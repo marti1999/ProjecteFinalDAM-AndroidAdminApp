@@ -123,7 +123,7 @@ public class AppActivity extends AppCompatActivity {
         navView.getMenu().getItem(0).setChecked(true);
 
 
-        getSupportActionBar().setTitle("Contacts");
+        getSupportActionBar().setTitle("Contacts"); //todo canviar pel que faci falta
 
     }
 
@@ -133,22 +133,17 @@ public class AppActivity extends AppCompatActivity {
 
 
 
-        //manager.openRead();
-
-        p = manager.getPersona(prefs.getString("LAST_LOGIN", ""));
-        //manager.close();
 
 
-        //Intent intent = getIntent();
-      //  String email =  intent.getStringExtra(MainActivity.EXTRA_PERSONA);
-      //  String name = intent.getStringExtra(MainActivity.EXTRA_EMAIL);
+        p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo canviar per el webservice request;
+
 
         TextView tvName = findViewById(R.id.navview_name);
         TextView tvEmail = findViewById(R.id.navview_email);
         tvName.setText(p.getNom());
         tvEmail.setText(p.getEmail());
 
-        new asyncTask().execute();
+        new asyncTask().execute(); //todo canviar per aconseguir la foto necessaria;
 
 
         return true;
@@ -172,9 +167,9 @@ public class AppActivity extends AppCompatActivity {
                         case DialogInterface.BUTTON_POSITIVE:
 
 
-                        //    manager.openWrite();
-                            manager.deletePersona(p.getEmail());
-                       //     manager.close();
+
+                            manager.deletePersona(p.getEmail()); //todo canviar
+
                             finish();
                             break;
 
@@ -210,7 +205,7 @@ public class AppActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-
+//todo fer que nomes conti com a 2 quan s'ha fet seguit de la primera vegada, posar un timer o algo per l'estil
         if (backButtonCount >= 1) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
@@ -221,15 +216,12 @@ public class AppActivity extends AppCompatActivity {
             backButtonCount++;
         }
 
-//        Intent intent = new Intent(Intent.ACTION_MAIN);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
+
     }
 
 
 
-    class asyncTask extends AsyncTask<Void, Integer, Bitmap> {
+    class asyncTask extends AsyncTask<Void, Integer, Bitmap> { //todo canviar tot el async tasc pel que faci falta
         @Override
         protected Bitmap doInBackground(Void... voids) {
 

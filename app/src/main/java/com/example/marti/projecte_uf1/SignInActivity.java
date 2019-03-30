@@ -128,7 +128,7 @@ public class SignInActivity extends AppCompatActivity {
 
             toast.show();
             valid = false;
-        } else if (DatabaseUtils.queryNumEntries(manager.getDatabaseInstance(),"Persona", "email =?", new String[] {email.getText().toString()}) != 0) {
+        } else if (DatabaseUtils.queryNumEntries(manager.getDatabaseInstance(),"Persona", "email =?", new String[] {email.getText().toString()}) != 0) { //todo canviar el checking
             Toast toast = Toast.makeText(getApplicationContext(),
                     "This email address is already in use.",
                     Toast.LENGTH_LONG);
@@ -168,9 +168,9 @@ public class SignInActivity extends AppCompatActivity {
                     persona.setTelefon(phone.getText().toString());
                     persona.setDescripcio(description.getText().toString());
 
-                    // manager.openWrite();
-                    manager.insertPersona(persona);
-                    // manager.close();
+
+                    manager.insertPersona(persona); //todo canviar per el webservice
+
 
                     Intent reply = new Intent();
                     reply.putExtra(NEW_NAME, persona.getEmail());

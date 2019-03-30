@@ -52,13 +52,13 @@ public class Fragment2 extends Fragment {
 //        group = getView().findViewById(R.id.frame2);
 //        TransitionManager.beginDelayedTransition(group);
 
-        getActivity().setTitle("Events");
+        getActivity().setTitle("Events"); //todo canviar
         populateList();
 
 
     }
 
-    private void populateList() {
+    private void populateList() { //todo canviar-ho tot pel que faci falta. A poder ser, modificar el adapter y tal abans de crear un nou
         ArrayList<Esdeveniment> list = manager.getListEsdeveniments();
         adapter = new esdevenimentAdapter(list, getActivity());
         recyclerView = getView().findViewById(R.id.my_recycler_view2);

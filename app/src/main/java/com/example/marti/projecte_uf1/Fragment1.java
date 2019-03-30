@@ -60,7 +60,7 @@ public class Fragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Contacts");
+        getActivity().setTitle("Contacts"); //todo canviar
 
         fab = getView().findViewById(R.id.fab);
         fab1 = getView().findViewById(R.id.fab1);
@@ -80,7 +80,7 @@ public class Fragment1 extends Fragment {
         populateList();
     }
 
-    private void populateList() {
+    private void populateList() { //todo canviar-ho tot pel que faci falta. A poder ser, modificar el adapter y tal abans de crear un nou
 
 //        manager.openRead();
         //ArrayList<Persona> list = manager.getListPersones();

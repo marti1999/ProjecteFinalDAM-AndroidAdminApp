@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         String oldName = prefs.getString("EMAIL", "");
         etEmail.setText(oldName);
 
-        tvSignIn.setOnLongClickListener(new View.OnLongClickListener() {
+        tvSignIn.setOnLongClickListener(new View.OnLongClickListener() { //todo esborrar aixo, no fa falta (era per debug)
             @Override
             public boolean onLongClick(View v) {
                 try {
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchLogIn(View v) {
 
-        // manager.openRead();
+        //todo canviar el sqlRequest per el webService Request (en comptes de string sera un bool i tal)
         String realPassword = manager.getPassword(etEmail.getText().toString());
 
         if (realPassword.equals(etPassword.getText().toString())) {
@@ -111,18 +111,18 @@ public class MainActivity extends AppCompatActivity {
                 etEmail.setText("");
             }
 
-            Persona per = manager.getPersona(etEmail.getText().toString());
+            Persona per = manager.getPersona(etEmail.getText().toString()); //todo igual, fer-ho desdel web service
 
-            Intent launch = new Intent(this, AppActivity.class);
+            Intent launch = new Intent(this, AppActivity.class);  //todo pues eso, tant aqui com el sharedPref posar el que toca
             launch.putExtra(EXTRA_PERSONA, per.getNom());
             launch.putExtra(EXTRA_EMAIL, per.getEmail());
 
             prefsEditor.putString("LAST_LOGIN", per.getEmail());
             prefsEditor.apply();
 
-            Log.d("nom", String.valueOf(per.getId()));
+            //Log.d("nom", String.valueOf(per.getId()));
             startActivity(launch);
-            etPassword.setText("");
+            etPassword.setText(""); //todo s'hauria de canviar, queda feo quan s'executa
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void personaEntries() {
+    public void personaEntries() { //todo no serveix per res, eliminar els seus usos i seguidament el metode
         Persona p = new Persona();
         p.setId(100);
         p.setEdat(34);
