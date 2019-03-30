@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">projecte_UF1</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="emailHint">   Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="loginText">Login</string>
+    <string name="remember_userText">Remember user</string>
+    <string name="no_account_yet_create_oneText">No account yet? Create one</string>
+    <string name="nameText">Name</string>
+    <string name="repeat_passwordHint">Repeat password</string>
+    <string name="date_of_birthText">Date of birth</string>
+    <string name="descriptionText">Description</string>
+    <string name="create_accountHint">Create Account</string>
+    <string name="phone_numberHint">Phone number</string>
+    <string name="interestedText">Interested</string>
+    <string name="should_you_ever_need_a_calculator_this_tool_will_come_in_handyText">should you ever need a calculator, this tool will come in handy.</string>
+    <string name="resultText">Result:</string>
+    <string name="this_tool_is_meant_to_keep_you_save_and_sound_while_going_back_home_on_your_own_when_the_button_is_pressed_an_alarm_will_sound_through_the_speakersText">This tool is meant to keep you save and sound while going back home on your own. When the button is pressed, an alarm will sound through the speakers.</string>
+    <string name="download_pdfText">DOWNLOAD PDF</string>
+    <string name="you_may_now_click_the_image_to_open_the_fileText">You may now click the image to open the file.</string>
+    <string name="its_location_is_in_downloads_folderText">Its location is in Downloads folder.</string>
+    <string name="sendText">Send</string>
+    <string name="doubleTapText">Press the back button once again to close the application.</string>
+</resources>

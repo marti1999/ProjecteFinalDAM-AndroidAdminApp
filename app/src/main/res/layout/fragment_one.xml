@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context=".OneFragment">
+
+    <!--these 2 buttons are not used-->
+    <Button
+        android:id="@+id/btStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="672dp"
+        android:text=""
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="317dp"
+        android:layout_marginTop="670dp"
+        android:text=""
+        android:visibility="invisible" />
+
+    <ImageView
+        style="@style/imageViewEsdeveniment"
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="114dp"
+        android:layout_marginTop="300dp"
+        android:src="@drawable/btnormal" />
+
+    <TextView
+        style="@style/textViewNormal"
+        android:id="@+id/textView"
+        android:layout_width="338dp"
+        android:layout_height="210dp"
+
+
+
+    android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="60dp"
+        android:gravity="fill"
+        android:text="@string/this_tool_is_meant_to_keep_you_save_and_sound_while_going_back_home_on_your_own_when_the_button_is_pressed_an_alarm_will_sound_through_the_speakersText"
+        android:textSize="24sp" />
+
+</RelativeLayout>

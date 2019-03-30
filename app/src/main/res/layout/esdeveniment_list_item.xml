@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/esdeveniments_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+
+
+    android:paddingLeft="17dp"
+    android:paddingTop="5dp"
+    android:paddingRight="17dp"
+    android:paddingBottom="5dp">
+
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/interested"
+        style="@style/checkboxItemEsdeveniment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp"
+        android:text="@string/interestedText" />
+
+
+    <TextView
+        android:id="@+id/EsdevenimentName"
+        style="@style/textViewItemEsdevenimentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="3dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/eventInfo"
+        style="@style/textViewItemEsdevenimentContent"
+        android:layout_width="245dp"
+        android:layout_height="84dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="43dp"
+        android:text="" />
+
+    <ImageView
+        android:id="@+id/eventImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginTop="3dp"
+        app:srcCompat="@drawable/downarrow"
+        style="@style/imageViewEsdeveniment" />
+
+</RelativeLayout>

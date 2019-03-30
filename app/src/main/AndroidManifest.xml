@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.marti.projecte_uf1">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<supports-screens
+    android:largeScreens="true"
+    android:smallScreens="true"
+        android:normalScreens="true"
+    android:xlargeScreens="true"
+
+    />
+
+    <application
+
+        android:allowBackup="true"
+        android:icon="@drawable/feministicon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".CalculatorActivity"
+            android:parentActivityName=".AppActivity"></activity>
+        <activity
+            android:name=".tabsActivity"
+            android:parentActivityName=".AppActivity"
+            android:theme="@style/MyMaterialTheme" />
+        <activity
+            android:name=".AppActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignInActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <receiver android:name=".NotificationActionReceiver">
+            <intent-filter>
+                <action android:name="CONFIRM" />
+                <action android:name="CANCEL" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".myService" />
+    </application>
+
+</manifest>

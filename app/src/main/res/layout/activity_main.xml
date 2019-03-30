@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/etMail"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="93dp"
+        android:layout_marginTop="239dp"
+        android:layout_marginEnd="97dp"
+        android:drawableLeft="@drawable/email"
+
+        android:hint="@string/emailHint"
+        android:inputType="textEmailAddress"
+        style="@style/editTextDrawable"
+        />
+
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="93dp"
+        android:layout_marginTop="313dp"
+        android:layout_marginEnd="97dp"
+        android:drawableLeft="@drawable/lock"
+
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword"
+        style="@style/editTextDrawable" />
+
+    <Button
+        android:id="@+id/btLogIn"
+        android:layout_width="222dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="94dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="95dp"
+        android:onClick="launchLogIn"
+        android:text="@string/loginText"
+        style="@style/buttonBig" />
+
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
+
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="207dp"
+        android:buttonTint="@color/gris"
+        android:layout_marginTop="375dp"
+        android:text="@string/remember_userText" />
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="145dp"
+
+        android:layout_marginTop="489dp"
+        android:gravity="center_horizontal"
+        android:onClick="launchSignIn"
+        android:text="@string/no_account_yet_create_oneText"
+        style="@style/textViewNormal" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="189dp"
+        android:layout_height="142dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="113dp"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/image1" />
+</RelativeLayout>

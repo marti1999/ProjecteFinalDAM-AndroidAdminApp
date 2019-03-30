@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+
+    tools:context=".SignInActivity">
+
+    <EditText
+        android:id="@+id/name"
+        style="@style/editTextDrawable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="67dp"
+        android:drawableStart="@drawable/person"
+        android:hint="@string/nameText"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="0dp"
+        style="@style/editTextDrawable"
+        android:drawableStart="@drawable/email"
+        android:hint="@string/emailHint"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/password1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="192dp"
+        style="@style/editTextDrawable"
+        android:drawableStart="@drawable/lock"
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/password2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="258dp"
+        style="@style/editTextDrawable" android:drawableStart="@drawable/lock"
+        android:hint="@string/repeat_passwordHint"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="321dp"
+        style="@style/editTextDrawable.NoFocusable"
+        android:drawableStart="@drawable/event"
+        android:hint="@string/date_of_birthText"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="199dp"
+        android:layout_height="58dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="443dp"
+        style="@style/editTextDrawable"
+        android:drawableStart="@drawable/desc"
+        android:hint="@string/descriptionText"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/createAccount"
+        style="@style/buttonBig"
+        android:layout_width="211dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="549dp"
+        android:text="@string/create_accountHint" />
+
+    <EditText
+        android:id="@+id/phone3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="382dp"
+        style="@style/editTextDrawable"
+        android:drawableStart="@drawable/phone"
+        android:hint="@string/phone_numberHint"
+        android:inputType="phone" />
+
+</RelativeLayout>

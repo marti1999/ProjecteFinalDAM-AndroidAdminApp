@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_seccion_1"
+            android:icon="@drawable/person"
+            android:title="Contacts"/>
+        <item
+            android:id="@+id/menu_seccion_2"
+            android:icon="@drawable/event"
+            android:title="Events"/>
+        <item
+            android:id="@+id/menu_tabs"
+            android:icon="@drawable/security"
+            android:title="More tools"/>
+        <item
+            android:id="@+id/menu_tools"
+            android:icon="@drawable/calculator"
+            android:title="Calculator"
+            />
+
+    </group>
+
+
+</menu>
