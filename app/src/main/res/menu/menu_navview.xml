@@ -9,15 +9,7 @@
             android:id="@+id/menu_seccion_2"
             android:icon="@drawable/event"
             android:title="Events"/>
-        <item
-            android:id="@+id/menu_tabs"
-            android:icon="@drawable/security"
-            android:title="More tools"/>
-        <item
-            android:id="@+id/menu_tools"
-            android:icon="@drawable/calculator"
-            android:title="Calculator"
-            />
+
 
     </group>
 

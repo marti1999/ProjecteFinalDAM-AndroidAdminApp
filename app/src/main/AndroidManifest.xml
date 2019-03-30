@@ -23,13 +23,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CalculatorActivity"
-            android:parentActivityName=".AppActivity"></activity>
-        <activity
-            android:name=".tabsActivity"
-            android:parentActivityName=".AppActivity"
-            android:theme="@style/MyMaterialTheme" />
-        <activity
             android:name=".AppActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />

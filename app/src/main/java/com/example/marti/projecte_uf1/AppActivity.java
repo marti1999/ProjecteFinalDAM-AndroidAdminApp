@@ -94,14 +94,7 @@ public class AppActivity extends AppCompatActivity {
                                 fragment = new Fragment2();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.menu_tools:
-//                                Intent i = new Intent(getApplicationContext(), CalculatorActivity.class);
-//                                startActivity(i);
-                                break;
-                            case R.id.menu_tabs:
-//                                Intent i2 = new Intent(getApplicationContext(), tabsActivity.class);
-//                                startActivity(i2);
-                                break;
+
 
                         }
 
