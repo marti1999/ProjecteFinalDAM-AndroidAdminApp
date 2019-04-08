@@ -6,6 +6,7 @@ package com.example.marti.projecte_uf1.interfaces;
 import com.example.marti.projecte_uf1.model.Administrator;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -21,8 +22,9 @@ public interface  ApiMecAroundInterfaces {
 //
 //
 //
-    @GET("login")
-    Call<Boolean> doLogin(@Field("val") Administrator a);
+
+    @POST("administrator/login")
+    Call<Boolean> doLogin(@Body Administrator a);
 
 
 

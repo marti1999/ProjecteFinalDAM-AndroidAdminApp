@@ -12,8 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
+import com.example.marti.projecte_uf1.model.Administrator;
+import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.remote.RetrofitClient;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
+
+    private ApiMecAroundInterfaces mAPIService;
+
+    Boolean isLogin;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -56,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        mAPIService = ApiUtils.getAPIService();
+
         manager.esdevenimentsEntries();
 
-        this.personaEntries();
+
 
         // getSupportActionBar().setTitle("Log in");
 
@@ -97,10 +111,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchLogIn(View v) {
 
-        //todo canviar el sqlRequest per el webService Request (en comptes de string sera un bool i tal)
-        String realPassword = manager.getPassword(etEmail.getText().toString());
 
-        if (realPassword.equals(etPassword.getText().toString())) {
+        Administrator a = new Administrator();
+        a.email = etEmail.getText().toString();
+        a.password = etPassword.getText().toString();
+
+
+
+        mAPIService.doLogin(a).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    isLogin = response.body().booleanValue();
+                    if (isLogin) {
+                        Toast.makeText(MainActivity.this, "Is OK", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+        if (0 == 1) { //todo canviar aixo xD
             if (checkBox.isChecked()) {
                 String email = etEmail.getText().toString();
                 prefsEditor.putString("EMAIL", email);
@@ -124,15 +164,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(launch);
             etPassword.setText(""); //todo s'hauria de canviar, queda feo quan s'executa
 
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Email and  password do not match",
-                    Toast.LENGTH_LONG);
-
-            toast.show();
-
-            // Intent launch = new Intent(this, AppActivity.class);
-            //  startActivity(launch);
         }
 //manager.close();
 
