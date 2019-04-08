@@ -7,7 +7,7 @@ public class ApiUtils {
 
     private ApiUtils() {}
 
-    public static final String BASE_URL = "https://reqres.in/api/";
+    public static final String BASE_URL = "https://localhost:44362/api/";
 
     public static ApiMecAroundInterfaces getAPIService() {
 
