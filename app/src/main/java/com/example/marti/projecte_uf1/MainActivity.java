@@ -77,29 +77,27 @@ public class MainActivity extends AppCompatActivity {
         // getSupportActionBar().setTitle("Log in");
 
 
-        etEmail = findViewById(R.id.etMail);
-        etPassword = findViewById(R.id.etPassword);
-        checkBox = findViewById(R.id.checkBox);
+        BindView();
+        setRememberName();
 
+
+
+
+
+    }
+
+    public void setRememberName(){
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
 
         String oldName = prefs.getString("EMAIL", "");
         etEmail.setText(oldName);
+    }
 
-        tvSignIn.setOnLongClickListener(new View.OnLongClickListener() { //todo esborrar aixo, no fa falta (era per debug)
-            @Override
-            public boolean onLongClick(View v) {
-                try {
-                    manager.esdevenimentsEntries();
-
-                } catch (Exception ex) {
-
-                }
-                return true;
-            }
-        });
-
+    public void BindView(){
+        etEmail = findViewById(R.id.etMail);
+        etPassword = findViewById(R.id.etPassword);
+        checkBox = findViewById(R.id.checkBox);
     }
 
     public void launchSignIn(View v) {
