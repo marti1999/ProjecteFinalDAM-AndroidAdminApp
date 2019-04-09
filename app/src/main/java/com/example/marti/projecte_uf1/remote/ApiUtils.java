@@ -7,7 +7,7 @@ public class ApiUtils {
 
     private ApiUtils() {}
 
-    public static final String BASE_URL = "https://localhost:44362/api/";
+    public static final String BASE_URL = "https://172.16.12.2:45456/api/";
 
     public static ApiMecAroundInterfaces getAPIService() {
 

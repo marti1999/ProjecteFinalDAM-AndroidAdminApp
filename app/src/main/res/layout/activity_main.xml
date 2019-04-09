@@ -87,13 +87,5 @@
         android:text="@string/no_account_yet_create_oneText"
         style="@style/textViewNormal" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="189dp"
-        android:layout_height="142dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/image1" />
+
 </RelativeLayout>

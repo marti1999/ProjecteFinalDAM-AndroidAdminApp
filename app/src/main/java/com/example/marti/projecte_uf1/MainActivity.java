@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAPIService = ApiUtils.getAPIService();
 
-        manager.esdevenimentsEntries();
+
 
 
 
@@ -128,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code() , Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -169,66 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void personaEntries() { //todo no serveix per res, eliminar els seus usos i seguidament el metode
-        Persona p = new Persona();
-        p.setId(100);
-        p.setEdat(34);
-        p.setEmail("carles@gmail.com");
-        p.setPassword("carles");
-        p.setTelefon("64815483");
-        p.setDescripcio("Bye bye");
-        p.setNom("Carles");
-        try {
-            manager.insertPersona(p);
-        } catch (Exception ex) {
 
-        }
-
-
-        Persona p2 = new Persona();
-        p2.setId(101);
-        p2.setEdat(19);
-        p2.setEmail("marti@gmail.com");
-        p2.setPassword("marti");
-        p2.setTelefon("3181531");
-        p2.setDescripcio("Hi there~");
-        p2.setNom("Martí");
-        try {
-            manager.insertPersona(p2);
-        } catch (Exception ex) {
-
-        }
-
-        Persona p3 = new Persona();
-        p3.setId(102);
-        p3.setEdat(56);
-        p3.setEmail("mario@gmail.com");
-        p3.setPassword("mario");
-        p3.setTelefon("65789456");
-        p3.setDescripcio("Description for mario");
-        p3.setNom("Mario");
-        try {
-            manager.insertPersona(p3);
-        } catch (Exception ex) {
-
-        }
-
-        Persona p4 = new Persona();
-        p4.setId(103);
-        p4.setEdat(34);
-        p4.setEmail("test@gmail.com");
-        p4.setPassword("a");
-        p4.setTelefon("64815483");
-        p4.setDescripcio("Bye bye");
-        p4.setNom("Test");
-        try {
-            manager.insertPersona(p4);
-        } catch (Exception ex) {
-
-        }
-
-
-    }
 
     @Override
     protected void onDestroy() {
