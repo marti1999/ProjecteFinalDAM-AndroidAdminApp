@@ -17,6 +17,11 @@ import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
 import com.example.marti.projecte_uf1.remote.RetrofitClient;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -71,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
         mAPIService = ApiUtils.getAPIService();
 
 
-
-
-
         // getSupportActionBar().setTitle("Log in");
 
 
@@ -81,12 +83,9 @@ public class MainActivity extends AppCompatActivity {
         setRememberName();
 
 
-
-
-
     }
 
-    public void setRememberName(){
+    public void setRememberName() {
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
 
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         etEmail.setText(oldName);
     }
 
-    public void BindView(){
+    public void BindView() {
         etEmail = findViewById(R.id.etMail);
         etPassword = findViewById(R.id.etPassword);
         checkBox = findViewById(R.id.checkBox);
@@ -107,14 +106,24 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(launch, SIGNIN_REQUEST);
     }
 
-    public void launchLogIn(View v) {
+    public String passwordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+        digest.reset();
+        digest.update(password.getBytes("utf8"));
+        String newPassword = String.format("%040x", new BigInteger(1, digest.digest()));
+        return newPassword;
+    }
+
+
+
+    public void launchLogIn(View v) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
 
         Administrator a = new Administrator();
         a.email = etEmail.getText().toString();
         a.password = etPassword.getText().toString();
 
-
+        a.password = passwordHash(a.password);
 
         mAPIService.doLogin(a).enqueue(new Callback<Boolean>() {
             @Override
@@ -127,18 +136,16 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code() , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();
 
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-
 
 
         if (0 == 1) { //todo canviar aixo xD
@@ -169,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
 //manager.close();
 
     }
-
 
 
     @Override
