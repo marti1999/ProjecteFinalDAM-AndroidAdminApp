@@ -27,6 +27,10 @@ public interface  ApiMecAroundInterfaces {
     Call<Boolean> doLogin(@Body Administrator a);
 
 
+    //todo login donor i requestor
+    @POST("administrator/login")
+    Call<Boolean> doLoginDonor(@Body Administrator a);
+
 
 
 }

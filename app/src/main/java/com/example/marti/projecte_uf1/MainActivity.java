@@ -115,28 +115,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void launchLogIn(View v) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-
-
-        Administrator a = new Administrator();
-        a.email = etEmail.getText().toString();
-        a.password = etPassword.getText().toString();
-
-        a.password = passwordHash(a.password);
-
-        mAPIService.doLogin(a).enqueue(new Callback<Boolean>() {
+    public boolean canLogin(Administrator admin) {
+        isLogin = false;
+        mAPIService.doLogin(admin).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {
                     isLogin = response.body().booleanValue();
                     if (isLogin) {
-                        Toast.makeText(MainActivity.this, "Is OK", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+
                     } else {
-                        Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show(); //todo canviar per un que no desapareixi
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
 
                 }
             }
@@ -146,6 +139,19 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+        return isLogin;
+    }
+
+    public void launchLogIn(View v) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+        Administrator a = new Administrator();
+        a.email = etEmail.getText().toString();
+        a.password = etPassword.getText().toString();
+
+        a.password = passwordHash(a.password);
+
+        canLogin(a);
 
 
         if (0 == 1) { //todo canviar aixo xD
