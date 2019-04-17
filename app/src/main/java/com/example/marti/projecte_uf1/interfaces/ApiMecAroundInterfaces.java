@@ -4,6 +4,8 @@ package com.example.marti.projecte_uf1.interfaces;
 
 
 import com.example.marti.projecte_uf1.model.Administrator;
+import com.example.marti.projecte_uf1.model.Donor;
+import com.example.marti.projecte_uf1.model.Requestor;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,9 +30,10 @@ public interface  ApiMecAroundInterfaces {
 
 
     //todo login donor i requestor
-    @POST("administrator/login")
-    Call<Boolean> doLoginDonor(@Body Administrator a);
+    @POST("donor/login")
+    Call<Boolean> doLoginDonor(@Body Donor d);
 
-
+    @POST("requestor/login")
+    Call<Boolean> doLoginRequestor(@Body Requestor r);
 
 }

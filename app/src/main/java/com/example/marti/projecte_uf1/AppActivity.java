@@ -57,7 +57,7 @@ public class AppActivity extends AppCompatActivity {
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         backButtonCount = 0;
-        p =  new Persona();
+        p = new Persona();
 
 
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -73,10 +73,6 @@ public class AppActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         navView = (NavigationView) findViewById(R.id.navview);
-
-
-
-
 
 
         navView.setNavigationItemSelectedListener(
@@ -132,9 +128,6 @@ public class AppActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
 
-
-
-
         p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo canviar per el webservice request;
 
 
@@ -159,13 +152,12 @@ public class AppActivity extends AppCompatActivity {
             finish();
             return true;
 
-        } else if ( id == R.id.action_deleteAccount) {
+        } else if (id == R.id.action_deleteAccount) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-
 
 
                             manager.deletePersona(p.getEmail()); //todo canviar
@@ -189,7 +181,6 @@ public class AppActivity extends AppCompatActivity {
             drawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
-
 
 
         return super.onOptionsItemSelected(item);
@@ -218,7 +209,6 @@ public class AppActivity extends AppCompatActivity {
 
 
     }
-
 
 
     class asyncTask extends AsyncTask<Void, Integer, Bitmap> { //todo canviar tot el async tasc pel que faci falta

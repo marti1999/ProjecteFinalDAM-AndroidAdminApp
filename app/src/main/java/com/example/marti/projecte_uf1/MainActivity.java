@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
-import com.example.marti.projecte_uf1.remote.RetrofitClient;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etEmail;
     EditText etPassword;
     CheckBox checkBox;
-    public static final String EXTRA_MESSAGE = "MESSAGE";
+
     public static final String EXTRA_PERSONA = "NAME";
     public static final String EXTRA_EMAIL = "EMAIL";
     public static Integer SIGNIN_REQUEST = 1;
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        try {
+        try { //todo s'hauria de treure un cop s'hagi tret el que depen
             manager.openWrite();
 
             // manager.close();
@@ -101,12 +99,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchSignIn(View v) {
         Intent launch = new Intent(this, SignInActivity.class);
-        //String email = etEmail.getText().toString();
-        //launch.putExtra(EXTRA_MESSAGE, email);
         startActivityForResult(launch, SIGNIN_REQUEST);
     }
 
-    public String passwordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public String generatePasswordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest digest = MessageDigest.getInstance("SHA-512");
         digest.reset();
         digest.update(password.getBytes("utf8"));
@@ -146,41 +142,46 @@ public class MainActivity extends AppCompatActivity {
     public void launchLogIn(View v) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         Administrator a = new Administrator();
+
         a.email = etEmail.getText().toString();
         a.password = etPassword.getText().toString();
 
-        a.password = passwordHash(a.password);
-
-        canLogin(a);
+        a.password = generatePasswordHash(a.password);
 
 
-        if (0 == 1) { //todo canviar aixo xD
-            if (checkBox.isChecked()) {
-                String email = etEmail.getText().toString();
-                prefsEditor.putString("EMAIL", email);
-                prefsEditor.apply();
-            } else {
-                prefsEditor.putString("EMAIL", "");
-                prefsEditor.apply();
-                etEmail.setText("");
-            }
 
-            Persona per = manager.getPersona(etEmail.getText().toString()); //todo igual, fer-ho desdel web service
 
-            Intent launch = new Intent(this, AppActivity.class);  //todo pues eso, tant aqui com el sharedPref posar el que toca
-            launch.putExtra(EXTRA_PERSONA, per.getNom());
-            launch.putExtra(EXTRA_EMAIL, per.getEmail());
+        if (canLogin(a)) {
+            rememberUserEmail();
 
-            prefsEditor.putString("LAST_LOGIN", per.getEmail());
+            prefsEditor.putString("LAST_LOGIN", etEmail.getText().toString());
             prefsEditor.apply();
+
+            Intent launch = new Intent(this, AppActivity.class);
+//            launch.putExtra(EXTRA_PERSONA, per.getNom());
+//            launch.putExtra(EXTRA_EMAIL, per.getEmail());
+
+
 
             //Log.d("nom", String.valueOf(per.getId()));
             startActivity(launch);
             etPassword.setText(""); //todo s'hauria de canviar, queda feo quan s'executa
 
         }
-//manager.close();
 
+
+    }
+
+    private void rememberUserEmail() {
+        if (checkBox.isChecked()) {
+            String email = etEmail.getText().toString();
+            prefsEditor.putString("EMAIL", email);
+            prefsEditor.apply();
+        } else {
+            prefsEditor.putString("EMAIL", "");
+            prefsEditor.apply();
+            etEmail.setText("");
+        }
     }
 
 
