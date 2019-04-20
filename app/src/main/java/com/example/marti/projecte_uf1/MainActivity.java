@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Administrator;
+import com.example.marti.projecte_uf1.model.Donor;
+import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ApiMecAroundInterfaces mAPIService;
 
     Boolean isLogin;
+    int incorrectAttempts;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -111,18 +115,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public boolean canLogin(Administrator admin) {
+    public boolean canLogin(Requestor requestor) throws InterruptedException, IOException, NoSuchAlgorithmException {
+
         isLogin = false;
-        mAPIService.doLogin(admin).enqueue(new Callback<Boolean>() {
+        incorrectAttempts = 0;
+
+        Donor donor = new Donor();
+        donor.email = requestor.email;
+        donor.password = requestor.password;
+
+
+        mAPIService.doLoginRequestor(requestor).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {
                     isLogin = response.body().booleanValue();
                     if (isLogin) {
                         Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+                        prefsEditor.putString("LAST_LOGIN_TYPE", "Requestor");
+                        prefsEditor.apply();
+
+                      //  launchLogInActivity();
 
                     } else {
-                        Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show(); //todo canviar per un que no desapareixi
+                        Toast.makeText(MainActivity.this, "Requestor wrong email / password", Toast.LENGTH_SHORT).show(); //todo canviar per un que no desapareixi
+
+                        incorrectAttempts++;
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
@@ -136,39 +154,89 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+//            try {
+//                Response<Boolean> response = mAPIService.doLoginDonor(donor).execute();
+//                if (response.isSuccessful()) {
+//                    isLogin = response.body().booleanValue();
+//                    if (isLogin) {
+//                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+//                        prefsEditor.putString("LAST_LOGIN_TYPE", "Donor");
+//                        prefsEditor.apply();
+//
+//
+//                    } else {
+//                        //     Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show(); //todo canviar per un que no desapareixi
+//                    }
+//                } else {
+//                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
+//
+//                }
+//            } catch (Exception ex) {
+//                Toast.makeText(MainActivity.this, "FAILURE " + ex.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+
+
+        mAPIService.doLoginDonor(donor).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    isLogin = response.body().booleanValue();
+                    if (isLogin) {
+                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+                        prefsEditor.putString("LAST_LOGIN_TYPE", "Donor");
+                        prefsEditor.apply();
+
+                      //  launchLogInActivity();
+
+
+                    } else {
+                        incorrectAttempts++;
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
         return isLogin;
     }
 
-    public void launchLogIn(View v) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public void launchLogInActivity() {
+        rememberUserEmail();
 
-        Administrator a = new Administrator();
+        prefsEditor.putString("LAST_LOGIN", etEmail.getText().toString());
+        prefsEditor.apply();
 
-        a.email = etEmail.getText().toString();
-        a.password = etPassword.getText().toString();
-
-        a.password = generatePasswordHash(a.password);
-
-
-
-
-        if (canLogin(a)) {
-            rememberUserEmail();
-
-            prefsEditor.putString("LAST_LOGIN", etEmail.getText().toString());
-            prefsEditor.apply();
-
-            Intent launch = new Intent(this, AppActivity.class);
+        Intent launch = new Intent(this, AppActivity.class);
 //            launch.putExtra(EXTRA_PERSONA, per.getNom());
 //            launch.putExtra(EXTRA_EMAIL, per.getEmail());
 
 
+        //Log.d("nom", String.valueOf(per.getId()));
+        startActivity(launch);
+        etPassword.setText(""); //todo s'hauria de canviar, queda feo quan s'executa
+    }
 
-            //Log.d("nom", String.valueOf(per.getId()));
-            startActivity(launch);
-            etPassword.setText(""); //todo s'hauria de canviar, queda feo quan s'executa
+    public void LogInClick(View v) throws IOException, NoSuchAlgorithmException, InterruptedException {
 
-        }
+        Requestor requestor = new Requestor();
+        requestor.email = etEmail.getText().toString();
+        requestor.password = etPassword.getText().toString();
 
+        requestor.password = generatePasswordHash(requestor.password);
+
+
+        canLogin(requestor);
 
     }
 
