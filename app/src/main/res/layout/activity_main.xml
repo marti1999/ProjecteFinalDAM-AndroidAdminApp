@@ -87,5 +87,17 @@
         android:text="@string/no_account_yet_create_oneText"
         style="@style/textViewNormal" />
 
+    <com.unstoppable.submitbuttonview.SubmitButton
+        android:id="@+id/testButton"
+        android:layout_width="229dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="536dp"
+        app:buttonColor="@color/gris"
+
+        app:buttonText="LOGIN" />
+
 
 </RelativeLayout>

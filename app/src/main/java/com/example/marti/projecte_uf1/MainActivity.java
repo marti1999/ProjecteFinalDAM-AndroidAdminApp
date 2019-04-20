@@ -2,6 +2,7 @@ package com.example.marti.projecte_uf1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etEmail;
     EditText etPassword;
     CheckBox checkBox;
+    com.unstoppable.submitbuttonview.SubmitButton testButton;
 
     public static final String EXTRA_PERSONA = "NAME";
     public static final String EXTRA_EMAIL = "EMAIL";
@@ -95,12 +97,28 @@ public class MainActivity extends AppCompatActivity {
 
         String oldName = prefs.getString("EMAIL", "");
         etEmail.setText(oldName);
+
     }
 
     public void BindView() {
         etEmail = findViewById(R.id.etMail);
         etPassword = findViewById(R.id.etPassword);
         checkBox = findViewById(R.id.checkBox);
+        testButton = findViewById(R.id.testButton);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    testClick();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void launchSignIn(View v) {
@@ -127,50 +145,32 @@ public class MainActivity extends AppCompatActivity {
         donor.password = requestor.password;
 
 
-
-
-//            try {
-//                Response<Boolean> response = mAPIService.doLoginDonor(donor).execute();
-//                if (response.isSuccessful()) {
-//                    isLogin = response.body().booleanValue();
-//                    if (isLogin) {
-//                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
-//                        prefsEditor.putString("LAST_LOGIN_TYPE", "Donor");
-//                        prefsEditor.apply();
-//
-//
-//                    } else {
-//                        //     Toast.makeText(MainActivity.this, "is NOT ok", Toast.LENGTH_SHORT).show(); //todo canviar per un que no desapareixi
-//                    }
-//                } else {
-//                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
-//
-//                }
-//            } catch (Exception ex) {
-//                Toast.makeText(MainActivity.this, "FAILURE " + ex.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-
-
         mAPIService.doLoginBoth(donor).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()){
+
+                if (response.isSuccessful()) {
                     String result = response.body();
                     String[] resultArray = result.split("-");
 
                     if (resultArray[0].equals(LOGIN_OK)) {
-                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+
+
                         String loginType = resultArray[1];
                         prefsEditor.putString("LAST_LOGIN_TYPE", loginType);
                         prefsEditor.apply();
 
-                        launchLogInActivity();
+                        loginButtonCorrectAnimation();
+
                     } else {
-                        Toast.makeText(MainActivity.this, "Incorrect email / password", Toast.LENGTH_SHORT).show();
+                        loginButtonIncorrectAnimation();
+                        //  Toast.makeText(MainActivity.this, "Incorrect email / password", Toast.LENGTH_SHORT).show();
+
                     }
 
                 } else {
                     Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
+                    loginButtonIncorrectAnimation();
 
                 }
             }
@@ -178,41 +178,77 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
+                loginButtonIncorrectAnimation();
+
             }
         });
 
-//        mAPIService.doLoginDonor(donor).enqueue(new Callback<Boolean>() {
-//            @Override
-//            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                if (response.isSuccessful()) {
-//                    isLogin = response.body().booleanValue();
-//                    if (isLogin) {
-//                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
-//                        prefsEditor.putString("LAST_LOGIN_TYPE", "Donor");
-//                        prefsEditor.apply();
-//
-//                      //  launchLogInActivity();
-//
-//
-//                    } else {
-//                        incorrectAttempts++;
-//                    }
-//                } else {
-//                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Boolean> call, Throwable t) {
-//                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-
-
 
         return isLogin;
+
+    }
+
+    private void loginButtonCorrectAnimation() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            testButton.doResult(true);
+                        }
+                    });
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+                        launchLogInActivity();
+                    }
+                });
+
+
+            }
+        });
+    }
+
+
+    private void loginButtonIncorrectAnimation() {
+
+        // testButton.doResult(false);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            testButton.doResult(false);
+                        }
+                    });
+                    Thread.sleep(2000);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        testButton.reset();
+                    }
+                });
+
+            }
+
+
+        });
     }
 
     public void launchLogInActivity() {
@@ -231,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Log.d("nom", String.valueOf(per.getId()));
         startActivity(launch);
-        etPassword.setText(""); //todo s'hauria de canviar, queda feo quan s'executa
+
     }
 
     public void LogInClick(View v) throws IOException, NoSuchAlgorithmException, InterruptedException {
@@ -247,6 +283,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void testClick() throws IOException, NoSuchAlgorithmException, InterruptedException {
+        Requestor requestor = new Requestor();
+        requestor.email = etEmail.getText().toString();
+        requestor.password = etPassword.getText().toString();
+
+        requestor.password = generatePasswordHash(requestor.password);
+
+
+        canLogin(requestor);
+    }
+
     private void rememberUserEmail() {
         if (checkBox.isChecked()) {
             String email = etEmail.getText().toString();
@@ -255,10 +302,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             prefsEditor.putString("EMAIL", "");
             prefsEditor.apply();
-            etEmail.setText("");
+
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        testButton.reset();
+        etPassword.setText("");
+        setRememberName();
+    }
 
     @Override
     protected void onDestroy() {
