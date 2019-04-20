@@ -135,14 +135,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public boolean canLogin(Requestor requestor) throws InterruptedException, IOException, NoSuchAlgorithmException {
+    public boolean canLogin(Donor donor) throws InterruptedException, IOException, NoSuchAlgorithmException {
 
         isLogin = false;
-        incorrectAttempts = 0;
-
-        Donor donor = new Donor();
-        donor.email = requestor.email;
-        donor.password = requestor.password;
 
 
         mAPIService.doLoginBoth(donor).enqueue(new Callback<String>() {
@@ -154,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     String[] resultArray = result.split("-");
 
                     if (resultArray[0].equals(LOGIN_OK)) {
-
+                        isLogin = true;
 
                         String loginType = resultArray[1];
                         prefsEditor.putString("LAST_LOGIN_TYPE", loginType);
@@ -163,22 +158,28 @@ public class MainActivity extends AppCompatActivity {
                         loginButtonCorrectAnimation();
 
                     } else {
-                        loginButtonIncorrectAnimation();
-                        //  Toast.makeText(MainActivity.this, "Incorrect email / password", Toast.LENGTH_SHORT).show();
+                        isLogin  = false;
+                        loginButtonIncorrectAnimation(null);
+
 
                     }
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
-                    loginButtonIncorrectAnimation();
+                    isLogin  = false;
+
+                    String errorMessage = response.message() + " " + response.code();
+                    loginButtonIncorrectAnimation(errorMessage);
 
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
-                loginButtonIncorrectAnimation();
+                isLogin  = false;
+
+                String errorMessage = t.getMessage();
+
+                loginButtonIncorrectAnimation(errorMessage);
 
             }
         });
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loginButtonIncorrectAnimation() {
+    private void loginButtonIncorrectAnimation(final String errorMessage) {
 
         // testButton.doResult(false);
         AsyncTask.execute(new Runnable() {
@@ -230,6 +231,10 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             testButton.doResult(false);
+                            if (errorMessage != null){
+
+                                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
                     Thread.sleep(2000);
@@ -272,26 +277,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void LogInClick(View v) throws IOException, NoSuchAlgorithmException, InterruptedException {
 
-        Requestor requestor = new Requestor();
-        requestor.email = etEmail.getText().toString();
-        requestor.password = etPassword.getText().toString();
+        Donor donor = new Donor();
+        donor.email = etEmail.getText().toString();
+        donor.password = etPassword.getText().toString();
 
-        requestor.password = generatePasswordHash(requestor.password);
+        donor.password = generatePasswordHash(donor.password);
 
 
-        canLogin(requestor);
-
+        canLogin(donor);
     }
 
     public void testClick() throws IOException, NoSuchAlgorithmException, InterruptedException {
-        Requestor requestor = new Requestor();
-        requestor.email = etEmail.getText().toString();
-        requestor.password = etPassword.getText().toString();
-
-        requestor.password = generatePasswordHash(requestor.password);
 
 
-        canLogin(requestor);
+
+        Donor donor = new Donor();
+        donor.email = etEmail.getText().toString();
+        donor.password = etPassword.getText().toString();
+
+        donor.password = generatePasswordHash(donor.password);
+
+
+        canLogin(donor);
     }
 
     private void rememberUserEmail() {

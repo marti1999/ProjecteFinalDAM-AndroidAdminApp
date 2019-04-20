@@ -11,53 +11,37 @@
 
     <EditText
         android:id="@+id/etMail"
+        style="@style/editTextDrawable"
         android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="93dp"
-        android:layout_marginTop="239dp"
+        android:layout_marginTop="314dp"
         android:layout_marginEnd="97dp"
-        android:drawableLeft="@drawable/email"
 
+        android:drawableLeft="@drawable/email"
         android:hint="@string/emailHint"
-        android:inputType="textEmailAddress"
-        style="@style/editTextDrawable"
-        />
+        android:inputType="textEmailAddress" />
 
 
     <EditText
         android:id="@+id/etPassword"
+        style="@style/editTextDrawable"
         android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
 
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="93dp"
-        android:layout_marginTop="313dp"
+        android:layout_marginTop="388dp"
         android:layout_marginEnd="97dp"
+
         android:drawableLeft="@drawable/lock"
-
         android:hint="@string/passwordHint"
-        android:inputType="textPassword"
-        style="@style/editTextDrawable" />
-
-    <Button
-        android:id="@+id/btLogIn"
-        android:layout_width="222dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="94dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginEnd="95dp"
-        android:onClick="LogInClick"
-        android:text="@string/loginText"
-        style="@style/buttonBig" />
-
+        android:inputType="textPassword" />
 
 
     <CheckBox
@@ -69,23 +53,24 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="207dp"
+        android:layout_marginTop="450dp"
         android:buttonTint="@color/gris"
-        android:layout_marginTop="375dp"
-        android:text="@string/remember_userText" />
+        android:text="@string/remember_userText"
+        android:textColor="@color/gris" />
 
     <TextView
         android:id="@+id/tvSignIn"
+        style="@style/textViewNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="145dp"
 
-        android:layout_marginTop="489dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="615dp"
         android:gravity="center_horizontal"
         android:onClick="launchSignIn"
-        android:text="@string/no_account_yet_create_oneText"
-        style="@style/textViewNormal" />
+        android:text="@string/no_account_yet_create_oneText" />
 
     <com.unstoppable.submitbuttonview.SubmitButton
         android:id="@+id/testButton"
@@ -93,8 +78,8 @@
         android:layout_height="55dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="536dp"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="531dp"
         app:buttonColor="@color/gris"
 
         app:buttonText="LOGIN" />
