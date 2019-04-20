@@ -128,13 +128,16 @@ public class AppActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
 
-        p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo canviar per el webservice request;
+    //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo s'hauria de poder esborrar
+
+        String userType = prefs.getString("LAST_LOGIN_TYPE", "");
+        String userEmail = prefs.getString("LAST_LOGIN", "");
 
 
         TextView tvName = findViewById(R.id.navview_name);
         TextView tvEmail = findViewById(R.id.navview_email);
-        tvName.setText(p.getNom());
-        tvEmail.setText(p.getEmail());
+        tvName.setText(userEmail);
+        tvEmail.setText(userType);
 
         new asyncTask().execute(); //todo canviar per aconseguir la foto necessaria;
 

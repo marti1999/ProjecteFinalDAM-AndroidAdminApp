@@ -33,6 +33,9 @@ public interface  ApiMecAroundInterfaces {
     @POST("donor/login")
     Call<Boolean> doLoginDonor(@Body Donor d);
 
+    @POST("donor/loginBoth")
+    Call<String> doLoginBoth(@Body Donor d);
+
     @POST("requestor/login")
     Call<Boolean> doLoginRequestor(@Body Requestor r);
 

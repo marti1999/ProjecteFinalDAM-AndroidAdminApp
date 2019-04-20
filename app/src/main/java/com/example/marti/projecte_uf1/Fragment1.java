@@ -77,7 +77,7 @@ public class Fragment1 extends Fragment {
             }
         });
 
-        populateList();
+// todo        populateList(); tornar-ho a activar quan faci falta
     }
 
     private void populateList() { //todo canviar-ho tot pel que faci falta. A poder ser, modificar el adapter y tal abans de crear un nou

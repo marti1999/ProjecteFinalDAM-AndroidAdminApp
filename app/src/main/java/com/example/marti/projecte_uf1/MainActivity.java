@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_PERSONA = "NAME";
     public static final String EXTRA_EMAIL = "EMAIL";
     public static Integer SIGNIN_REQUEST = 1;
+    public static final String LOGIN_OK = "true";
+
     SQLiteManager manager = new SQLiteManager(this);
     @BindView(R.id.tvSignIn)
     TextView tvSignIn;
@@ -125,34 +127,6 @@ public class MainActivity extends AppCompatActivity {
         donor.password = requestor.password;
 
 
-        mAPIService.doLoginRequestor(requestor).enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful()) {
-                    isLogin = response.body().booleanValue();
-                    if (isLogin) {
-                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
-                        prefsEditor.putString("LAST_LOGIN_TYPE", "Requestor");
-                        prefsEditor.apply();
-
-                      //  launchLogInActivity();
-
-                    } else {
-                        Toast.makeText(MainActivity.this, "Requestor wrong email / password", Toast.LENGTH_SHORT).show(); //todo canviar per un que no desapareixi
-
-                        incorrectAttempts++;
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
 
 
 //            try {
@@ -177,22 +151,24 @@ public class MainActivity extends AppCompatActivity {
 //            }
 
 
-        mAPIService.doLoginDonor(donor).enqueue(new Callback<Boolean>() {
+        mAPIService.doLoginBoth(donor).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful()) {
-                    isLogin = response.body().booleanValue();
-                    if (isLogin) {
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()){
+                    String result = response.body();
+                    String[] resultArray = result.split("-");
+
+                    if (resultArray[0].equals(LOGIN_OK)) {
                         Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
-                        prefsEditor.putString("LAST_LOGIN_TYPE", "Donor");
+                        String loginType = resultArray[1];
+                        prefsEditor.putString("LAST_LOGIN_TYPE", loginType);
                         prefsEditor.apply();
 
-                      //  launchLogInActivity();
-
-
+                        launchLogInActivity();
                     } else {
-                        incorrectAttempts++;
+                        Toast.makeText(MainActivity.this, "Incorrect email / password", Toast.LENGTH_SHORT).show();
                     }
+
                 } else {
                     Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
 
@@ -200,10 +176,38 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+//        mAPIService.doLoginDonor(donor).enqueue(new Callback<Boolean>() {
+//            @Override
+//            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                if (response.isSuccessful()) {
+//                    isLogin = response.body().booleanValue();
+//                    if (isLogin) {
+//                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+//                        prefsEditor.putString("LAST_LOGIN_TYPE", "Donor");
+//                        prefsEditor.apply();
+//
+//                      //  launchLogInActivity();
+//
+//
+//                    } else {
+//                        incorrectAttempts++;
+//                    }
+//                } else {
+//                    Toast.makeText(MainActivity.this, "Response UNSUCCESFUL " + response.message() + response.code(), Toast.LENGTH_LONG).show();//todo canviar per un que no desapareixi
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Boolean> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "FAILURE " + t.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
 
 
@@ -212,10 +216,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchLogInActivity() {
-        rememberUserEmail();
 
-        prefsEditor.putString("LAST_LOGIN", etEmail.getText().toString());
+
+        String lastLoginEmail = etEmail.getText().toString();
+        prefsEditor.putString("LAST_LOGIN", lastLoginEmail);
         prefsEditor.apply();
+
+        rememberUserEmail();
 
         Intent launch = new Intent(this, AppActivity.class);
 //            launch.putExtra(EXTRA_PERSONA, per.getNom());
