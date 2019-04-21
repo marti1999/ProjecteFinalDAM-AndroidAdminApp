@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.marti.projecte_uf1.SignIn.RegisterActicity;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Administrator;
@@ -159,14 +161,15 @@ public class MainActivity extends AppCompatActivity {
                         loginButtonCorrectAnimation();
 
                     } else {
-                        isLogin  = false;
+                        isLogin = false;
+
                         loginButtonIncorrectAnimation(null);
 
 
                     }
 
                 } else {
-                    isLogin  = false;
+                    isLogin = false;
 
                     String errorMessage = response.message() + " " + response.code();
                     loginButtonIncorrectAnimation(errorMessage);
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                isLogin  = false;
+                isLogin = false;
 
                 String errorMessage = t.getMessage();
 
@@ -232,9 +235,16 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             testButton.doResult(false);
-                            if (errorMessage != null){
+                            if (errorMessage != null) {
 
                                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                            } else {
+                                YoYo.with(Techniques.Shake)
+                                        .duration(700)
+                                        .playOn(findViewById(R.id.etMail));
+                                YoYo.with(Techniques.Shake)
+                                        .duration(700)
+                                        .playOn(findViewById(R.id.etPassword));
                             }
                         }
                     });
@@ -289,7 +299,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testClick() throws IOException, NoSuchAlgorithmException, InterruptedException {
-
 
 
         Donor donor = new Donor();

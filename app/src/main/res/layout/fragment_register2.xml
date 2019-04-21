@@ -1,17 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="80dp"
-
+    android:gravity="center"
     tools:context=".SignIn.Register2Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="225dp"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        android:text="2222222" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/gris"
+            android:textSize="15dp"
+            android:text="Please, enter the password you will use to Log In with your user." />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="17dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etPassword"
+                style="@style/commonTextInputEditText"
+                android:hint="Password"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="60dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etPassword2"
+                style="@style/commonTextInputEditText"
+                android:hint="Repeat password"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:textSize="15dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/gris"
+            android:layout_height="wrap_content"
+            android:text="should you ever forget your password, this will help you recover it" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="17dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etQuestion"
+                style="@style/commonTextInputEditText"
+                android:hint="Security Question" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="45dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etAnswer"
+                style="@style/commonTextInputEditText"
+                android:hint="Security Answer" />
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+    </LinearLayout>
 
 </FrameLayout>

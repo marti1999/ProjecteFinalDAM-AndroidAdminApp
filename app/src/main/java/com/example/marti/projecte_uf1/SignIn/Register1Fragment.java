@@ -141,6 +141,17 @@ public class Register1Fragment extends Fragment {
         unbinder.unbind();
     }
 
+    public Donor getUser(){
+        Donor donor = new Donor();
+        donor.name = etName.getText().toString();
+        donor.lastName = etLastName.getText().toString();
+        donor.dni = etDNI.getText().toString();
+        donor.email = etMail.getText().toString();
+        donor.birthDate = etBirth.getText().toString();
+
+        return donor;
+    }
+
     public boolean isInfoOk() {
 
         if (isNull()) return false;
@@ -339,8 +350,6 @@ public class Register1Fragment extends Fragment {
             case R.id.ivMale:
                 if (!maleSelected) {
                     increaseMale();
-
-
                 } else {
                     increaseFemale();
                 }

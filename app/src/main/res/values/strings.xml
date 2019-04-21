@@ -24,4 +24,22 @@
     <string name="sendText">Send</string>
     <string name="doubleTapText">Press the back button once again to close the application.</string>
     <string name="welcome">Welcome</string>
+
+
+    <string-array name="income">
+        <item>15000</item>
+        <item>25000</item>
+        <item>35000</item>
+        <item>45000</item>
+        <item>55000</item>
+    </string-array>
+
+    <string-array name="members">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
 </resources>
