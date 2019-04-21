@@ -3,20 +3,37 @@ package com.example.marti.projecte_uf1.SignIn;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.R;
+import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
+import com.example.marti.projecte_uf1.model.Donor;
+import com.example.marti.projecte_uf1.remote.ApiUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Register1Fragment extends Fragment {
@@ -27,15 +44,34 @@ public class Register1Fragment extends Fragment {
     @BindView(R.id.ivFemale)
     ImageView ivFemale;
     Unbinder unbinder;
+    @BindView(R.id.etName)
+    TextInputEditText etName;
+    @BindView(R.id.etLastName)
+    TextInputEditText etLastName;
+    @BindView(R.id.etDNI)
+    TextInputEditText etDNI;
+    @BindView(R.id.etMail)
+    TextInputEditText etMail;
+    @BindView(R.id.etBirth)
+    TextInputEditText etBirth;
+
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
+    private ApiMecAroundInterfaces mAPIService;
+
     private SharedPreferences.Editor prefsEditor;
     private boolean maleSelected = false;
     private boolean femaleSelected = false;
+    private boolean userDuplicaated;
+    int age = 0;
+    public static String NEW_NAME = "NAME";
+
+    Calendar myCalendar;
+    DatePickerDialog.OnDateSetListener date;
 
 
     public Register1Fragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -43,16 +79,58 @@ public class Register1Fragment extends Fragment {
         super.onCreate(savedInstanceState);
         prefs = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
         prefsEditor = prefs.edit();
+        mAPIService = ApiUtils.getAPIService();
 
+
+    }
+
+    private void updateBithLabel() {
+
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
+
+        etBirth.setText(simpleDateFormat.format(myCalendar.getTime()));
+
+        Calendar today = Calendar.getInstance();
+
+        age = today.get(Calendar.YEAR) - myCalendar.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_YEAR) < myCalendar.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_register1, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_register1, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        myCalendar = Calendar.getInstance();
+        date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateBithLabel();
+
+            }
+
+        };
+
+
+        etBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
         return view;
     }
 
@@ -61,6 +139,147 @@ public class Register1Fragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public boolean isInfoOk() {
+
+        if (isNull()) return false;
+
+        if (isUnderAge()) return false;
+
+        if (isEmailFormatInvalid()) return false;
+
+        if (isNIFFormatInvalid()) return false;
+
+        if (isGenderNotSelected()) return false;
+
+        //todo esperar a la resposta del webservice, sino no serveix per res;
+        if (isUserDuplicated()) return false;
+
+
+        return true;
+    }
+
+    private boolean isUserDuplicated() {
+        Donor donor = new Donor();
+        donor.dni = etDNI.getText().toString();
+        donor.email = etMail.getText().toString();
+
+
+        mAPIService.isUserDuplicated(donor).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+                if (response.isSuccessful()){
+                    userDuplicaated = response.body();
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (userDuplicaated){
+            Toast.makeText(getActivity(), "User already exists", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isGenderNotSelected() {
+        if (!maleSelected && !femaleSelected) {
+            Toast toast = Toast.makeText(getActivity(),
+                    "Gender not selected",
+                    Toast.LENGTH_LONG);
+
+            toast.show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNIFFormatInvalid() {
+        if (!validateNIF(etDNI.getText().toString())) {
+            Toast toast = Toast.makeText(getActivity(),
+                    "DNI is not valid",
+                    Toast.LENGTH_LONG);
+
+            toast.show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isEmailFormatInvalid() {
+        if (!Patterns.EMAIL_ADDRESS.matcher(etMail.getText().toString()).matches()) {
+            Toast toast = Toast.makeText(getActivity(),
+                    "The email is not valid",
+                    Toast.LENGTH_LONG);
+
+            toast.show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isUnderAge() {
+        if (age < 18) {
+            Toast toast = Toast.makeText(getActivity(),
+                    "You must be over 18 years old.",
+                    Toast.LENGTH_LONG);
+
+            toast.show();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNull() {
+        if (etName.getText().toString().equals("")
+                || etMail.getText().toString().equals("")
+                || etBirth.getText().toString().equals("")
+                || etLastName.getText().toString().equals("")
+                || etDNI.getText().toString().equals("")) {
+            Toast toast = Toast.makeText(getActivity(),
+                    "All fields must be filled up.",
+                    Toast.LENGTH_LONG);
+
+            toast.show();
+            return true;
+        }
+        return false;
+    }
+
+    public  boolean validateNIF(String nif) {
+
+        boolean result = false;
+        Pattern pattern = Pattern.compile("(\\d{1,8})([TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke])");
+        Matcher matcher = pattern.matcher(nif);
+
+        if (matcher.matches()) {
+            String letra = matcher.group(2);
+            String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+            int index = Integer.parseInt(matcher.group(1));
+            index = index % 23;
+            String reference = letras.substring(index, index + 1);
+
+            if (reference.equalsIgnoreCase(letra)) {
+                result = true;
+            } else {
+                result = false;
+            }
+        } else {
+            result = false;
+        }
+
+
+
+        return result;
+
     }
 
     private void increaseMale() {
@@ -89,7 +308,7 @@ public class Register1Fragment extends Fragment {
         scaleDown.start();
     }
 
-    private void increaseFemale(){
+    private void increaseFemale() {
         maleSelected = false;
         femaleSelected = true;
 

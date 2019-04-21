@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.R;
 
@@ -39,6 +40,7 @@ public class RegisterActicity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         backBt = (Button) findViewById(R.id.backBt);
         backBt.setVisibility(View.INVISIBLE);
+
         backBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,20 +65,30 @@ public class RegisterActicity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("CURRENTpAGE ", String.valueOf(currentTab));
 
-                if (currentTab<1){
-                    currentTab++;
+                Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
+
+                if (page instanceof Register1Fragment){
+                    if (((Register1Fragment) page).isInfoOk()){
+                        if (currentTab<1){
+                            currentTab++;
+                        }
+
+                        if (backBt.getVisibility()== View.INVISIBLE){
+                            TransitionManager.beginDelayedTransition(transitionsContainer);
+
+                            backBt.setVisibility(View.VISIBLE);
+
+
+                        }
+                        TransitionManager.beginDelayedTransition(transitionsContainer);
+
+                        viewPager.setCurrentItem(currentTab);
+
+                    }
                 }
 
-                if (backBt.getVisibility()== View.INVISIBLE){
-                    TransitionManager.beginDelayedTransition(transitionsContainer);
-
-                    backBt.setVisibility(View.VISIBLE);
 
 
-                }
-                TransitionManager.beginDelayedTransition(transitionsContainer);
-
-                viewPager.setCurrentItem(currentTab);
             }
         });
 
@@ -101,6 +113,8 @@ public class RegisterActicity extends AppCompatActivity {
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
+        private Fragment mCurrentFragment;
+
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -125,5 +139,7 @@ public class RegisterActicity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+
     }
 }
