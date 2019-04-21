@@ -84,15 +84,42 @@ public class Register3Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setRequestorHouseholdData();
-                Boolean result = ((RegisterActicity) getActivity()).insertRequestor(requestor); //todo falta completar aquest metode
+                Requestor r0 = ((RegisterActicity) getActivity()).getRequestor(requestor);
 
 
-                requestorLayout.setVisibility(View.GONE);
+                mAPIService.insertRequestor(r0).enqueue(new Callback<Requestor>() {
+                    @Override
+                    public void onResponse(Call<Requestor> call, Response<Requestor> response) {
+                        if (response.isSuccessful()) {
+                            Requestor r = response.body();
+                            if (r != null) {
+                                requestorLayout.setVisibility(View.GONE);
+                                succesfulMessage();
+                            } else {
+                                requestorLayout.setVisibility(View.GONE);
+                                errorMessage();
+                            }
+                        } else {
+                            requestorLayout.setVisibility(View.GONE);
+                            errorMessage();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Requestor> call, Throwable t) {
+                        requestorLayout.setVisibility(View.GONE);
+                        errorMessage();
+                    }
+                });
+
+
+
+
+
 
 
 //                final ViewGroup transitionsContainer2 = (ViewGroup) getView().findViewById(R.id.register3layout);
 //                TransitionManager.beginDelayedTransition(transitionsContainer2);
-                succesfulMessage();
             }
         });
 

@@ -91,31 +91,31 @@ public class RegisterActicity extends AppCompatActivity {
                 Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
 
                 if (page instanceof Register1Fragment) {
-                       if (((Register1Fragment) page).isInfoOk()) {
-                    donor = ((Register1Fragment) page).getUser();
-                    nextTab(transitionsContainer);
+                    if (((Register1Fragment) page).isInfoOk()) {
+                        donor = ((Register1Fragment) page).getUser();
+                        nextTab(transitionsContainer);
 
-                      }
+                    }
                 }
 
                 if (page instanceof Register2Fragment) {
-                         if (((Register2Fragment) page).isInfoOk()) {
+                    if (((Register2Fragment) page).isInfoOk()) {
 
-                    try {
-                        Donor donor2 = ((Register2Fragment) page).getUser();
-                        donor.password = donor2.password;
-                        donor.securityAnswer = donor2.securityAnswer;
-                        donor.securityQuestion = donor2.securityQuestion;
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
+                        try {
+                            Donor donor2 = ((Register2Fragment) page).getUser();
+                            donor.password = donor2.password;
+                            donor.securityAnswer = donor2.securityAnswer;
+                            donor.securityQuestion = donor2.securityQuestion;
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        nextTab(transitionsContainer);
+
                     }
-
-
-                    nextTab(transitionsContainer);
-
-                       }
                 }
 
                 if (page instanceof Register3Fragment) {
@@ -135,7 +135,7 @@ public class RegisterActicity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public Donor getDonor(){
+    public Donor getDonor() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         donor.dateCreated = dateFormat.format(date);
@@ -147,36 +147,8 @@ public class RegisterActicity extends AppCompatActivity {
         return donor;
     }
 
-    public boolean insertDonor() throws IOException {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        donor.dateCreated = dateFormat.format(date);
-        donor.active = true;
-        donor.picturePath = null;
-        donor.ammountGiven = 0;
-        donor.points = 0;
-        donor.languageId = 1;
-
-        try{
-            Donor d = mAPIService.insertDonor(donor).execute().body();
-            if (d != null){
-                return true;
-
-            } else {
-                return false;
-            }
-        } catch (Exception ex){
-            Toast.makeText(this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-
-
-
-    }
-
-    public boolean insertRequestor(Requestor requestor) {
+    public Requestor getRequestor(Requestor requestor) {
         requestor.name = donor.name;
         requestor.lastName = donor.lastName;
         requestor.email = donor.email;
@@ -187,9 +159,18 @@ public class RegisterActicity extends AppCompatActivity {
         requestor.securityQuestion = donor.securityQuestion;
         requestor.securityAnswer = donor.securityAnswer;
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        requestor.dateCreated = dateFormat.format(date);
+        requestor.active = true;
+        requestor.picturePath = null;
+        requestor.points = 0;
+        requestor.languageId = 1;
+        requestor.maxClaimsId= 1;
+        requestor.statusId = 3;
 
-        //todo add requestor to db
-        return true;
+
+        return requestor;
     }
 
     public void showNextButton(String text) {

@@ -36,13 +36,12 @@ public interface  ApiMecAroundInterfaces {
     @POST("donor/loginBoth")
     Call<String> doLoginBoth(@Body Donor d);
 
-    @POST("requestor/login")
-    Call<Boolean> doLoginRequestor(@Body Requestor r);
-
     @POST("donor/isUserDuplicated")
     Call<Boolean> isUserDuplicated(@Body Donor d);
 
     @POST("donor")
     Call<Donor> insertDonor(@Body Donor d);
 
+    @POST("requestor")
+    Call<Requestor> insertRequestor(@Body Requestor r);
 }
