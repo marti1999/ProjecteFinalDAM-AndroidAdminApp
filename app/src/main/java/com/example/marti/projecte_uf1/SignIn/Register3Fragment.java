@@ -14,11 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.marti.projecte_uf1.R;
+import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
+import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
+import com.example.marti.projecte_uf1.remote.ApiUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Register3Fragment extends Fragment {
@@ -42,10 +48,13 @@ public class Register3Fragment extends Fragment {
     LinearLayout requestorLayout;
     @BindView(R.id.saveRequestorBt)
     Button saveRequestorBt;
+    @BindView(R.id.errorLayout)
+    LinearLayout errorLayout;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
     Requestor requestor;
+    private ApiMecAroundInterfaces mAPIService;
 
 
     public Register3Fragment() {
@@ -57,6 +66,7 @@ public class Register3Fragment extends Fragment {
         super.onCreate(savedInstanceState);
         prefs = getActivity().getSharedPreferences(sharedPrefFile, getActivity().MODE_PRIVATE);
         prefsEditor = prefs.edit();
+        mAPIService = ApiUtils.getAPIService();
 
     }
 
@@ -73,10 +83,8 @@ public class Register3Fragment extends Fragment {
         saveRequestorBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestor = new Requestor();
-                requestor.householdIncome = Double.valueOf(spinnerIncome.getSelectedItem().toString());
-                requestor.householdMembers = Integer.valueOf(spinnerMembers.getSelectedItem().toString());
-                Boolean result = ((RegisterActicity) getActivity()).createRequestor(requestor); //todo falta completar aquest metode
+                setRequestorHouseholdData();
+                Boolean result = ((RegisterActicity) getActivity()).insertRequestor(requestor); //todo falta completar aquest metode
 
 
                 requestorLayout.setVisibility(View.GONE);
@@ -84,10 +92,7 @@ public class Register3Fragment extends Fragment {
 
 //                final ViewGroup transitionsContainer2 = (ViewGroup) getView().findViewById(R.id.register3layout);
 //                TransitionManager.beginDelayedTransition(transitionsContainer2);
-                donorLayout.setVisibility(View.VISIBLE);
-
-                ((RegisterActicity) getActivity()).hideBackButton();
-                ((RegisterActicity) getActivity()).showNextButton("Finish");
+                succesfulMessage();
             }
         });
 
@@ -96,13 +101,33 @@ public class Register3Fragment extends Fragment {
             public void onClick(View v) {
                 requestorBt.getBackground().setAlpha(0);
                 requestorBt.setEnabled(false);
-                donorLayout.setVisibility(View.VISIBLE);
+                donorBt.setEnabled(false);
 
 
-                //todo guardar usuario al webservice
+                Donor d0 = ((RegisterActicity) getActivity()).getDonor();
 
-                ((RegisterActicity) getActivity()).hideBackButton();
-                ((RegisterActicity) getActivity()).showNextButton("Finish");
+                mAPIService.insertDonor(d0).enqueue(new Callback<Donor>() {
+                    @Override
+                    public void onResponse(Call<Donor> call, Response<Donor> response) {
+                        if (response.isSuccessful()) {
+                            Donor d = response.body();
+                            if (d != null) {
+                                succesfulMessage();
+                            } else {
+                                errorMessage();
+                            }
+                        } else {
+                            errorMessage();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Donor> call, Throwable t) {
+                        errorMessage();
+                    }
+                });
+
+
             }
         });
 
@@ -111,18 +136,36 @@ public class Register3Fragment extends Fragment {
             public void onClick(View v) {
                 donorBt.getBackground().setAlpha(0);
                 donorBt.setEnabled(false);
+                requestorBt.setEnabled(false);
                 final ViewGroup transitionsContainer = (ViewGroup) getView().findViewById(R.id.register3layout);
 
                 TransitionManager.beginDelayedTransition(transitionsContainer);
                 requestorLayout.setVisibility(View.VISIBLE);
 
 
-
-
             }
         });
 
         return view;
+    }
+
+    private void setRequestorHouseholdData() {
+        requestor = new Requestor();
+        requestor.householdIncome = Double.valueOf(spinnerIncome.getSelectedItem().toString());
+        requestor.householdMembers = Integer.valueOf(spinnerMembers.getSelectedItem().toString());
+    }
+
+    private void errorMessage() {
+        errorLayout.setVisibility(View.VISIBLE);
+        ((RegisterActicity) getActivity()).hideBackButton();
+        ((RegisterActicity) getActivity()).showNextButton("Finish");
+    }
+
+    private void succesfulMessage() {
+        donorLayout.setVisibility(View.VISIBLE);
+
+        ((RegisterActicity) getActivity()).hideBackButton();
+        ((RegisterActicity) getActivity()).showNextButton("Finish");
     }
 
     private void fillSpinners() {

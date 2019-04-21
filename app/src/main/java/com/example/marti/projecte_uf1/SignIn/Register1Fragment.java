@@ -86,7 +86,7 @@ public class Register1Fragment extends Fragment {
 
     private void updateBithLabel() {
 
-        String myFormat = "dd/MM/yyyy";
+        String myFormat = "yyyy/MM/dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.US);
 
         etBirth.setText(simpleDateFormat.format(myCalendar.getTime()));
@@ -148,6 +148,11 @@ public class Register1Fragment extends Fragment {
         donor.dni = etDNI.getText().toString();
         donor.email = etMail.getText().toString();
         donor.birthDate = etBirth.getText().toString();
+        if (maleSelected){
+            donor.gender = "male";
+        } else {
+            donor.gender = "female";
+        }
 
         return donor;
     }

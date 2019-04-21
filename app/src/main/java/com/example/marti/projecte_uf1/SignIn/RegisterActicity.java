@@ -16,14 +16,24 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.R;
+import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
+import com.example.marti.projecte_uf1.remote.ApiUtils;
 import com.transitionseverywhere.ChangeText;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActicity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -34,6 +44,7 @@ public class RegisterActicity extends AppCompatActivity {
     private ViewGroup transitionsContainer;
     private Donor donor;
     private Requestor requestor;
+    private ApiMecAroundInterfaces mAPIService;
 
 
     private int currentTab = 0;
@@ -43,6 +54,8 @@ public class RegisterActicity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_acticity);
         final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.registerLayout);
+
+        mAPIService = ApiUtils.getAPIService();
 
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -78,15 +91,15 @@ public class RegisterActicity extends AppCompatActivity {
                 Fragment page = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
 
                 if (page instanceof Register1Fragment) {
-                    //   if (((Register1Fragment) page).isInfoOk()) { //todo habilitar el if
+                       if (((Register1Fragment) page).isInfoOk()) {
                     donor = ((Register1Fragment) page).getUser();
                     nextTab(transitionsContainer);
 
-                    //  }
+                      }
                 }
 
                 if (page instanceof Register2Fragment) {
-                    //     if (((Register2Fragment) page).isInfoOk()) { //todo habilitar el if
+                         if (((Register2Fragment) page).isInfoOk()) {
 
                     try {
                         Donor donor2 = ((Register2Fragment) page).getUser();
@@ -102,7 +115,7 @@ public class RegisterActicity extends AppCompatActivity {
 
                     nextTab(transitionsContainer);
 
-                    //   }
+                       }
                 }
 
                 if (page instanceof Register3Fragment) {
@@ -122,7 +135,48 @@ public class RegisterActicity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public boolean createRequestor(Requestor requestor) {
+    public Donor getDonor(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        donor.dateCreated = dateFormat.format(date);
+        donor.active = true;
+        donor.picturePath = null;
+        donor.ammountGiven = 0;
+        donor.points = 0;
+        donor.languageId = 1;
+        return donor;
+    }
+
+    public boolean insertDonor() throws IOException {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        donor.dateCreated = dateFormat.format(date);
+        donor.active = true;
+        donor.picturePath = null;
+        donor.ammountGiven = 0;
+        donor.points = 0;
+        donor.languageId = 1;
+
+        try{
+            Donor d = mAPIService.insertDonor(donor).execute().body();
+            if (d != null){
+                return true;
+
+            } else {
+                return false;
+            }
+        } catch (Exception ex){
+            Toast.makeText(this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+
+
+    }
+
+    public boolean insertRequestor(Requestor requestor) {
         requestor.name = donor.name;
         requestor.lastName = donor.lastName;
         requestor.email = donor.email;

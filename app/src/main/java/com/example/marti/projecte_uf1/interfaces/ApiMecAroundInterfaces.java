@@ -42,4 +42,7 @@ public interface  ApiMecAroundInterfaces {
     @POST("donor/isUserDuplicated")
     Call<Boolean> isUserDuplicated(@Body Donor d);
 
+    @POST("donor")
+    Call<Donor> insertDonor(@Body Donor d);
+
 }
