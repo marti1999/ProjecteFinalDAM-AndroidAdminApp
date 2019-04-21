@@ -1,88 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/etMail"
-        style="@style/editTextDrawable"
-        android:layout_width="194dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="314dp"
-        android:layout_marginEnd="97dp"
+    <LinearLayout
+        android:layout_width="225dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-        android:drawableLeft="@drawable/email"
-        android:hint="@string/emailHint"
-        android:inputType="textEmailAddress" />
-
-
-    <EditText
-        android:id="@+id/etPassword"
-        style="@style/editTextDrawable"
-        android:layout_width="194dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="388dp"
-        android:layout_marginEnd="97dp"
-
-        android:drawableLeft="@drawable/lock"
-        android:hint="@string/passwordHint"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/etMail"
+            style="@style/editTextDrawable"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+android:textColor="@color/gris"
+            android:layout_marginBottom="20dp"
+            android:drawableStart="@drawable/email"
+            android:hint="@string/emailHint"
+            android:inputType="textEmailAddress" />
 
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
 
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="207dp"
-        android:layout_marginTop="450dp"
-        android:buttonTint="@color/gris"
-        android:text="@string/remember_userText"
-        android:textColor="@color/gris" />
-
-    <TextView
-        android:id="@+id/tvSignIn"
-        style="@style/textViewNormal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="615dp"
-        android:gravity="center_horizontal"
-        android:onClick="launchSignIn"
-        android:text="@string/no_account_yet_create_oneText" />
-
-    <com.unstoppable.submitbuttonview.SubmitButton
-        android:id="@+id/testButton"
-        android:layout_width="229dp"
-        android:layout_height="55dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="98dp"
-        android:layout_marginTop="531dp"
-        app:buttonColor="@color/gris"
-
-        app:buttonText="LOGIN" />
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/editTextDrawable"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
 
 
-</RelativeLayout>
+            android:drawableStart="@drawable/lock"
+            android:textColor="@color/gris"
+            android:hint="@string/passwordHint"
+            android:inputType="textPassword" />
+
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+
+            android:layout_marginBottom="60dp"
+            android:buttonTint="@color/gris"
+            android:text="@string/remember_userText"
+            android:textColor="@color/gris" />
+
+
+
+        <com.unstoppable.submitbuttonview.SubmitButton
+            android:id="@+id/testButton"
+            android:layout_width="225dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="25dp"
+
+            app:buttonColor="@color/gris"
+
+            app:buttonText="LOGIN" />
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            style="@style/textViewNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:onClick="launchSignIn"
+            android:text="@string/no_account_yet_create_oneText" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

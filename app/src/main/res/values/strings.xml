@@ -7,7 +7,7 @@
     <string name="passwordHint">Password</string>
     <string name="loginText">Login</string>
     <string name="remember_userText">Remember user</string>
-    <string name="no_account_yet_create_oneText">No account yet? Create one</string>
+    <string name="no_account_yet_create_oneText">No account yet?  Create one</string>
     <string name="nameText">Name</string>
     <string name="repeat_passwordHint">Repeat password</string>
     <string name="date_of_birthText">Date of birth</string>

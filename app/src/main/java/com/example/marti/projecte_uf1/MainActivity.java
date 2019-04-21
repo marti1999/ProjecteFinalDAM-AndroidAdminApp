@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marti.projecte_uf1.SignIn.RegisterActicity;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.model.Donor;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchSignIn(View v) {
-        Intent launch = new Intent(this, SignInActivity.class);
+        Intent launch = new Intent(this, RegisterActicity.class);
         startActivityForResult(launch, SIGNIN_REQUEST);
     }
 
