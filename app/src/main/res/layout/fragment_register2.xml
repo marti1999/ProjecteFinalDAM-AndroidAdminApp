@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/gris"
+            android:textColor="#494949"
             android:textSize="15dp"
             android:text="Please, enter the password you will use to Log In with your user." />
 
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:textSize="15dp"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/gris"
+            android:textColor="#494949"
             android:layout_height="wrap_content"
             android:text="should you ever forget your password, this will help you recover it" />
 

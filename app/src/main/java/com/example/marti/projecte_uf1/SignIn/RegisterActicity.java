@@ -57,7 +57,6 @@ public class RegisterActicity extends AppCompatActivity {
 
         mAPIService = ApiUtils.getAPIService();
 
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         backBt = (Button) findViewById(R.id.backBt);
         backBt.setVisibility(View.INVISIBLE);
@@ -65,20 +64,7 @@ public class RegisterActicity extends AppCompatActivity {
         backBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentTab > 0) {
-                    currentTab--;
-                    if (currentTab == 0) {
-                        TransitionManager.beginDelayedTransition(transitionsContainer);
-
-                        backBt.setVisibility(View.INVISIBLE);
-
-
-                    }
-
-                    showNextButton("Next");
-
-                    viewPager.setCurrentItem(currentTab);
-                }
+                previousTab(transitionsContainer);
             }
         });
 
@@ -94,7 +80,6 @@ public class RegisterActicity extends AppCompatActivity {
                     if (((Register1Fragment) page).isInfoOk()) {
                         donor = ((Register1Fragment) page).getUser();
                         nextTab(transitionsContainer);
-
                     }
                 }
 
@@ -111,28 +96,32 @@ public class RegisterActicity extends AppCompatActivity {
                         } catch (NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         }
-
-
                         nextTab(transitionsContainer);
-
                     }
                 }
 
                 if (page instanceof Register3Fragment) {
                     finish();
                 }
-
-
             }
         });
 
 
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void previousTab(ViewGroup transitionsContainer) {
+        if (currentTab > 0) {
+            currentTab--;
+            if (currentTab == 0) {
+                TransitionManager.beginDelayedTransition(transitionsContainer);
+                backBt.setVisibility(View.INVISIBLE);
+            }
+            showNextButton("Next");
+            viewPager.setCurrentItem(currentTab);
+        }
     }
 
     public Donor getDonor() {
@@ -166,7 +155,7 @@ public class RegisterActicity extends AppCompatActivity {
         requestor.picturePath = null;
         requestor.points = 0;
         requestor.languageId = 1;
-        requestor.maxClaimsId= 1;
+        requestor.maxClaimsId = 1;
         requestor.statusId = 3;
 
 
@@ -176,7 +165,6 @@ public class RegisterActicity extends AppCompatActivity {
     public void showNextButton(String text) {
         nextBt.setText(text);
         final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.registerLayout);
-
         TransitionManager.beginDelayedTransition(transitionsContainer);
         nextBt.setVisibility(View.VISIBLE);
     }
@@ -184,7 +172,6 @@ public class RegisterActicity extends AppCompatActivity {
 
     public void hideBackButton() {
         final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.registerLayout);
-
         TransitionManager.beginDelayedTransition(transitionsContainer);
         backBt.setVisibility(View.INVISIBLE);
     }
@@ -197,16 +184,14 @@ public class RegisterActicity extends AppCompatActivity {
         if (currentTab == 2) {
             TransitionManager.beginDelayedTransition(transitionsContainer);
             nextBt.setVisibility(View.INVISIBLE);
-
-
         }
 
         if (backBt.getVisibility() == View.INVISIBLE) {
             TransitionManager.beginDelayedTransition(transitionsContainer);
             backBt.setVisibility(View.VISIBLE);
         }
-        TransitionManager.beginDelayedTransition(transitionsContainer);
 
+        TransitionManager.beginDelayedTransition(transitionsContainer);
         viewPager.setCurrentItem(currentTab);
     }
 

@@ -80,6 +80,65 @@ public class Register3Fragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         fillSpinners();
 
+        saveRequestorButtonClickListener();
+
+        DonorButtonClickListener();
+
+        RequestorButtonClickListener();
+
+        return view;
+    }
+
+    private void RequestorButtonClickListener() {
+        requestorBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                donorBt.getBackground().setAlpha(0);
+                disableRequestorDonorButtons();
+                final ViewGroup transitionsContainer = (ViewGroup) getView().findViewById(R.id.register3layout);
+
+                TransitionManager.beginDelayedTransition(transitionsContainer);
+                requestorLayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void DonorButtonClickListener() {
+        donorBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestorBt.getBackground().setAlpha(0);
+                disableRequestorDonorButtons();
+
+
+
+                Donor d0 = ((RegisterActicity) getActivity()).getDonor();
+
+                mAPIService.insertDonor(d0).enqueue(new Callback<Donor>() {
+                    @Override
+                    public void onResponse(Call<Donor> call, Response<Donor> response) {
+                        if (response.isSuccessful()) {
+                            Donor d = response.body();
+                            if (d != null) {
+                                succesfulMessage();
+                            } else {
+                                errorMessage();
+                            }
+                        } else {
+                            errorMessage();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Donor> call, Throwable t) {
+                        errorMessage();
+                    }
+                });
+            }
+        });
+    }
+
+    private void saveRequestorButtonClickListener() {
         saveRequestorBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,68 +171,13 @@ public class Register3Fragment extends Fragment {
                     }
                 });
 
-
-
-
-
-
-
-//                final ViewGroup transitionsContainer2 = (ViewGroup) getView().findViewById(R.id.register3layout);
-//                TransitionManager.beginDelayedTransition(transitionsContainer2);
             }
         });
+    }
 
-        donorBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestorBt.getBackground().setAlpha(0);
-                requestorBt.setEnabled(false);
-                donorBt.setEnabled(false);
-
-
-                Donor d0 = ((RegisterActicity) getActivity()).getDonor();
-
-                mAPIService.insertDonor(d0).enqueue(new Callback<Donor>() {
-                    @Override
-                    public void onResponse(Call<Donor> call, Response<Donor> response) {
-                        if (response.isSuccessful()) {
-                            Donor d = response.body();
-                            if (d != null) {
-                                succesfulMessage();
-                            } else {
-                                errorMessage();
-                            }
-                        } else {
-                            errorMessage();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Donor> call, Throwable t) {
-                        errorMessage();
-                    }
-                });
-
-
-            }
-        });
-
-        requestorBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                donorBt.getBackground().setAlpha(0);
-                donorBt.setEnabled(false);
-                requestorBt.setEnabled(false);
-                final ViewGroup transitionsContainer = (ViewGroup) getView().findViewById(R.id.register3layout);
-
-                TransitionManager.beginDelayedTransition(transitionsContainer);
-                requestorLayout.setVisibility(View.VISIBLE);
-
-
-            }
-        });
-
-        return view;
+    private void disableRequestorDonorButtons() {
+        donorBt.setEnabled(false);
+        requestorBt.setEnabled(false);
     }
 
     private void setRequestorHouseholdData() {

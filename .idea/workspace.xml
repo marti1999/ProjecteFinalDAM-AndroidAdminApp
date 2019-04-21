@@ -10,7 +10,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c728d09b-e311-462d-ae61-ad31f20567e7" name="Default Changelist" comment="">
+    <list default="true" id="c728d09b-e311-462d-ae61-ad31f20567e7" name="Default Changelist" comment="cl">
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
@@ -19,8 +19,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActicity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActicity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/interfaces/ApiMecAroundInterfaces.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/interfaces/ApiMecAroundInterfaces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,16 +100,16 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="18" />
-          <entry key="java" value="8782" />
-          <entry key="txt" value="911" />
+          <entry key="java" value="8812" />
+          <entry key="txt" value="920" />
           <entry key="xml" value="2360" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="18" />
-          <entry key="JAVA" value="8782" />
-          <entry key="PLAIN_TEXT" value="911" />
+          <entry key="JAVA" value="8812" />
+          <entry key="PLAIN_TEXT" value="920" />
           <entry key="XML" value="2360" />
         </counts>
       </usages-collector>
@@ -119,7 +118,7 @@
           <entry key="class" value="1" />
           <entry key="gradle" value="3" />
           <entry key="java" value="56" />
-          <entry key="xml" value="53" />
+          <entry key="xml" value="55" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -127,24 +126,44 @@
           <entry key="CLASS" value="1" />
           <entry key="Groovy" value="3" />
           <entry key="JAVA" value="56" />
-          <entry key="XML" value="53" />
+          <entry key="XML" value="55" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActicity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="146" column="21" lean-forward="true" selection-start-line="146" selection-start-column="21" selection-end-line="146" selection-end-column="21" />
+            <state relative-caret-position="2475">
+              <caret line="206" column="56" lean-forward="true" selection-start-line="206" selection-start-column="56" selection-end-line="206" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2768#4243#0" expanded="true" />
-                <element signature="e#4242#4243#0" expanded="true" />
-                <element signature="class#ViewPagerAdapter#0;class#RegisterActicity#0" />
+                <element signature="e#2147#2314#0" expanded="true" />
+                <element signature="e#2313#2314#0" expanded="true" />
+                <element signature="e#2406#3867#0" expanded="true" />
+                <element signature="e#3866#3867#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="59" column="36" lean-forward="true" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2">
+              <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
             </state>
           </provider>
         </entry>
@@ -152,15 +171,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="826">
-              <caret line="122" selection-start-line="122" selection-end-line="122" />
+            <state relative-caret-position="1173">
+              <caret line="105" column="35" selection-start-line="105" selection-start-column="35" selection-end-line="105" selection-end-column="35" />
               <folding>
-                <element signature="e#3588#4532#0" expanded="true" />
-                <element signature="e#4559#4560#0" expanded="true" />
-                <element signature="e#4621#4622#0" expanded="true" />
-                <element signature="e#4531#4532#0" expanded="true" />
-                <element signature="e#4575#5046#0" expanded="true" />
-                <element signature="e#5045#5046#0" expanded="true" />
+                <element signature="method#RequestorButtonClickListener#0;class#Register3Fragment#0" />
+                <element signature="e#2808#3280#0" expanded="true" />
+                <element signature="e#3279#3280#0" expanded="true" />
+                <element signature="method#DonorButtonClickListener#0;class#Register3Fragment#0" />
+                <element signature="e#3274#4403#0" expanded="true" />
+                <element signature="e#4296#4297#0" expanded="true" />
+                <element signature="e#4358#4359#0" expanded="true" />
+                <element signature="e#4402#4403#0" expanded="true" />
+                <element signature="method#saveRequestorButtonClickListener#0;class#Register3Fragment#0" />
+                <element signature="e#4421#5814#0" expanded="true" />
+                <element signature="e#5813#5814#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -239,7 +263,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/gradient.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register2Fragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
@@ -247,9 +270,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register1Fragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register1.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/interfaces/ApiMecAroundInterfaces.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register3.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActicity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register3.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml" />
       </list>
     </option>
   </component>
@@ -552,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555872561897</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="ja es pot registrar el requestor. Cal comprovar que el sign in funcioni tot perfectamenti ja es pot donar aquesta part per acabada">
+      <created>1555874660228</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1555874660228</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -569,7 +600,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" weight="0.50765866" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.29371002" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -585,7 +616,7 @@
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32923076" />
       <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.50159913" side_tool="true" weight="0.32744282" />
       <window_info anchor="bottom" id="Flutter Performance" order="7" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32952183" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32952183" />
       <window_info anchor="bottom" id="Build" order="9" sideWeight="0.4989339" weight="0.3347324" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
       <window_info anchor="bottom" id="Find" order="11" weight="0.32952183" />
@@ -597,7 +628,7 @@
       <window_info anchor="right" id="Flutter Inspector" order="5" />
       <window_info anchor="right" id="Flutter Outline" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Preview" order="8" weight="0.3315565" />
+      <window_info active="true" anchor="right" id="Preview" order="8" visible="true" weight="0.3315565" />
       <window_info anchor="right" id="Android WiFi ADB" order="9" weight="0.32995737" />
     </layout>
   </component>
@@ -869,21 +900,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="125" column="50" selection-start-line="125" selection-start-column="50" selection-end-line="125" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -966,21 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="826">
-          <caret line="122" selection-start-line="122" selection-end-line="122" />
-          <folding>
-            <element signature="e#3588#4532#0" expanded="true" />
-            <element signature="e#4559#4560#0" expanded="true" />
-            <element signature="e#4621#4622#0" expanded="true" />
-            <element signature="e#4531#4532#0" expanded="true" />
-            <element signature="e#4575#5046#0" expanded="true" />
-            <element signature="e#5045#5046#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_register3.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -989,16 +990,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="105" column="35" selection-start-line="105" selection-start-column="35" selection-end-line="105" selection-end-column="35" />
+          <folding>
+            <element signature="method#RequestorButtonClickListener#0;class#Register3Fragment#0" />
+            <element signature="e#2808#3280#0" expanded="true" />
+            <element signature="e#3279#3280#0" expanded="true" />
+            <element signature="method#DonorButtonClickListener#0;class#Register3Fragment#0" />
+            <element signature="e#3274#4403#0" expanded="true" />
+            <element signature="e#4296#4297#0" expanded="true" />
+            <element signature="e#4358#4359#0" expanded="true" />
+            <element signature="e#4402#4403#0" expanded="true" />
+            <element signature="method#saveRequestorButtonClickListener#0;class#Register3Fragment#0" />
+            <element signature="e#4421#5814#0" expanded="true" />
+            <element signature="e#5813#5814#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActicity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="146" column="21" lean-forward="true" selection-start-line="146" selection-start-column="21" selection-end-line="146" selection-end-column="21" />
+        <state relative-caret-position="2475">
+          <caret line="206" column="56" lean-forward="true" selection-start-line="206" selection-start-column="56" selection-end-line="206" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2768#4243#0" expanded="true" />
-            <element signature="e#4242#4243#0" expanded="true" />
-            <element signature="class#ViewPagerAdapter#0;class#RegisterActicity#0" />
+            <element signature="e#2147#2314#0" expanded="true" />
+            <element signature="e#2313#2314#0" expanded="true" />
+            <element signature="e#2406#3867#0" expanded="true" />
+            <element signature="e#3866#3867#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_register2.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="59" column="36" lean-forward="true" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
         </state>
       </provider>
     </entry>
