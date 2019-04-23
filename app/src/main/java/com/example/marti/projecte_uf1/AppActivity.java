@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
+
 import org.w3c.dom.Text;
 
 import java.io.InputStream;
@@ -90,9 +92,7 @@ public class AppActivity extends AppCompatActivity {
                                 fragment = new Fragment2();
                                 fragmentTransaction = true;
                                 break;
-
-
-                        }
+}
 
                         if (fragmentTransaction) {
                             getSupportFragmentManager().beginTransaction()
@@ -118,7 +118,6 @@ public class AppActivity extends AppCompatActivity {
 
         navView.getMenu().getItem(0).setChecked(true);
 
-
         getSupportActionBar().setTitle("Contacts"); //todo canviar pel que faci falta
 
     }
@@ -130,7 +129,7 @@ public class AppActivity extends AppCompatActivity {
 
     //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo s'hauria de poder esborrar
 
-        String userType = prefs.getString("LAST_LOGIN_TYPE", "");
+        String userType = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
         String userEmail = prefs.getString("LAST_LOGIN", "");
 
 
@@ -252,7 +251,7 @@ public class AppActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(getApplicationContext(), "Downloading profile picture...", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "Downloading profile picture...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -263,12 +262,8 @@ public class AppActivity extends AppCompatActivity {
             pic.setAdjustViewBounds(true);
             pic.setImageBitmap(result);
 
-            // pic.getLayoutParams().height = 50;
-
 
         }
-
-
     }
 
     @Override

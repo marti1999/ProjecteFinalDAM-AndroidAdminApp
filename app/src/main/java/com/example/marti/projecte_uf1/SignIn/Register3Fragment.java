@@ -112,7 +112,7 @@ public class Register3Fragment extends Fragment {
 
 
 
-                Donor d0 = ((RegisterActicity) getActivity()).getDonor();
+                Donor d0 = ((RegisterActivity) getActivity()).getDonor();
 
                 mAPIService.insertDonor(d0).enqueue(new Callback<Donor>() {
                     @Override
@@ -143,7 +143,7 @@ public class Register3Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setRequestorHouseholdData();
-                Requestor r0 = ((RegisterActicity) getActivity()).getRequestor(requestor);
+                Requestor r0 = ((RegisterActivity) getActivity()).getRequestor(requestor);
 
 
                 mAPIService.insertRequestor(r0).enqueue(new Callback<Requestor>() {
@@ -188,15 +188,15 @@ public class Register3Fragment extends Fragment {
 
     private void errorMessage() {
         errorLayout.setVisibility(View.VISIBLE);
-        ((RegisterActicity) getActivity()).hideBackButton();
-        ((RegisterActicity) getActivity()).showNextButton("Finish");
+        ((RegisterActivity) getActivity()).hideBackButton();
+        ((RegisterActivity) getActivity()).showNextButton("Finish");
     }
 
     private void succesfulMessage() {
         donorLayout.setVisibility(View.VISIBLE);
 
-        ((RegisterActicity) getActivity()).hideBackButton();
-        ((RegisterActicity) getActivity()).showNextButton("Finish");
+        ((RegisterActivity) getActivity()).hideBackButton();
+        ((RegisterActivity) getActivity()).showNextButton("Finish");
     }
 
     private void fillSpinners() {

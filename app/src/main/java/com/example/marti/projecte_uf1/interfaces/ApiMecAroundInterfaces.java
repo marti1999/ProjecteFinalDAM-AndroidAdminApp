@@ -6,6 +6,9 @@ package com.example.marti.projecte_uf1.interfaces;
 import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
+import com.example.marti.projecte_uf1.model.Reward;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -44,4 +47,7 @@ public interface  ApiMecAroundInterfaces {
 
     @POST("requestor")
     Call<Requestor> insertRequestor(@Body Requestor r);
+
+    @GET("rewards")
+    Call<List<Reward>> getRewards();
 }

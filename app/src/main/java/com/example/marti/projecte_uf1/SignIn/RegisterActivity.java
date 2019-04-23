@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RegisterActicity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -77,16 +77,7 @@ public class RegisterActicity extends AppCompatActivity {
                 if (page instanceof Register2Fragment) {
                     if (((Register2Fragment) page).isInfoOk()) {
 
-                        try {
-                            Donor donor2 = ((Register2Fragment) page).getUser();
-                            donor.password = donor2.password;
-                            donor.securityAnswer = donor2.securityAnswer;
-                            donor.securityQuestion = donor2.securityQuestion;
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        }
+                        getDonorFromFragmentTwo((Register2Fragment) page);
                         nextTab(transitionsContainer);
                     }
                 }
@@ -101,6 +92,19 @@ public class RegisterActicity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void getDonorFromFragmentTwo(Register2Fragment page) {
+        try {
+            Donor donor2 = page.getUser();
+            donor.password = donor2.password;
+            donor.securityAnswer = donor2.securityAnswer;
+            donor.securityQuestion = donor2.securityQuestion;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     private void previousTab(ViewGroup transitionsContainer) {

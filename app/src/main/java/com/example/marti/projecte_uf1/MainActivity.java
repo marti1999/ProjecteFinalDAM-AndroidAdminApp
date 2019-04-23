@@ -14,12 +14,11 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.marti.projecte_uf1.SignIn.RegisterActicity;
+import com.example.marti.projecte_uf1.SignIn.RegisterActivity;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
-import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.model.Donor;
-import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchSignIn(View v) {
-        Intent launch = new Intent(this, RegisterActicity.class);
+        Intent launch = new Intent(this, RegisterActivity.class);
         startActivityForResult(launch, SIGNIN_REQUEST);
     }
 
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         isLogin = true;
 
                         String loginType = resultArray[1];
-                        prefsEditor.putString("LAST_LOGIN_TYPE", loginType);
+                        prefsEditor.putString(PrefsFileKeys.LAST_LOGIN_TYPE, loginType);
                         prefsEditor.apply();
 
                         loginButtonCorrectAnimation();
