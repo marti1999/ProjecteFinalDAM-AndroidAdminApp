@@ -1,5 +1,6 @@
 package com.example.marti.projecte_uf1.SignIn;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
@@ -26,6 +28,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RegisterActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -36,6 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Donor donor;
     private Requestor requestor;
     private ApiMecAroundInterfaces mAPIService;
+    private                         boolean userDuplicaated;
+    ProgressDialog pd;
+
 
 
     private int currentTab = 0;
@@ -50,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         backBt = (Button) findViewById(R.id.backBt);
+        pd = new ProgressDialog(RegisterActivity.this);
+
         backBt.setVisibility(View.INVISIBLE);
 
         backBt.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +81,11 @@ public class RegisterActivity extends AppCompatActivity {
                 if (page instanceof Register1Fragment) {
                     if (((Register1Fragment) page).isInfoOk()) {
                         donor = ((Register1Fragment) page).getUser();
-                        nextTab(transitionsContainer);
+
+
+                        NextTabIfUserNotDuplicated(transitionsContainer);
+
+
                     }
                 }
 
@@ -92,6 +107,37 @@ public class RegisterActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void NextTabIfUserNotDuplicated(final ViewGroup transitionsContainer) {
+        pd.setMessage("Checking information");
+        pd.show();
+
+        mAPIService.isUserDuplicated(donor).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+                if (response.isSuccessful()) {
+                    userDuplicaated = response.body();
+                    pd.dismiss();
+
+                    if (!userDuplicaated){
+                        nextTab(transitionsContainer);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "User already in use.", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Error connecting to server", Toast.LENGTH_SHORT).show();
+                userDuplicaated = false;
+                pd.dismiss();
+            }
+        });
     }
 
     private void getDonorFromFragmentTwo(Register2Fragment page) {

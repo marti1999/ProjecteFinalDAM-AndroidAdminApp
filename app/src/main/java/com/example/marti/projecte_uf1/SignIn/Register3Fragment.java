@@ -189,7 +189,7 @@ public class Register3Fragment extends Fragment {
     private void errorMessage() {
         errorLayout.setVisibility(View.VISIBLE);
         ((RegisterActivity) getActivity()).hideBackButton();
-        ((RegisterActivity) getActivity()).showNextButton("Finish");
+        ((RegisterActivity) getActivity()).showNextButton("Back to login");
     }
 
     private void succesfulMessage() {

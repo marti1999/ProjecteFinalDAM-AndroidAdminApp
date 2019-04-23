@@ -4,6 +4,7 @@ package com.example.marti.projecte_uf1.SignIn;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -65,6 +66,8 @@ public class Register1Fragment extends Fragment {
     private boolean userDuplicaated;
     int age = 0;
     public static String NEW_NAME = "NAME";
+    ProgressDialog pd;
+
 
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
@@ -106,6 +109,8 @@ public class Register1Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register1, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+         pd = new ProgressDialog(getActivity());
+
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
 
@@ -141,14 +146,14 @@ public class Register1Fragment extends Fragment {
         unbinder.unbind();
     }
 
-    public Donor getUser(){
+    public Donor getUser() {
         Donor donor = new Donor();
         donor.name = etName.getText().toString();
         donor.lastName = etLastName.getText().toString();
         donor.dni = etDNI.getText().toString();
         donor.email = etMail.getText().toString();
         donor.birthDate = etBirth.getText().toString();
-        if (maleSelected){
+        if (maleSelected) {
             donor.gender = "male";
         } else {
             donor.gender = "female";
@@ -169,8 +174,8 @@ public class Register1Fragment extends Fragment {
 
         if (isGenderNotSelected()) return false;
 
-        //todo esperar a la resposta del webservice, sino no serveix per res;
-        if (isUserDuplicated()) return false;
+
+      //  if (isUserDuplicated()) return false;
 
 
         return true;
@@ -181,25 +186,33 @@ public class Register1Fragment extends Fragment {
         donor.dni = etDNI.getText().toString();
         donor.email = etMail.getText().toString();
 
+        pd.setMessage("Checking information...");
+        pd.show();
+
 
         mAPIService.isUserDuplicated(donor).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     userDuplicaated = response.body();
 
-
+                    pd.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                userDuplicaated = false;
+                pd.dismiss();
             }
         });
 
-        if (userDuplicaated){
+
+        Toast.makeText(getActivity(), "Test", Toast.LENGTH_SHORT).show();
+
+        if (userDuplicaated) {
             Toast.makeText(getActivity(), "User already exists", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -270,7 +283,7 @@ public class Register1Fragment extends Fragment {
         return false;
     }
 
-    public  boolean validateNIF(String nif) {
+    public boolean validateNIF(String nif) {
 
         boolean result = false;
         Pattern pattern = Pattern.compile("(\\d{1,8})([TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke])");
@@ -291,7 +304,6 @@ public class Register1Fragment extends Fragment {
         } else {
             result = false;
         }
-
 
 
         return result;
