@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     CheckBox checkBox;
     com.unstoppable.submitbuttonview.SubmitButton testButton;
 
-    public static final String EXTRA_PERSONA = "NAME";
-    public static final String EXTRA_EMAIL = "EMAIL";
+    public static final String EXTRA_PERSONA = PrefsFileKeys.NAME;
+    public static final String EXTRA_EMAIL = PrefsFileKeys.EMAIL;
     public static Integer SIGNIN_REQUEST = 1;
     public static final String LOGIN_OK = "true";
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tvSignIn)
     TextView tvSignIn;
 
-    private String sharedPrefFile = "prefsFile";
+    private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
 
-        String oldName = prefs.getString("EMAIL", "");
+        String oldName = prefs.getString(PrefsFileKeys.EMAIL, "");
         etEmail.setText(oldName);
 
     }
@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
                         String loginType = resultArray[1];
                         prefsEditor.putString(PrefsFileKeys.LAST_LOGIN_TYPE, loginType);
+                        prefsEditor.putString(PrefsFileKeys.LAST_LOGIN, etEmail.getText().toString());
                         prefsEditor.apply();
 
                         loginButtonCorrectAnimation();
@@ -270,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         String lastLoginEmail = etEmail.getText().toString();
-        prefsEditor.putString("LAST_LOGIN", lastLoginEmail);
+        prefsEditor.putString(PrefsFileKeys.LAST_LOGIN_TYPE, lastLoginEmail);
         prefsEditor.apply();
 
         rememberUserEmail();
@@ -313,10 +314,10 @@ public class MainActivity extends AppCompatActivity {
     private void rememberUserEmail() {
         if (checkBox.isChecked()) {
             String email = etEmail.getText().toString();
-            prefsEditor.putString("EMAIL", email);
+            prefsEditor.putString(PrefsFileKeys.EMAIL, email);
             prefsEditor.apply();
         } else {
-            prefsEditor.putString("EMAIL", "");
+            prefsEditor.putString(PrefsFileKeys.EMAIL, "");
             prefsEditor.apply();
 
         }

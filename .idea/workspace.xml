@@ -11,27 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c728d09b-e311-462d-ae61-ad31f20567e7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/DonorFragments/CreateQrFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/DonorFragments/RewardsFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/mutualFragments/AnnouncementsFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_announcements.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_create_qr.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_rewards.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_navviewDonor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/AppActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/AppActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActicity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/interfaces/ApiMecAroundInterfaces.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/interfaces/ApiMecAroundInterfaces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_navview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_navview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_navviewDonor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_navview_donor.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,17 +75,17 @@
         <counts>
           <entry key="dummy" value="1" />
           <entry key="gradle" value="13" />
-          <entry key="java" value="685" />
+          <entry key="java" value="880" />
           <entry key="properties" value="5" />
-          <entry key="txt" value="225" />
+          <entry key="txt" value="271" />
           <entry key="xml" value="75" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="13" />
-          <entry key="JAVA" value="685" />
-          <entry key="PLAIN_TEXT" value="226" />
+          <entry key="JAVA" value="880" />
+          <entry key="PLAIN_TEXT" value="272" />
           <entry key="Properties" value="5" />
           <entry key="XML" value="75" />
         </counts>
@@ -154,13 +138,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/AppActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="131" column="57" selection-start-line="131" selection-start-column="57" selection-end-line="131" selection-end-column="57" />
+            <state relative-caret-position="255">
+              <caret line="135" column="67" selection-start-line="135" selection-start-column="67" selection-end-line="135" selection-end-column="67" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#2547#3887#0" expanded="true" />
                 <element signature="e#3886#3887#0" expanded="true" />
                 <element signature="e#5243#5789#0" expanded="true" />
@@ -175,17 +158,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="155" column="62" selection-start-line="155" selection-start-column="47" selection-end-line="155" selection-end-column="62" />
+            <state relative-caret-position="155">
+              <caret line="157" column="102" selection-start-line="157" selection-start-column="102" selection-end-line="157" selection-end-column="102" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="153">
+              <caret line="9" column="57" lean-forward="true" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -208,6 +191,8 @@
       <find>actionbar</find>
       <find>buttonbi</find>
       <find>donorLayout.setVisibility(View.VISIBLE);</find>
+      <find>last_login</find>
+      <find>canlogin</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -234,7 +219,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register1.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_register3.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/Register3Fragment.java" />
@@ -249,8 +233,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_navview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_navviewDonor.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/SignIn/RegisterActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/AppActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/AppActivity.java" />
       </list>
     </option>
   </component>
@@ -569,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1556043806362</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="creacio de fragments i estructura del projecte">
+      <created>1556045707623</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1556045707623</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView">
@@ -586,7 +578,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1860817" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.1860817" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -596,7 +588,7 @@
       <window_info id="DB Browser" order="8" weight="0.32995737" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49840087" weight="0.33367983" />
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49840087" weight="0.33053514" />
-      <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49946696" weight="0.32952183" />
+      <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49946696" weight="0.32923076" />
       <window_info anchor="bottom" id="Android Profiler" order="3" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.33160084" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.32923076" />
@@ -667,7 +659,8 @@
     <MESSAGE value="clean code" />
     <MESSAGE value="ara el fragment funciona" />
     <MESSAGE value="classes del model" />
-    <option name="LAST_COMMIT_MESSAGE" value="classes del model" />
+    <MESSAGE value="creacio de fragments i estructura del projecte" />
+    <option name="LAST_COMMIT_MESSAGE" value="creacio de fragments i estructura del projecte" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_app.xml">
@@ -926,7 +919,7 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navviewDonor.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navview_donor.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
@@ -965,19 +958,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="57" lean-forward="true" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="155" column="62" selection-start-line="155" selection-start-column="47" selection-end-line="155" selection-end-column="62" />
+        <state relative-caret-position="155">
+          <caret line="157" column="102" selection-start-line="157" selection-start-column="102" selection-end-line="157" selection-end-column="102" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/AppActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="131" column="57" selection-start-line="131" selection-start-column="57" selection-end-line="131" selection-end-column="57" />
+        <state relative-caret-position="255">
+          <caret line="135" column="67" selection-start-line="135" selection-start-column="67" selection-end-line="135" selection-end-column="67" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#2547#3887#0" expanded="true" />
             <element signature="e#3886#3887#0" expanded="true" />
             <element signature="e#5243#5789#0" expanded="true" />
@@ -985,13 +984,6 @@
             <element signature="e#6830#6863#0" expanded="true" />
             <element signature="class#asyncTask#0;class#AppActivity#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/marti/projecte_uf1/utils/PrefsFileKeys.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>

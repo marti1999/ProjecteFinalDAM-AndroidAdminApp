@@ -44,6 +44,9 @@ public class AppActivity extends AppCompatActivity {
     private int backButtonCount;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
+
+    private String user_type;
+
     private SharedPreferences.Editor prefsEditor;
     private Persona p;
 
@@ -130,7 +133,7 @@ public class AppActivity extends AppCompatActivity {
     //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo s'hauria de poder esborrar
 
         String userType = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
-        String userEmail = prefs.getString("LAST_LOGIN", "");
+        String userEmail = prefs.getString(PrefsFileKeys.LAST_LOGIN, "");
 
 
         TextView tvName = findViewById(R.id.navview_name);
