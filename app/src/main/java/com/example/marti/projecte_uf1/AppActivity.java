@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
+import com.example.marti.projecte_uf1.utils.asyncTask;
 
 import org.w3c.dom.Text;
 
@@ -121,7 +122,7 @@ public class AppActivity extends AppCompatActivity {
 
         navView.getMenu().getItem(0).setChecked(true);
 
-        getSupportActionBar().setTitle("Contacts"); //todo canviar pel que faci falta
+        getSupportActionBar().setTitle("Contacts"); //TODO: canviar pel que faci falta
 
     }
 
@@ -130,7 +131,7 @@ public class AppActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
 
-    //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //todo s'hauria de poder esborrar
+    //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //TODO: s'hauria de poder esborrar
 
         String userType = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
         String userEmail = prefs.getString(PrefsFileKeys.LAST_LOGIN, "");
@@ -141,8 +142,8 @@ public class AppActivity extends AppCompatActivity {
         tvName.setText(userEmail);
         tvEmail.setText(userType);
 
-        new asyncTask().execute(); //todo canviar per aconseguir la foto necessaria;
-
+        asyncTask asyncTk = new asyncTask(AppActivity.this); //TODO: canviar per aconseguir la foto necessaria;
+        asyncTk.execute();
 
         return true;
     }
@@ -165,7 +166,7 @@ public class AppActivity extends AppCompatActivity {
                         case DialogInterface.BUTTON_POSITIVE:
 
 
-                            manager.deletePersona(p.getEmail()); //todo canviar
+                            manager.deletePersona(p.getEmail()); //TODO: canviar
 
                             finish();
                             break;
@@ -201,7 +202,7 @@ public class AppActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-//todo fer que nomes conti com a 2 quan s'ha fet seguit de la primera vegada, posar un timer o algo per l'estil
+        //TODO: fer que nomes conti com a 2 quan s'ha fet seguit de la primera vegada, posar un timer o algo per l'estil
         if (backButtonCount >= 1) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
@@ -211,63 +212,9 @@ public class AppActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.doubleTapText), Toast.LENGTH_SHORT).show();
             backButtonCount++;
         }
-
-
     }
 
 
-    class asyncTask extends AsyncTask<Void, Integer, Bitmap> { //todo canviar tot el async tasc pel que faci falta
-        @Override
-        protected Bitmap doInBackground(Void... voids) {
-
-
-            String urldisplay = "http://icons.iconarchive.com/icons/webalys/kameleon.pics/512/Woman-9-icon.png";
-
-
-            try {
-
-
-                Bitmap bmp = null;
-                try {
-                    InputStream in = new URL(urldisplay).openStream();
-                    bmp = BitmapFactory.decodeStream(in);
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-                return bmp;
-
-
-                //return dowloadImage(url);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-           // Toast.makeText(getApplicationContext(), "Downloading profile picture...", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-
-            ImageView pic = findViewById(R.id.profilePicture);
-            pic.setAdjustViewBounds(true);
-            pic.setImageBitmap(result);
-
-
-        }
-    }
 
     @Override
     protected void onDestroy() {

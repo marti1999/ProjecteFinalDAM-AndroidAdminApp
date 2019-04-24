@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:visible="false" android:id="@+id/general_navview">
         <item
             android:id="@+id/menu_seccion_1"
             android:icon="@drawable/person"
@@ -10,6 +10,20 @@
             android:icon="@drawable/event"
             android:title="Events" />
     </group>
+    <group android:checkableBehavior="single" android:visible="true" android:id="@+id/donors_navview">
+        <item
+            android:id="@+id/donor_rewards"
+            android:icon="@drawable/person"
+            android:title="Rewards" />
+        <item
+            android:id="@+id/donor_QR"
+            android:icon="@drawable/event"
+            android:title="Cloth QR" />
 
+        <item
+            android:id="@+id/annnouncements"
+            android:icon="@drawable/event"
+            android:title="Announcements" />
+    </group>
 
 </menu>

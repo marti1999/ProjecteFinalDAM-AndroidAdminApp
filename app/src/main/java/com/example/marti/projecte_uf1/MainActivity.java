@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SIGNIN_REQUEST) {
             if (resultCode == RESULT_OK) {
-                etEmail.setText(data.getStringExtra(SignInActivity.NEW_NAME));
+                //TODO: Agafar de la nova activity signIn
+                //etEmail.setText(data.getStringExtra(SignInActivity.NEW_NAME));
             }
         }
     }
