@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.daimajia.easing:library:2.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-2.0.aar/695a6a7b3d8d7e372038d948fd69ecc1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-2.0.aar/695a6a7b3d8d7e372038d948fd69ecc1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-2.0.aar/dc8812b2fd7f5871a9c166a153d6465e/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-2.0.aar/dc8812b2fd7f5871a9c166a153d6465e/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

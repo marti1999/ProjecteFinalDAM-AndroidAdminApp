@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
                         String loginType = resultArray[1];
                         prefsEditor.putString(PrefsFileKeys.LAST_LOGIN_TYPE, loginType);
+                        prefsEditor.apply();
+
                         prefsEditor.putString(PrefsFileKeys.LAST_LOGIN, etEmail.getText().toString());
                         prefsEditor.apply();
 
@@ -271,9 +273,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchLogInActivity() {
 
 
-        String lastLoginEmail = etEmail.getText().toString();
-        prefsEditor.putString(PrefsFileKeys.LAST_LOGIN_TYPE, lastLoginEmail);
-        prefsEditor.apply();
+
 
         rememberUserEmail();
 

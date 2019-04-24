@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rewardLaout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+
+
+    android:paddingLeft="17dp"
+    android:paddingTop="5dp"
+    android:paddingRight="17dp"
+    android:paddingBottom="5dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+android:id="@+id/rewardHeaderLaout"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/rweardImageExpand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_marginTop="3dp"
+            app:srcCompat="@drawable/downarrow"
+            style="@style/imageViewEsdeveniment" />
+
+        <TextView
+            android:id="@+id/RewardTitle"
+android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_weight="0.3"
+
+            android:text="Titol reward" />
+
+        <Button
+            android:id="@+id/button"
+            style="@style/buttonBig"
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
+
+
+            android:text="Claim" />
+
+
+
+    </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:id="@+id/RewardLayoutContent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/rewardInfo"
+
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+
+
+        android:text="" />
+
+</LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
