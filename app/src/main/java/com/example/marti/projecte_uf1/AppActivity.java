@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,25 +13,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.example.marti.projecte_uf1.utils.asyncTask;
 
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
-import java.net.URL;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AppActivity extends AppCompatActivity {
 
@@ -94,6 +82,10 @@ public class AppActivity extends AppCompatActivity {
                                 break;
                             case R.id.menu_seccion_2:
                                 fragment = new Fragment2();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.donor_QR:
+                                fragment = new FragmentQR();
                                 fragmentTransaction = true;
                                 break;
 }

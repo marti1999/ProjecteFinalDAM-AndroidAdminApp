@@ -47,4 +47,8 @@ dependencies {
     implementation 'com.andkulikov:transitionseverywhere:1.8.1'
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    //QR LIBS
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 }
