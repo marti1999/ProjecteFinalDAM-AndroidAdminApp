@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rewardLaout"
+    android:id="@+id/rewardLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
@@ -19,34 +19,34 @@
 
 
     <LinearLayout
+        android:id="@+id/rewardHeaderLaout"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
-android:id="@+id/rewardHeaderLaout"
-        android:layout_height="40dp">
+        android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/rweardImageExpand"
+            android:id="@+id/rewardImageExpand"
+            style="@style/imageViewEsdeveniment"
             android:layout_width="wrap_content"
+
+
             android:layout_height="wrap_content"
-
-
             android:layout_marginTop="3dp"
-            app:srcCompat="@drawable/downarrow"
-            style="@style/imageViewEsdeveniment" />
+            app:srcCompat="@drawable/downarrow" />
 
         <TextView
             android:id="@+id/RewardTitle"
-android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="0.3"
+            android:text="Titol reward"
 
-            android:text="Titol reward" />
+            android:textSize="20dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/claimRewardButton"
             style="@style/buttonBig"
             android:layout_width="108dp"
             android:layout_height="match_parent"
@@ -55,30 +55,24 @@ android:layout_marginStart="10dp"
             android:text="Claim" />
 
 
-
     </LinearLayout>
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:id="@+id/RewardLayoutContent"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/rewardInfo"
-
+    <LinearLayout
+        android:id="@+id/RewardLayoutContent"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/rewardInfo"
 
-        android:text="" />
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
 
-</LinearLayout>
+            android:text="" />
 
-
-
-
+    </LinearLayout>
 
 
 </LinearLayout>

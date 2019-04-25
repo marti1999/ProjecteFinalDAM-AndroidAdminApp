@@ -15,9 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,12 +28,14 @@ import com.example.marti.projecte_uf1.MainActivity;
 import com.example.marti.projecte_uf1.NotificationActionReceiver;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.SQLiteManager;
+import com.example.marti.projecte_uf1.model.Reward;
+import com.example.marti.projecte_uf1.model.RewardInfoLang;
 
 import java.util.ArrayList;
 
 public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHolder> {
 
-    private ArrayList<Esdeveniment> list;
+    private ArrayList<Reward> list;
     private Context context;
     public static final String EXTRA_ID = "ID";
     SQLiteManager manager = new SQLiteManager(context);
@@ -40,18 +44,22 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CheckBox interested;
-        public TextView EsdevenimentName;
+        public TextView rewardTitle;
         public RelativeLayout relativeLayout;
-        public TextView esdevenimentInfo;
-        public ImageView esdevenimentImage;
+        public LinearLayout linearLayout;
+        public TextView rewardInfo;
+        public ImageView rewardImage;
+        public Button claimRewardBt;
 
         public MyViewHolder(View view) {
             super(view);
-            EsdevenimentName = view.findViewById(R.id.EsdevenimentName);
+            rewardTitle = view.findViewById(R.id.RewardTitle);
             interested = view.findViewById(R.id.interested);
             relativeLayout = view.findViewById(R.id.esdeveniments_list);
-            esdevenimentInfo = view.findViewById(R.id.eventInfo);
-            esdevenimentImage = view.findViewById(R.id.eventImage);
+            linearLayout = view.findViewById(R.id.rewardLayout);
+            rewardInfo = view.findViewById(R.id.rewardInfo);
+            rewardImage = view.findViewById(R.id.rewardImageExpand);
+            claimRewardBt = view.findViewById(R.id.claimRewardButton);
         }
 
         @Override
@@ -60,8 +68,8 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
         }
     }
 
-    public rewardsAdapter(ArrayList<Esdeveniment> esdevenimentsList, Context context) {
-        this.list = esdevenimentsList;
+    public rewardsAdapter(ArrayList<Reward> rewardsList, Context context) {
+        this.list = rewardsList;
         this.context = context;
     }
 
@@ -70,7 +78,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     public rewardsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View item = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.esdeveniment_list_item, viewGroup, false);
+                .inflate(R.layout.rewards_list_item, viewGroup, false);
 
         return new MyViewHolder(item);
     }
@@ -96,99 +104,51 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final rewardsAdapter.MyViewHolder myViewHolder, final int i) {
-        Esdeveniment esd = list.get(i);
+        Reward reward = list.get(i);
 
-        System.out.print(esd.getTitol());
-        Log.d("missatge: ", esd.getTitol());
+        RewardInfoLang infoEng;
+        for (RewardInfoLang item : reward.getRewardInfoLangs()){
+            if (item.language.equals("En")) { //TODO: mirar si el equals En està igual a la base de dades
+                infoEng = item;
+            }
+        }
 
-        myViewHolder.EsdevenimentName.setText(esd.getTitol());
-        myViewHolder.esdevenimentInfo.setText("Type:   " + esd.getTipus() + "\nPlace:   " + esd.getLloc() + "\nDate:   " + esd.getData() + "\nPeople attending:   " + esd.getNumAssistens());
 
-        myViewHolder.interested.setChecked(esd.isInteressa());
+        /*  //TODO: descomentar quan ja es tingui lo de dalt;
+
+        System.out.print(reward.getTitol());
+        Log.d("missatge: ", reward.getTitol());
+
+        myViewHolder.rewardTitle.setText(reward.getTitol());
+        myViewHolder.rewardInfo.setText("Type:   " + reward.getTipus() + "\nPlace:   " + reward.getLloc() + "\nDate:   " + reward.getData() + "\nPeople attending:   " + reward.getNumAssistens());
+
+        myViewHolder.interested.setChecked(reward.isInteressa());
         myViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ViewGroup group = (ViewGroup) myViewHolder.relativeLayout;
                 Esdeveniment esd = list.get(i);
                 esdG = esd;
-                if (myViewHolder.esdevenimentInfo.getVisibility() == View.GONE) {
+                if (myViewHolder.rewardInfo.getVisibility() == View.GONE) {
 
-                   // myViewHolder.esdevenimentImage.setImageResource(R.drawable.uparrow);
 
-                    // myViewHolder.esdevenimentInfo.setText("Type:   " + esd.getTipus() + "\nPlace:   " + esd.getLloc() + "\nDate:   " + esd.getData() + "\nPeople attending:   " + esd.getNumAssistens());
-
-//                    myViewHolder.esdevenimentInfo.animate()
-//                            .translationY(0)
-//                            .alpha(1.0f)
-//                            .setDuration(300)
-//
-//                            .setListener(new AnimatorListenerAdapter() {
-//                                @Override
-//                                public void onAnimationStart(Animator animation) {
-//                                    super.onAnimationStart(animation);
-//                                    myViewHolder.esdevenimentInfo.setVisibility(View.VISIBLE);
-//                                }
-//                            });
-
-//                    Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
-//                    myViewHolder.esdevenimentInfo.setVisibility(View.VISIBLE);
-//                    myViewHolder.esdevenimentInfo.startAnimation(slideDown);
 
                     TransitionManager.beginDelayedTransition(group);
-                    myViewHolder.esdevenimentInfo.setVisibility(View.VISIBLE);
-                    myViewHolder.esdevenimentImage.animate().rotation(180).setDuration(400).start();
-                   // myViewHolder.esdevenimentImage.setRotation(180);
-                    //                TransitionManager.beginDelayedTransition(group, new Rotate());
-
-
-                    // slideToBottom(myViewHolder.esdevenimentInfo);
+                    myViewHolder.rewardInfo.setVisibility(View.VISIBLE);
+                    myViewHolder.rewardImage.animate().rotation(180).setDuration(400).start();
 
 
                 } else {
-                    //  slideToTop(myViewHolder.esdevenimentInfo);
 
-                    //myViewHolder.esdevenimentInfo.setVisibility(View.GONE);
-                    myViewHolder.esdevenimentImage.animate().rotation(0).setDuration(400).start();
-                   // TransitionManager.beginDelayedTransition(group);
-                    myViewHolder.esdevenimentInfo.setVisibility(View.GONE);
+                    myViewHolder.rewardImage.animate().rotation(0).setDuration(400).start();
 
-                   // myViewHolder.esdevenimentImage.setRotation(0);
-//                    myViewHolder.esdevenimentInfo.animate()
-//                            .translationY(-myViewHolder.esdevenimentInfo.getHeight())
-//                            .alpha(0.0f)
-//                            .setDuration(300)
-//                            .setListener(new AnimatorListenerAdapter() {
-//                                @Override
-//                                public void onAnimationEnd(Animator animation) {
-//                                    super.onAnimationEnd(animation);
-//                                    myViewHolder.esdevenimentInfo.setVisibility(View.GONE);
-//                                }
-//                            });
-
-//                    Animation slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up);
-//                    myViewHolder.esdevenimentInfo.setVisibility(View.GONE);
-//                    myViewHolder.esdevenimentInfo.startAnimation(slideUp);
+                    myViewHolder.rewardInfo.setVisibility(View.GONE);
 
 
-                    //myViewHolder.esdevenimentImage.setImageResource(R.drawable.downarrow);
-//                    RotateAnimation rotate = new RotateAnimation(180, 0);
-//                    rotate.setDuration(400);
-//                    rotate.setInterpolator(new LinearInterpolator());
-//
-//                    myViewHolder.esdevenimentImage.startAnimation(rotate);
 
                 }
 
-//                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-//                alertDialog.setTitle("Event information");
-//                alertDialog.setMessage("Title:   " + esd.getTitol() + "\nType:   " + esd.getTipus() + "\nPlace:   " + esd.getLloc() + "\nDate:   " + esd.getData() + "\nPeople attending:   " + esd.getNumAssistens());
-//                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Close",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                alertDialog.show();
+//
             }
         });
 
@@ -209,6 +169,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
             }
         });
 
+        */
     }
 
     public void sendNotification(View view) {
