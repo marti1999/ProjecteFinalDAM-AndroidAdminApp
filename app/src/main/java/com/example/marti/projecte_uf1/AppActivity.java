@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marti.projecte_uf1.DonorFragments.RewardsFragment;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.example.marti.projecte_uf1.utils.asyncTask;
 
@@ -86,6 +87,11 @@ public class AppActivity extends AppCompatActivity {
                                 break;
                             case R.id.donor_QR:
                                 fragment = new FragmentQR();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.donor_rewards:
+                                Toast.makeText(AppActivity.this, "entra a rewards", Toast.LENGTH_SHORT).show();
+                                fragment = new RewardsFragment();
                                 fragmentTransaction = true;
                                 break;
 }

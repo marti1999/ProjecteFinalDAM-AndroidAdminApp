@@ -20,19 +20,11 @@ import retrofit2.http.POST;
 
 public interface  ApiMecAroundInterfaces {
 
-//   @FormUrlEncoded
-//    @POST("users")
-//    Call<User> doRegister(@Field("name") String name,
-//                          @Field("job") String job);
-//
-//
-//
 
     @POST("administrator/login")
     Call<Boolean> doLogin(@Body Administrator a);
 
 
-    //todo login donor i requestor
     @POST("donor/login")
     Call<Boolean> doLoginDonor(@Body Donor d);
 

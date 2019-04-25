@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.Esdeveniment;
 import com.example.marti.projecte_uf1.MainActivity;
@@ -40,24 +41,25 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     public static final String EXTRA_ID = "ID";
     SQLiteManager manager = new SQLiteManager(context);
 
-    Esdeveniment esdG;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public CheckBox interested;
         public TextView rewardTitle;
-        public RelativeLayout relativeLayout;
         public LinearLayout linearLayout;
+        public LinearLayout linearLayoutHeader;
+        public LinearLayout linearLayoutContent;
         public TextView rewardInfo;
+        public TextView rewardPoints;
         public ImageView rewardImage;
         public Button claimRewardBt;
 
         public MyViewHolder(View view) {
             super(view);
             rewardTitle = view.findViewById(R.id.RewardTitle);
-            interested = view.findViewById(R.id.interested);
-            relativeLayout = view.findViewById(R.id.esdeveniments_list);
             linearLayout = view.findViewById(R.id.rewardLayout);
+            linearLayoutHeader = view.findViewById(R.id.rewardHeaderLaout);
+            linearLayoutContent = view.findViewById(R.id.RewardLayoutContent);
             rewardInfo = view.findViewById(R.id.rewardInfo);
+            rewardPoints = view.findViewById(R.id.RewardPoints);
             rewardImage = view.findViewById(R.id.rewardImageExpand);
             claimRewardBt = view.findViewById(R.id.claimRewardButton);
         }
@@ -106,80 +108,57 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     public void onBindViewHolder(@NonNull final rewardsAdapter.MyViewHolder myViewHolder, final int i) {
         Reward reward = list.get(i);
 
-        RewardInfoLang infoEng;
-        for (RewardInfoLang item : reward.getRewardInfoLangs()){
-            if (item.language.equals("En")) { //TODO: mirar si el equals En està igual a la base de dades
+        RewardInfoLang infoEng = new RewardInfoLang();
+        for (RewardInfoLang item : reward.getRewardInfoLangs()) {
+            if (item.language.code.equalsIgnoreCase("en")) {
                 infoEng = item;
             }
         }
 
 
-        /*  //TODO: descomentar quan ja es tingui lo de dalt;
+        myViewHolder.rewardTitle.setText(infoEng.title);
+        myViewHolder.rewardPoints.setText(String.valueOf("Points: " + reward.neededPoints));
+        myViewHolder.rewardInfo.setText(infoEng.description);
 
-        System.out.print(reward.getTitol());
-        Log.d("missatge: ", reward.getTitol());
-
-        myViewHolder.rewardTitle.setText(reward.getTitol());
-        myViewHolder.rewardInfo.setText("Type:   " + reward.getTipus() + "\nPlace:   " + reward.getLloc() + "\nDate:   " + reward.getData() + "\nPeople attending:   " + reward.getNumAssistens());
-
-        myViewHolder.interested.setChecked(reward.isInteressa());
-        myViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewGroup group = (ViewGroup) myViewHolder.relativeLayout;
-                Esdeveniment esd = list.get(i);
-                esdG = esd;
-                if (myViewHolder.rewardInfo.getVisibility() == View.GONE) {
-
-
-
+                ViewGroup group = (ViewGroup) myViewHolder.linearLayout;
+                //Reward esd = list.get(i);
+                //esdG = esd;
+                if (myViewHolder.linearLayoutContent.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(group);
-                    myViewHolder.rewardInfo.setVisibility(View.VISIBLE);
+                    myViewHolder.linearLayoutContent.setVisibility(View.VISIBLE);
                     myViewHolder.rewardImage.animate().rotation(180).setDuration(400).start();
-
 
                 } else {
 
                     myViewHolder.rewardImage.animate().rotation(0).setDuration(400).start();
-
-                    myViewHolder.rewardInfo.setVisibility(View.GONE);
-
-
+                    myViewHolder.linearLayoutContent.setVisibility(View.GONE);
 
                 }
-
-//
             }
         });
 
-        myViewHolder.interested.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        myViewHolder.claimRewardBt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    esdG = list.get(i);
-                    sendNotification(new View(context));
-
-                } else {
-                    esdG = list.get(i);
-
-                    manager.updateEsdeveniment(String.valueOf(esdG.getId()), false);
-
-
-                }
+            public void onClick(View v) {
+                //TODO: fer el claim reward
+                Toast.makeText(context, "Claimed", Toast.LENGTH_SHORT).show();
             }
         });
 
-        */
+
     }
 
-    public void sendNotification(View view) {
+    public void sendNotification(View view) { //TODO: utilitzar si es necessari en algum moment, sin'o s' hauria d' esborrar
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("fromNotification", "attending?");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         Intent intentConfirm = new Intent(context, NotificationActionReceiver.class);
-        intentConfirm.putExtra(EXTRA_ID, String.valueOf(esdG.getId()));
+        intentConfirm.putExtra(EXTRA_ID, "1");
         intentConfirm.setAction("CONFIRM");
         intentConfirm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

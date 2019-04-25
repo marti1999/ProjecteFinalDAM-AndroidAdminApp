@@ -31,4 +31,6 @@ public class RewardInfoLang {
     @Expose
     public Long rewardsId;
 
+
+
 }

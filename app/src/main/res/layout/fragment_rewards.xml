@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".DonorFragments.RewardsFragment">
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reward_recyclerview"
         android:scrollbars="vertical"
