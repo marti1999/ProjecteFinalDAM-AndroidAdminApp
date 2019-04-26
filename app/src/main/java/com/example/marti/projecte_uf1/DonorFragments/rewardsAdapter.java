@@ -3,9 +3,11 @@ package com.example.marti.projecte_uf1.DonorFragments;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +31,16 @@ import com.example.marti.projecte_uf1.MainActivity;
 import com.example.marti.projecte_uf1.NotificationActionReceiver;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.SQLiteManager;
+import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Reward;
 import com.example.marti.projecte_uf1.model.RewardInfoLang;
+import com.example.marti.projecte_uf1.remote.ApiUtils;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHolder> {
 
@@ -40,6 +48,11 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     private Context context;
     public static final String EXTRA_ID = "ID";
     SQLiteManager manager = new SQLiteManager(context);
+    private String sharedPrefFile = "prefsFile";
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
+    private int currentUserId;
+    public ApiMecAroundInterfaces mAPIService;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -70,9 +83,10 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
         }
     }
 
-    public rewardsAdapter(ArrayList<Reward> rewardsList, Context context) {
+    public rewardsAdapter(ArrayList<Reward> rewardsList, Context context, int currentUserId0) {
         this.list = rewardsList;
         this.context = context;
+        this.currentUserId = currentUserId0;
     }
 
     @NonNull
@@ -82,35 +96,20 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
         View item = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.rewards_list_item, viewGroup, false);
 
+
+        mAPIService = ApiUtils.getAPIService();
+
         return new MyViewHolder(item);
-    }
-
-    // To animate view slide out from top to bottom
-    public void slideToBottom(View view) {
-        TranslateAnimation animate = new TranslateAnimation(0, 0, -view.getHeight(), 0);
-        animate.setDuration(250);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
-        view.setVisibility(View.VISIBLE);
-    }
-
-    // To animate view slide out from bottom to top
-    public void slideToTop(View view) {
-        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, -view.getHeight());
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
-        view.setVisibility(View.GONE);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull final rewardsAdapter.MyViewHolder myViewHolder, final int i) {
-        Reward reward = list.get(i);
+        final Reward reward = list.get(i);
 
         RewardInfoLang infoEng = new RewardInfoLang();
         for (RewardInfoLang item : reward.getRewardInfoLangs()) {
-            if (item.language.code.equalsIgnoreCase("en")) {
+            if (item.languageId == 1) { //TODO:  s' hauria de posar aixi pero peta el segon item item.language.code.equalsIgnoreCase("en")
                 infoEng = item;
             }
         }
@@ -143,8 +142,32 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
         myViewHolder.claimRewardBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: fer el claim reward
-                Toast.makeText(context, "Claimed", Toast.LENGTH_SHORT).show();
+
+
+                int rewardId = reward.id.intValue();
+                mAPIService.claimReward(rewardId, currentUserId).enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful()&& response.body()){
+                            if (response.body()) {
+                                Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
+
+                                //TODO: millorar aixo de esborrar de la llista
+                                myViewHolder.linearLayout.setVisibility(View.GONE);
+                            }
+
+                        } else {
+                            Toast.makeText(context, "Can't claim reward, check if you have enough points", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        Toast.makeText(context, "Server error " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
             }
         });
 

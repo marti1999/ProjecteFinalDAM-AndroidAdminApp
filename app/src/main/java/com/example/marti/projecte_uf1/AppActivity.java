@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.DonorFragments.RewardsFragment;
+import com.example.marti.projecte_uf1.model.Donor;
+import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.example.marti.projecte_uf1.utils.asyncTask;
 
@@ -34,6 +36,10 @@ public class AppActivity extends AppCompatActivity {
     private int backButtonCount;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
+
+    public Donor currentDonor;
+    public Requestor currentRequestor;
+
 
     private String user_type;
 
@@ -94,7 +100,7 @@ public class AppActivity extends AppCompatActivity {
                                 fragment = new RewardsFragment();
                                 fragmentTransaction = true;
                                 break;
-}
+                        }
 
                         if (fragmentTransaction) {
                             getSupportFragmentManager().beginTransaction()
@@ -124,12 +130,22 @@ public class AppActivity extends AppCompatActivity {
 
     }
 
+    private void setCurrentUser(){
+        currentDonor = null;
+        currentRequestor = null;
+        String userType = prefs.getString(PrefsFileKeys.LAST_LOGIN, "");
+        String userId = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
+
+
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
 
-    //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //TODO: s'hauria de poder esborrar
+        //    p = manager.getPersona(prefs.getString("LAST_LOGIN", "")); //TODO: s'hauria de poder esborrar
 
         String userType = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
         String userEmail = prefs.getString(PrefsFileKeys.LAST_LOGIN, "");
@@ -211,7 +227,6 @@ public class AppActivity extends AppCompatActivity {
             backButtonCount++;
         }
     }
-
 
 
     @Override

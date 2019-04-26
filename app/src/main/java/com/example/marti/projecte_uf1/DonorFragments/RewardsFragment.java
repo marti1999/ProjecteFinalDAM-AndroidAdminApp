@@ -1,6 +1,7 @@
 package com.example.marti.projecte_uf1.DonorFragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.example.marti.projecte_uf1.esdevenimentAdapter;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Reward;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class RewardsFragment extends Fragment {
 
@@ -33,6 +37,10 @@ public class RewardsFragment extends Fragment {
     RecyclerView rv;
     private RecyclerView.LayoutManager mLayoutManager;
     private ApiMecAroundInterfaces mAPIService;
+    private String sharedPrefFile = "prefsFile";
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
+
 
     public RewardsFragment() {
 
@@ -44,6 +52,10 @@ public class RewardsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAPIService = ApiUtils.getAPIService();
+
+        prefs = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        prefsEditor = prefs.edit();
+
 
     }
 
@@ -91,7 +103,10 @@ public class RewardsFragment extends Fragment {
     }
 
     private void setAdapter(ArrayList<Reward> list) {
-        adapter = new rewardsAdapter(list, getActivity());
+        String currentUserIdString = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, null);
+        int currentUserId = Integer.valueOf(currentUserIdString);
+
+        adapter = new rewardsAdapter(list, getActivity(), currentUserId);
         rv = getView().findViewById(R.id.reward_recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(mLayoutManager);
