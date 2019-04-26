@@ -153,7 +153,16 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                                 Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
 
                                 //TODO: millorar aixo de esborrar de la llista
-                                myViewHolder.linearLayout.setVisibility(View.GONE);
+                               // myViewHolder.linearLayout.setVisibility(View.GONE);
+
+
+                                Reward itemLabel = list.get(i);
+                                list.remove(i);
+                                notifyItemRemoved(i);
+                                notifyItemRangeChanged(i, list.size());
+
+                            } else {
+                                Toast.makeText(context, "You don't have enough points", Toast.LENGTH_SHORT).show();
                             }
 
                         } else {
@@ -221,6 +230,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
 
 
     }
+
 
 
     @Override
