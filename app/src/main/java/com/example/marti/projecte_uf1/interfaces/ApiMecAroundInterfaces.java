@@ -17,22 +17,16 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Query;
 
 public interface  ApiMecAroundInterfaces {
 
-//   @FormUrlEncoded
-//    @POST("users")
-//    Call<User> doRegister(@Field("name") String name,
-//                          @Field("job") String job);
-//
-//
-//
 
     @POST("administrator/login")
     Call<Boolean> doLogin(@Body Administrator a);
 
 
-    //todo login donor i requestor
     @POST("donor/login")
     Call<Boolean> doLoginDonor(@Body Donor d);
 
@@ -50,4 +44,10 @@ public interface  ApiMecAroundInterfaces {
 
     @GET("rewards")
     Call<List<Reward>> getRewards();
+
+    @PUT("reward/claim")
+    Call<Boolean> claimReward(@Query("id")int rewardId,
+                              @Body int donorId);
+
+
 }
