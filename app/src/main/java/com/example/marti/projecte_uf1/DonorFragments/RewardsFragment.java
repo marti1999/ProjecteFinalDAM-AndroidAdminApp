@@ -75,14 +75,14 @@ public class RewardsFragment extends Fragment {
     }
     private void populateList(){
 
-
-        //TODO: populate list
-        mAPIService.getRewards().enqueue(new Callback<List<Reward>>() {
+        String currentUserIdString = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, null);
+        int currentUserId = Integer.valueOf(currentUserIdString);
+        mAPIService.getAvailableRewardByDonor(currentUserId).enqueue(new Callback<List<Reward>>() {
             @Override
             public void onResponse(Call<List<Reward>> call, Response<List<Reward>> response) {
                 if (response.isSuccessful()){
                     List<Reward> list = response.body();
-                   // Toast.makeText(getActivity(), String.valueOf(list.size()), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getActivity(), String.valueOf(list.size()), Toast.LENGTH_SHORT).show();
                     setAdapter(new ArrayList<Reward>(list));
 
                 } else{
@@ -93,14 +93,11 @@ public class RewardsFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Reward>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
-
-
-
-
-    }
+ }
 
     private void setAdapter(ArrayList<Reward> list) {
         String currentUserIdString = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, null);

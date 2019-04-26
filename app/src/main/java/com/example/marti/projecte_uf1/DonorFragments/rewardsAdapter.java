@@ -130,6 +130,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                     myViewHolder.linearLayoutContent.setVisibility(View.VISIBLE);
                     myViewHolder.rewardImage.animate().rotation(180).setDuration(400).start();
 
+
                 } else {
 
                     myViewHolder.rewardImage.animate().rotation(0).setDuration(400).start();
@@ -148,15 +149,11 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                 mAPIService.claimReward(rewardId, currentUserId).enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful()&& response.body()){
+                        if (response.isSuccessful()){
                             if (response.body()) {
                                 Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
 
-                                //TODO: millorar aixo de esborrar de la llista
-                               // myViewHolder.linearLayout.setVisibility(View.GONE);
 
-
-                                Reward itemLabel = list.get(i);
                                 list.remove(i);
                                 notifyItemRemoved(i);
                                 notifyItemRangeChanged(i, list.size());
@@ -166,7 +163,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                             }
 
                         } else {
-                            Toast.makeText(context, "Can't claim reward, check if you have enough points", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response.code() + response.message(), Toast.LENGTH_LONG).show();
                         }
                     }
 

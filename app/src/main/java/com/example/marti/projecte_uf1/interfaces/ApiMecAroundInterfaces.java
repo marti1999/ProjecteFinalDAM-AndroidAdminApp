@@ -46,8 +46,10 @@ public interface  ApiMecAroundInterfaces {
     Call<List<Reward>> getRewards();
 
     @PUT("reward/claim")
-    Call<Boolean> claimReward(@Query("id")int rewardId,
+    Call<Boolean> claimReward(@Query("rewardId")int rewardId,
                               @Body int donorId);
 
+    @PUT("reward/availableDonor")
+    Call<List<Reward>> getAvailableRewardByDonor(@Query("donorId")int donorId);
 
 }
