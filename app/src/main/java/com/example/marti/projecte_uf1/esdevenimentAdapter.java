@@ -113,11 +113,11 @@ public class esdevenimentAdapter extends RecyclerView.Adapter<esdevenimentAdapte
                 esdG = esd;
                 if (myViewHolder.esdevenimentInfo.getVisibility() == View.GONE) {
 
-                   // myViewHolder.rewardImage.setImageResource(R.drawable.uparrow);
+                   // myViewHolder.announcementImage.setImageResource(R.drawable.uparrow);
 
-                    // myViewHolder.rewardInfo.setText("Type:   " + esd.getTipus() + "\nPlace:   " + esd.getLloc() + "\nDate:   " + esd.getData() + "\nPeople attending:   " + esd.getNumAssistens());
+                    // myViewHolder.announcementMessage.setText("Type:   " + esd.getTipus() + "\nPlace:   " + esd.getLloc() + "\nDate:   " + esd.getData() + "\nPeople attending:   " + esd.getNumAssistens());
 
-//                    myViewHolder.rewardInfo.animate()
+//                    myViewHolder.announcementMessage.animate()
 //                            .translationY(0)
 //                            .alpha(1.0f)
 //                            .setDuration(300)
@@ -126,56 +126,56 @@ public class esdevenimentAdapter extends RecyclerView.Adapter<esdevenimentAdapte
 //                                @Override
 //                                public void onAnimationStart(Animator animation) {
 //                                    super.onAnimationStart(animation);
-//                                    myViewHolder.rewardInfo.setVisibility(View.VISIBLE);
+//                                    myViewHolder.announcementMessage.setVisibility(View.VISIBLE);
 //                                }
 //                            });
 
 //                    Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
-//                    myViewHolder.rewardInfo.setVisibility(View.VISIBLE);
-//                    myViewHolder.rewardInfo.startAnimation(slideDown);
+//                    myViewHolder.announcementMessage.setVisibility(View.VISIBLE);
+//                    myViewHolder.announcementMessage.startAnimation(slideDown);
 
                     TransitionManager.beginDelayedTransition(group);
                     myViewHolder.esdevenimentInfo.setVisibility(View.VISIBLE);
                     myViewHolder.esdevenimentImage.animate().rotation(180).setDuration(400).start();
-                   // myViewHolder.rewardImage.setRotation(180);
+                   // myViewHolder.announcementImage.setRotation(180);
                     //                TransitionManager.beginDelayedTransition(group, new Rotate());
 
 
-                    // slideToBottom(myViewHolder.rewardInfo);
+                    // slideToBottom(myViewHolder.announcementMessage);
 
 
                 } else {
-                    //  slideToTop(myViewHolder.rewardInfo);
+                    //  slideToTop(myViewHolder.announcementMessage);
 
-                    //myViewHolder.rewardInfo.setVisibility(View.GONE);
+                    //myViewHolder.announcementMessage.setVisibility(View.GONE);
                     myViewHolder.esdevenimentImage.animate().rotation(0).setDuration(400).start();
                    // TransitionManager.beginDelayedTransition(group);
                     myViewHolder.esdevenimentInfo.setVisibility(View.GONE);
 
-                   // myViewHolder.rewardImage.setRotation(0);
-//                    myViewHolder.rewardInfo.animate()
-//                            .translationY(-myViewHolder.rewardInfo.getHeight())
+                   // myViewHolder.announcementImage.setRotation(0);
+//                    myViewHolder.announcementMessage.animate()
+//                            .translationY(-myViewHolder.announcementMessage.getHeight())
 //                            .alpha(0.0f)
 //                            .setDuration(300)
 //                            .setListener(new AnimatorListenerAdapter() {
 //                                @Override
 //                                public void onAnimationEnd(Animator animation) {
 //                                    super.onAnimationEnd(animation);
-//                                    myViewHolder.rewardInfo.setVisibility(View.GONE);
+//                                    myViewHolder.announcementMessage.setVisibility(View.GONE);
 //                                }
 //                            });
 
 //                    Animation slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up);
-//                    myViewHolder.rewardInfo.setVisibility(View.GONE);
-//                    myViewHolder.rewardInfo.startAnimation(slideUp);
+//                    myViewHolder.announcementMessage.setVisibility(View.GONE);
+//                    myViewHolder.announcementMessage.startAnimation(slideUp);
 
 
-                    //myViewHolder.rewardImage.setImageResource(R.drawable.downarrow);
+                    //myViewHolder.announcementImage.setImageResource(R.drawable.downarrow);
 //                    RotateAnimation rotate = new RotateAnimation(180, 0);
 //                    rotate.setDuration(400);
 //                    rotate.setInterpolator(new LinearInterpolator());
 //
-//                    myViewHolder.rewardImage.startAnimation(rotate);
+//                    myViewHolder.announcementImage.startAnimation(rotate);
 
                 }
 

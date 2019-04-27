@@ -20,10 +20,15 @@
             android:icon="@drawable/event"
             android:title="Cloth QR" />
 
+
+    </group>
+    <group android:checkableBehavior="single" android:visible="false" android:id="@+id/requestors_navview">
+
+    </group>
+    <group android:checkableBehavior="single" android:visible="true" android:id="@+id/mutual_navview">
         <item
             android:id="@+id/annnouncements"
             android:icon="@drawable/event"
             android:title="Announcements" />
     </group>
-
 </menu>
