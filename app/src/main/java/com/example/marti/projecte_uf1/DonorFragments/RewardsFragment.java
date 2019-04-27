@@ -1,8 +1,6 @@
 package com.example.marti.projecte_uf1.DonorFragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.R;
-import com.example.marti.projecte_uf1.esdevenimentAdapter;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Reward;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
