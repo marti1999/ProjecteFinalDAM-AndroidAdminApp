@@ -77,6 +77,15 @@ public class AppActivity extends AppCompatActivity {
 
         navView = (NavigationView) findViewById(R.id.navview);
 
+        user_type = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
+        if (user_type.equalsIgnoreCase("donor")){
+            navView.getMenu().setGroupVisible(R.id.donors_navview, true);
+        }
+        if (user_type.equalsIgnoreCase("requestor")){
+            navView.getMenu().setGroupVisible(R.id.requestors_navview, true);
+
+        }
+
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
