@@ -7,16 +7,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import javax.xml.transform.Result;
+
 public class GeocodingLocation {
 
     private static final String TAG = "GeocodingLocation";
 
-    public static void getAddressFromLocation(final String locationAddress,
+    public static void getAddressFromLocation(final String locationAddress, final String name,
                                               final Context context, final Handler handler) {
         Thread thread = new Thread() {
             @Override
@@ -40,14 +43,16 @@ public class GeocodingLocation {
                     if (result != null) {
                         message.what = 1;
                         Bundle bundle = new Bundle();
-                        result = result;
+
                         bundle.putString("address", result);
                         message.setData(bundle);
                     } else {
                         message.what = 1;
                         Bundle bundle = new Bundle();
-                        result = "Unable to get Latitude and Longitude for this address location.";
+                        result = "Unable to get Latitude and Longitude for this address location." ;
+                        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                         bundle.putString("address", result);
+                        bundle.putString("warehouseName", name);
 
                         message.setData(bundle);
                     }

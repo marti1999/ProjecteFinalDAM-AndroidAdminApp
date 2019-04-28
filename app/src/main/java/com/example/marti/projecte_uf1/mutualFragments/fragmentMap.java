@@ -10,8 +10,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.R;
+import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
+import com.example.marti.projecte_uf1.model.Warehouse;
+import com.example.marti.projecte_uf1.remote.ApiUtils;
 import com.example.marti.projecte_uf1.utils.GeocodingLocation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,11 +25,19 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class fragmentMap extends Fragment {
     private GoogleMap mMap;
     Geocoder gc;
 
+    public ApiMecAroundInterfaces mAPIService;
+    List<Warehouse> list;
 
     public fragmentMap() {
     }
@@ -34,6 +46,7 @@ public class fragmentMap extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAPIService = ApiUtils.getAPIService();
 
     }
 
@@ -61,11 +74,30 @@ public class fragmentMap extends Fragment {
             }
         });
 
-        String address = "Carrer del Camp de les Moreres, 14 08401 Granollers, Barcelona";
 
-        GeocodingLocation locationAddress = new GeocodingLocation();
-        locationAddress.getAddressFromLocation(address,
-                getActivity(), new GeocoderHandler());
+        mAPIService.getWarehoues().enqueue(new Callback<List<Warehouse>>() {
+            @Override
+            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+                if (response.isSuccessful()) {
+                    list = response.body();
+                    for (Warehouse item : list
+                    ) {
+                        String address = item.street + ", " + item.number + " " + item.postalCode + " " + item.city;
+
+                        GeocodingLocation locationAddress = new GeocodingLocation();
+                        locationAddress.getAddressFromLocation(address, item.name,
+                                getActivity(), new GeocoderHandler());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+
+            }
+        });
+
+
 
         return rootView;
     }
@@ -74,29 +106,34 @@ public class fragmentMap extends Fragment {
         @Override
         public void handleMessage(Message message) {
             String locationAddress;
+            String name;
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
                     locationAddress = bundle.getString("address");
+                    name = bundle.getString("warehouseName");
                     break;
                 default:
                     locationAddress = null;
+                    name = null;
             }
             String[] latlong = locationAddress.split(",");
             double latitude = Double.parseDouble(latlong[0]);
             double longitude = Double.parseDouble(latlong[1]);
             LatLng location = new LatLng(latitude, longitude);
-            addMarker(location);
+            Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+
+            addMarker(location, name);
 
         }
     }
 
-    public void addMarker(LatLng latlng) {
+    public void addMarker(LatLng latlng, String name) {
         MarkerOptions markerOptions = new MarkerOptions();
 
         markerOptions.position(latlng);
 
-        markerOptions.title(latlng.latitude + " : " + latlng.longitude);
+        markerOptions.title(name);
 
         mMap.addMarker(markerOptions);
     }

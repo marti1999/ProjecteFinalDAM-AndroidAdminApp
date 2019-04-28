@@ -35,8 +35,13 @@
             android:title="Announcements" />
         <item
             android:id="@+id/warehouses"
-            android:icon="@drawable/announcement"
+            android:icon="@drawable/map"
             android:title="Warehouses" />
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/person"
+            android:title="Profile" />
+
 
     </group>
 </menu>
