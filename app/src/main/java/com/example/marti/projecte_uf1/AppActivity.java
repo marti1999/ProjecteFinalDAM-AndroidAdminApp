@@ -24,6 +24,7 @@ import com.example.marti.projecte_uf1.DonorFragments.RewardsFragment;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.mutualFragments.AnnouncementsFragment;
+import com.example.marti.projecte_uf1.mutualFragments.fragmentMap;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.example.marti.projecte_uf1.utils.asyncTask;
 
@@ -105,6 +106,10 @@ public class AppActivity extends AppCompatActivity {
                                 break;
                             case R.id.annnouncements:
                                 fragment = new AnnouncementsFragment();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.warehouses:
+                                fragment = new fragmentMap();
                                 fragmentTransaction = true;
                                 break;
                         }
