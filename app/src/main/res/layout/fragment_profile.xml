@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="">
+                android:weightSum="2">
 
 
                 <LinearLayout
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Wiliam@gmail.com"
+                android:text="marti@gmail.com"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="+266 225 225"
+                android:text="**********"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Add to group"
+                android:text="name"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Show all comments"
+                android:text="Last Name"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
