@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
 
         String oldName = prefs.getString(PrefsFileKeys.EMAIL, "");
         etEmail.setText(oldName);
+        if (!oldName.equals("")){
+            checkBox.setChecked(true);
+        }
 
     }
 

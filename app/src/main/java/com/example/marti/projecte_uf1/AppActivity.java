@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,9 @@ import android.widget.Toast;
 import com.example.marti.projecte_uf1.DonorFragments.RewardsFragment;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
+import com.example.marti.projecte_uf1.mutualFragments.AnnouncementsFragment;
+import com.example.marti.projecte_uf1.mutualFragments.fragmentMap;
+import com.example.marti.projecte_uf1.mutualFragments.profileFragment;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.example.marti.projecte_uf1.utils.asyncTask;
 
@@ -34,6 +38,8 @@ public class AppActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     private int backButtonCount;
+    boolean doubleBackToExitPressedOnce = false;
+
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
 
@@ -44,7 +50,6 @@ public class AppActivity extends AppCompatActivity {
     private String user_type;
 
     private SharedPreferences.Editor prefsEditor;
-    private Persona p;
 
     SQLiteManager manager = new SQLiteManager(this);
 
@@ -58,7 +63,6 @@ public class AppActivity extends AppCompatActivity {
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         backButtonCount = 0;
-        p = new Persona();
 
 
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -75,6 +79,15 @@ public class AppActivity extends AppCompatActivity {
 
         navView = (NavigationView) findViewById(R.id.navview);
 
+        user_type = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
+        if (user_type.equalsIgnoreCase("donor")){
+            navView.getMenu().setGroupVisible(R.id.donors_navview, true);
+        }
+        if (user_type.equalsIgnoreCase("requestor")){
+            navView.getMenu().setGroupVisible(R.id.requestors_navview, true);
+
+        }
+
 
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -83,21 +96,25 @@ public class AppActivity extends AppCompatActivity {
                         boolean fragmentTransaction = false;
                         Fragment fragment = null;
                         switch (menuItem.getItemId()) {
-                            case R.id.menu_seccion_1:
-                                fragment = new Fragment1();
-                                fragmentTransaction = true;
-                                break;
-                            case R.id.menu_seccion_2:
-                                fragment = new Fragment2();
-                                fragmentTransaction = true;
-                                break;
+
                             case R.id.donor_QR:
                                 fragment = new FragmentQR();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.donor_rewards:
-                                Toast.makeText(AppActivity.this, "entra a rewards", Toast.LENGTH_SHORT).show();
                                 fragment = new RewardsFragment();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.annnouncements:
+                                fragment = new AnnouncementsFragment();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.warehouses:
+                                fragment = new fragmentMap();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.profile:
+                                fragment = new profileFragment();
                                 fragmentTransaction = true;
                                 break;
                         }
@@ -119,23 +136,22 @@ public class AppActivity extends AppCompatActivity {
         );
 
         Fragment fragment = null;
-        fragment = new Fragment1();
+        fragment = new AnnouncementsFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
 
         navView.getMenu().getItem(0).setChecked(true);
 
-        getSupportActionBar().setTitle("Contacts"); //TODO: canviar pel que faci falta
+        getSupportActionBar().setTitle("Announcements"); //TODO: canviar pel que faci falta
 
     }
 
-    private void setCurrentUser(){
+    private void setCurrentUser() {
         currentDonor = null;
         currentRequestor = null;
         String userType = prefs.getString(PrefsFileKeys.LAST_LOGIN, "");
         String userId = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
-
 
 
     }
@@ -180,9 +196,7 @@ public class AppActivity extends AppCompatActivity {
                         case DialogInterface.BUTTON_POSITIVE:
 
 
-                            manager.deletePersona(p.getEmail()); //TODO: canviar
-
-                            finish();
+                            Toast.makeText(AppActivity.this, "put something here or delete button", Toast.LENGTH_SHORT).show();
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -217,15 +231,34 @@ public class AppActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         //TODO: fer que nomes conti com a 2 quan s'ha fet seguit de la primera vegada, posar un timer o algo per l'estil
-        if (backButtonCount >= 1) {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.doubleTapText), Toast.LENGTH_SHORT).show();
-            backButtonCount++;
+//        if (backButtonCount >= 1) {
+//            Intent intent = new Intent(Intent.ACTION_MAIN);
+//            intent.addCategory(Intent.CATEGORY_HOME);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//        } else {
+//            Toast.makeText(this, getString(R.string.doubleTapText), Toast.LENGTH_SHORT).show();
+//            backButtonCount++;
+//        }
+
+
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity();
+
+            System.exit(0);
+            return;
         }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.doubleTapText, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 
 

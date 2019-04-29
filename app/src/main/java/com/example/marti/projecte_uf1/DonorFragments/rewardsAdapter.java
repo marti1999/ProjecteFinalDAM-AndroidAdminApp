@@ -7,26 +7,19 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.marti.projecte_uf1.Esdeveniment;
 import com.example.marti.projecte_uf1.MainActivity;
 import com.example.marti.projecte_uf1.NotificationActionReceiver;
 import com.example.marti.projecte_uf1.R;
@@ -130,6 +123,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                     myViewHolder.linearLayoutContent.setVisibility(View.VISIBLE);
                     myViewHolder.rewardImage.animate().rotation(180).setDuration(400).start();
 
+
                 } else {
 
                     myViewHolder.rewardImage.animate().rotation(0).setDuration(400).start();
@@ -148,15 +142,11 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                 mAPIService.claimReward(rewardId, currentUserId).enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful()&& response.body()){
+                        if (response.isSuccessful()){
                             if (response.body()) {
                                 Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
 
-                                //TODO: millorar aixo de esborrar de la llista
-                               // myViewHolder.linearLayout.setVisibility(View.GONE);
 
-
-                                Reward itemLabel = list.get(i);
                                 list.remove(i);
                                 notifyItemRemoved(i);
                                 notifyItemRangeChanged(i, list.size());
@@ -166,7 +156,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                             }
 
                         } else {
-                            Toast.makeText(context, "Can't claim reward, check if you have enough points", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, response.code() + response.message(), Toast.LENGTH_LONG).show();
                         }
                     }
 

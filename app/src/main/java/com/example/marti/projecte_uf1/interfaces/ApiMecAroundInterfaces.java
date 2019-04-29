@@ -4,9 +4,11 @@ package com.example.marti.projecte_uf1.interfaces;
 
 
 import com.example.marti.projecte_uf1.model.Administrator;
+import com.example.marti.projecte_uf1.model.Announcement;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.model.Reward;
+import com.example.marti.projecte_uf1.model.Warehouse;
 
 import java.util.List;
 
@@ -45,9 +47,17 @@ public interface  ApiMecAroundInterfaces {
     @GET("rewards")
     Call<List<Reward>> getRewards();
 
+    @GET("warehouses")
+    Call<List<Warehouse>> getWarehoues();
+
     @PUT("reward/claim")
-    Call<Boolean> claimReward(@Query("id")int rewardId,
+    Call<Boolean> claimReward(@Query("rewardId")int rewardId,
                               @Body int donorId);
 
+    @GET("announcementsUserType")
+    Call<List<Announcement>> getAnnouncements(@Query("userType")String userType);
+
+    @PUT("reward/availableDonor")
+    Call<List<Reward>> getAvailableRewardByDonor(@Query("donorId")int donorId);
 
 }

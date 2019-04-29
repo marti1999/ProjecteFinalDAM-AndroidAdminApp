@@ -16,9 +16,9 @@ import java.lang.Override;
 public class Register1Fragment_ViewBinding implements Unbinder {
   private Register1Fragment target;
 
-  private View view2131296401;
+  private View view2131296410;
 
-  private View view2131296400;
+  private View view2131296409;
 
   @UiThread
   public Register1Fragment_ViewBinding(final Register1Fragment target, View source) {
@@ -27,7 +27,7 @@ public class Register1Fragment_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.ivMale, "field 'ivMale' and method 'onViewClicked'");
     target.ivMale = Utils.castView(view, R.id.ivMale, "field 'ivMale'", ImageView.class);
-    view2131296401 = view;
+    view2131296410 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -36,7 +36,7 @@ public class Register1Fragment_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.ivFemale, "field 'ivFemale' and method 'onViewClicked'");
     target.ivFemale = Utils.castView(view, R.id.ivFemale, "field 'ivFemale'", ImageView.class);
-    view2131296400 = view;
+    view2131296409 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -65,9 +65,9 @@ public class Register1Fragment_ViewBinding implements Unbinder {
     target.etMail = null;
     target.etBirth = null;
 
-    view2131296401.setOnClickListener(null);
-    view2131296401 = null;
-    view2131296400.setOnClickListener(null);
-    view2131296400 = null;
+    view2131296410.setOnClickListener(null);
+    view2131296410 = null;
+    view2131296409.setOnClickListener(null);
+    view2131296409 = null;
   }
 }

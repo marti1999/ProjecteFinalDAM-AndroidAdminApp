@@ -26,7 +26,7 @@ public class NotificationActionReceiver extends BroadcastReceiver {
 
             Toast.makeText(context, "Attendance confirmed", Toast.LENGTH_LONG).show();
 
-            String id = intent.getStringExtra(esdevenimentAdapter.EXTRA_ID);
+            String id = null;
 
             manager.updateEsdeveniment(id, true);
 
