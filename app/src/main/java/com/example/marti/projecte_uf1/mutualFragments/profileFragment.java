@@ -1,6 +1,7 @@
 package com.example.marti.projecte_uf1.mutualFragments;
 
 import android.content.SharedPreferences;
+import android.net.http.SslCertificate;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -80,7 +81,6 @@ public class profileFragment extends Fragment {
                         donor = response.body();
                         if (donor != null) {
                             fillTextViewsDonor(donor);
-                            //TODO: cridar el metode que omple la pantalla
                         } else {
                             Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
                         }
@@ -103,7 +103,6 @@ public class profileFragment extends Fragment {
                     if (response.isSuccessful()) {
                         requestor = response.body();
                         if (requestor != null) {
-                            //TODO: cridar el metode que omple la pantalla
                             fillTextViewsRequestor(requestor);
                         } else {
                             Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
@@ -129,12 +128,29 @@ public class profileFragment extends Fragment {
 
         type.setText(userType);
         name.setText(donor.name);
+        pointsLabel.setText("Points");
+        points.setText(donor.points);
+        amountLabel.setText("Amount Given");
+        amount.setText(donor.ammountGiven);
+        email.setText(donor.email);
+        password.setText("**********");
+        name.setText(donor.name);
+        dni.setText(donor.dni);
+
     }
 
-    private void fillTextViewsRequestor(Requestor donor){
+    private void fillTextViewsRequestor(Requestor requestor){
 
         type.setText(userType);
-        name.setText(donor.name);
+        name.setText(requestor.name);
+        pointsLabel.setText("Remaining Points");
+        points.setText(requestor.points);
+        amountLabel.setText("Points per year");
+        amount.setText(requestor.maxClaim.value);
+        email.setText(requestor.email);
+        password.setText("**********");
+        name.setText(requestor.name);
+        dni.setText(requestor.dni);
     }
 
     @Override
