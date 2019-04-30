@@ -1,14 +1,19 @@
 package com.example.marti.projecte_uf1.mutualFragments;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +24,15 @@ import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +75,9 @@ public class profileFragment extends Fragment {
     private Requestor requestor;
     private String userType;
     private String userId;
-private final int GALLERY_REQUEST_CODE = 1;
+    private final int GALLERY_REQUEST_CODE = 1;
+    private StorageReference mStorageRef;
+
     public profileFragment() {
     }
 
@@ -71,6 +87,7 @@ private final int GALLERY_REQUEST_CODE = 1;
         super.onCreate(savedInstanceState);
 
         mAPIService = ApiUtils.getAPIService();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         prefs = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
@@ -151,7 +168,7 @@ private final int GALLERY_REQUEST_CODE = 1;
         pointsLabel.setText("Remaining Points");
         points.setText(String.valueOf(requestor.points));
         amountLabel.setText("Points per year");
-        amount.setText(requestor.maxClaim.value);
+        amount.setText(String.valueOf(requestor.maxClaim.value));
         email.setText(requestor.email);
         password.setText("**********");
         name.setText(requestor.name);
@@ -164,6 +181,12 @@ private final int GALLERY_REQUEST_CODE = 1;
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
+        try {
+            downloadImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return view;
     }
 
@@ -174,33 +197,80 @@ private final int GALLERY_REQUEST_CODE = 1;
     }
 
 
-
     @OnClick(R.id.image)
     public void onViewClicked() {
         pickFromGallery();
     }
-    private void pickFromGallery(){
-        //Create an Intent with action as ACTION_PICK
-        Intent intent=new Intent(Intent.ACTION_PICK);
-        // Sets the type as image/*. This ensures only components of type image are selected
+
+    private void pickFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        // Launching the Intent
-        startActivityForResult(intent,GALLERY_REQUEST_CODE);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode){
+            switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     //data.getData returns the content URI for the selected Image
                     Uri selectedImage = data.getData();
                     image.setImageURI(selectedImage);
+                    uploadImage(selectedImage);
                     break;
             }
+    }
+
+    public void uploadImage(Uri file) {
+
+        // Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
+        StorageReference ref = mStorageRef.child(prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, ""));
+
+        ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getActivity(), "UPLOADED", Toast.LENGTH_SHORT).show();
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "FAILURE", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+
+    public String getFileExtension(Uri uri) {
+        ContentResolver cR = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    public void downloadImage() throws IOException {
+        StorageReference ref = mStorageRef.child(prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, ""));
+
+        final File localFile = File.createTempFile("images", "jpg");
+        ref.getFile(localFile)
+                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity(), "DOWNLOADED", Toast.LENGTH_SHORT).show();
+                        Bitmap myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                        image.setImageBitmap(myBitmap);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle failed download
+                // ...
+            }
+        });
     }
 }

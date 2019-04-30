@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "370005516674-bk2psfkrivjffu1415co3gum037cuh6g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.marti.projecte_uf1",
+            "certificate_hash": "f752eda0a9450ec59ce8d6176b281bc208dbc1fb"
+          }
+        },
+        {
           "client_id": "370005516674-jfluakdki99j6i41k8b330ncf7aetd54.apps.googleusercontent.com",
           "client_type": 3
         }
