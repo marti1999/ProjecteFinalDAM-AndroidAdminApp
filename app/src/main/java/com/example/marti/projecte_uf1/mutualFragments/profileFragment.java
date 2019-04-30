@@ -14,10 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Donor;
@@ -86,6 +87,60 @@ public class profileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initiateGlobalVariables();
+    }
+
+    private void fillRequestor() {
+        mAPIService.getRequestorById(Integer.valueOf(userId)).enqueue(new Callback<Requestor>() {
+            @Override
+            public void onResponse(Call<Requestor> call, Response<Requestor> response) {
+                if (response.isSuccessful()) {
+                    requestor = response.body();
+                    if (requestor != null) {
+                        fillTextViewsRequestor(requestor);
+                    } else {
+                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Requestor> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void fillDonor() {
+        mAPIService.getDonorById(Integer.valueOf(userId)).enqueue(new Callback<Donor>() {
+            @Override
+            public void onResponse(Call<Donor> call, Response<Donor> response) {
+                if (response.isSuccessful()) {
+                    donor = response.body();
+                    if (donor != null) {
+                        fillTextViewsDonor(donor);
+                    } else {
+                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Donor> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void initiateGlobalVariables() {
         mAPIService = ApiUtils.getAPIService();
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
@@ -94,59 +149,9 @@ public class profileFragment extends Fragment {
 
         userType = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
         userId = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
-
-        if (userType.equalsIgnoreCase("donor")) {
-            mAPIService.getDonorById(Integer.valueOf(userId)).enqueue(new Callback<Donor>() {
-                @Override
-                public void onResponse(Call<Donor> call, Response<Donor> response) {
-                    if (response.isSuccessful()) {
-                        donor = response.body();
-                        if (donor != null) {
-                            fillTextViewsDonor(donor);
-                        } else {
-                            Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Donor> call, Throwable t) {
-                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        } else {
-            mAPIService.getRequestorById(Integer.valueOf(userId)).enqueue(new Callback<Requestor>() {
-                @Override
-                public void onResponse(Call<Requestor> call, Response<Requestor> response) {
-                    if (response.isSuccessful()) {
-                        requestor = response.body();
-                        if (requestor != null) {
-                            fillTextViewsRequestor(requestor);
-                        } else {
-                            Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Requestor> call, Throwable t) {
-                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        }
-
     }
 
     private void fillTextViewsDonor(Donor donor) {
-
 
         type.setText(userType);
         name.setText(donor.name);
@@ -165,7 +170,7 @@ public class profileFragment extends Fragment {
 
         type.setText(userType);
         name.setText(requestor.name);
-        pointsLabel.setText("Remaining Points");
+        pointsLabel.setText("Used points");
         points.setText(String.valueOf(requestor.points));
         amountLabel.setText("Points per year");
         amount.setText(String.valueOf(requestor.maxClaim.value));
@@ -176,16 +181,23 @@ public class profileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        if (userType.equalsIgnoreCase("donor")) {
+            fillDonor();
+        } else {
+            fillRequestor();
+        }
+       // image.setImageResource(R.drawable.profilepicture);
         try {
-            downloadImage();
+            downloadProfilePicture();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         return view;
     }
@@ -199,10 +211,10 @@ public class profileFragment extends Fragment {
 
     @OnClick(R.id.image)
     public void onViewClicked() {
-        pickFromGallery();
+        pickImageFromGallery();
     }
 
-    private void pickFromGallery() {
+    private void pickImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         String[] mimeTypes = {"image/jpeg", "image/png"};
@@ -216,7 +228,6 @@ public class profileFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
-                    //data.getData returns the content URI for the selected Image
                     Uri selectedImage = data.getData();
                     image.setImageURI(selectedImage);
                     uploadImage(selectedImage);
@@ -227,22 +238,20 @@ public class profileFragment extends Fragment {
     public void uploadImage(Uri file) {
 
         // Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-        StorageReference ref = mStorageRef.child(prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, ""));
+        String fileName = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
+        StorageReference ref = mStorageRef.child(fileName);
 
         ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(), "UPLOADED", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getActivity(), "Profile picture succesfully uploaded", Toast.LENGTH_LONG).show();
             }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "FAILURE", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed to upload profile picture", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public String getFileExtension(Uri uri) {
@@ -251,26 +260,31 @@ public class profileFragment extends Fragment {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    public void downloadImage() throws IOException {
-        StorageReference ref = mStorageRef.child(prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, ""));
+    public void downloadProfilePicture() throws IOException {
+        String fileName = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
+        StorageReference ref = mStorageRef.child(fileName);
+        final File imageFile = File.createTempFile("images", "jpg");
 
-        final File localFile = File.createTempFile("images", "jpg");
-        ref.getFile(localFile)
+        ref.getFile(imageFile)
                 .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "DOWNLOADED", Toast.LENGTH_SHORT).show();
-                        Bitmap myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
 
+                        YoYo.with(Techniques.FadeOut)
+                                .duration(4000)
+                                .playOn(image);
                         image.setImageBitmap(myBitmap);
-
+                        YoYo.with(Techniques.FadeIn)
+                                .duration(4000)
+                                .playOn(image);
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle failed download
-                // ...
-            }
-        });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        //Toast.makeText(getActivity(), "Failed to download profile picture", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

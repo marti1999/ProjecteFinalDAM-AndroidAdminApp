@@ -66,4 +66,10 @@ public interface  ApiMecAroundInterfaces {
     @GET("requestor")
     Call<Requestor> getRequestorById(@Query("id")int requestorId);
 
+    @POST("donor/question")
+    Call<String> getQuestionBothByMail(@Body String email);
+
+    @POST("donor/requestNewPassword")
+    Call<String> getNewPassword(@Body String emailAnswer);
+
 }

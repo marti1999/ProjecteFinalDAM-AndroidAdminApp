@@ -1,11 +1,14 @@
 package com.example.marti.projecte_uf1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,6 +22,7 @@ import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
+import com.unstoppable.submitbuttonview.SubmitButton;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,6 +32,7 @@ import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     EditText etEmail;
     EditText etPassword;
     CheckBox checkBox;
-    com.unstoppable.submitbuttonview.SubmitButton testButton;
+    SubmitButton testButton;
 
     public static final String EXTRA_PERSONA = PrefsFileKeys.NAME;
     public static final String EXTRA_EMAIL = PrefsFileKeys.EMAIL;
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     SQLiteManager manager = new SQLiteManager(this);
     @BindView(R.id.tvSignIn)
     TextView tvSignIn;
+    @BindView(R.id.tvForgotPassword)
+    TextView tvForgotPassword;
 
     private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
     private SharedPreferences prefs;
@@ -100,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         String oldName = prefs.getString(PrefsFileKeys.EMAIL, "");
         etEmail.setText(oldName);
-        if (!oldName.equals("")){
+        if (!oldName.equals("")) {
             checkBox.setChecked(true);
         }
 
@@ -279,8 +286,6 @@ public class MainActivity extends AppCompatActivity {
     public void launchLogInActivity() {
 
 
-
-
         rememberUserEmail();
 
         Intent launch = new Intent(this, AppActivity.class);
@@ -343,4 +348,94 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         manager.close();
     }
+
+    @OnClick(R.id.tvForgotPassword)
+    public void onViewClicked() {
+
+        if (etEmail.getText().toString().equalsIgnoreCase("")) {
+            Toast.makeText(this, "Write an email first", Toast.LENGTH_LONG).show();
+        } else {
+
+
+            mAPIService.getQuestionBothByMail(etEmail.getText().toString()).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            showAlertDialogQuestion(response.body());
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, response.code()+response.message(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+        }
+
+    }
+
+    public void showAlertDialogQuestion(String question) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Answer the security question");
+        builder.setMessage(question);
+
+        final EditText input = new EditText(this);
+
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                try {
+                    getNewPassword(input.getText().toString());
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public void getNewPassword(String answerRaw) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String answer = generatePasswordHash(answerRaw);
+        String body = etEmail.getText().toString()+"-"+answer;
+
+        mAPIService.getNewPassword(body).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()){
+                    String arr[] = response.body().split("-");
+                    if (arr[0].equalsIgnoreCase("true")){
+                        //TODO: send notification with new password
+                        Toast.makeText(MainActivity.this, "check your notifications", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, arr[1], Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Can't connect with server", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
