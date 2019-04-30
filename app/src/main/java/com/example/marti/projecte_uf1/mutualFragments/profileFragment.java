@@ -1,12 +1,15 @@
 package com.example.marti.projecte_uf1.mutualFragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.http.SslCertificate;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +51,8 @@ public class profileFragment extends Fragment {
     @BindView(R.id.dni)
     TextView dni;
     Unbinder unbinder;
+    @BindView(R.id.image)
+    de.hdodenhof.circleimageview.CircleImageView image;
     private ApiMecAroundInterfaces mAPIService;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
@@ -56,7 +61,7 @@ public class profileFragment extends Fragment {
     private Requestor requestor;
     private String userType;
     private String userId;
-
+private final int GALLERY_REQUEST_CODE = 1;
     public profileFragment() {
     }
 
@@ -129,9 +134,9 @@ public class profileFragment extends Fragment {
         type.setText(userType);
         name.setText(donor.name);
         pointsLabel.setText("Points");
-        points.setText(donor.points);
+        points.setText(String.valueOf(donor.points));
         amountLabel.setText("Amount Given");
-        amount.setText(donor.ammountGiven);
+        amount.setText(String.valueOf(donor.ammountGiven));
         email.setText(donor.email);
         password.setText("**********");
         name.setText(donor.name);
@@ -139,12 +144,12 @@ public class profileFragment extends Fragment {
 
     }
 
-    private void fillTextViewsRequestor(Requestor requestor){
+    private void fillTextViewsRequestor(Requestor requestor) {
 
         type.setText(userType);
         name.setText(requestor.name);
         pointsLabel.setText("Remaining Points");
-        points.setText(requestor.points);
+        points.setText(String.valueOf(requestor.points));
         amountLabel.setText("Points per year");
         amount.setText(requestor.maxClaim.value);
         email.setText(requestor.email);
@@ -168,7 +173,34 @@ public class profileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.password)
+
+
+    @OnClick(R.id.image)
     public void onViewClicked() {
+        pickFromGallery();
+    }
+    private void pickFromGallery(){
+        //Create an Intent with action as ACTION_PICK
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent,GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode){
+                case GALLERY_REQUEST_CODE:
+                    //data.getData returns the content URI for the selected Image
+                    Uri selectedImage = data.getData();
+                    image.setImageURI(selectedImage);
+                    break;
+            }
     }
 }
