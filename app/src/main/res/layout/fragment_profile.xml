@@ -12,7 +12,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:background="@drawable/gradient"
+            android:background="@drawable/gradientuser"
             android:orientation="vertical">
 
             <ImageView
@@ -30,6 +30,7 @@
                 android:text="Username"
                 android:textColor="#fff"
                 android:textSize="21sp"
+                android:id="@+id/type"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -56,7 +57,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Points"
+                        android:text="PointsLabel"
+                        android:id="@+id/pointsLabel"
+
                         android:textSize="20sp" />
 
                     <TextView
@@ -64,6 +67,8 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:text="1205"
+                        android:id="@+id/points"
+
                         android:textColor="@color/gris"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -81,6 +86,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Amount given"
+                        android:id="@+id/amountLabel"
+
                         android:textSize="20sp" />
 
                     <TextView
@@ -88,6 +95,8 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:text="360"
+                        android:id="@+id/amount"
+
                         android:textColor="@color/gris"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -103,6 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="45dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="80dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -111,6 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+
             android:paddingLeft="25dp">
 
             <ImageView
@@ -123,6 +134,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
+                android:id="@+id/email"
+
                 android:text="marti@gmail.com"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -145,6 +158,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
+                android:id="@+id/password"
+
                 android:text="**********"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -167,7 +182,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="name"
+                android:text="name"                android:id="@+id/name"
+
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -189,7 +205,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Last Name"
+                android:text="DNI"
+                android:id="@+id/dni"
+
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

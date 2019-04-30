@@ -60,4 +60,10 @@ public interface  ApiMecAroundInterfaces {
     @PUT("reward/availableDonor")
     Call<List<Reward>> getAvailableRewardByDonor(@Query("donorId")int donorId);
 
+    @GET("donor")
+    Call<Donor> getDonorById(@Query("id")int donorId);
+
+    @GET("requestor")
+    Call<Requestor> getRequestorById(@Query("id")int requestorId);
+
 }
