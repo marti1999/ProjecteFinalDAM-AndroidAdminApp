@@ -23,14 +23,14 @@
                 android:src="@drawable/male" />
 
             <TextView
+                android:id="@+id/type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:text="Username"
+                android:text="type"
                 android:textColor="#fff"
                 android:textSize="21sp"
-                android:id="@+id/type"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -174,7 +174,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/map" />
+                android:src="@drawable/person" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,7 +197,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/announcement" />
+                android:src="@drawable/dni" />
 
             <TextView
                 android:layout_width="wrap_content"
