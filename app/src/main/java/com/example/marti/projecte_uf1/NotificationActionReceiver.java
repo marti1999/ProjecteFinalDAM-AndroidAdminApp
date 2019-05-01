@@ -23,6 +23,7 @@ public class NotificationActionReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equalsIgnoreCase("COPY_TO_CLIPBOARD")) {
 
+
             Bundle extras = intent.getExtras();
             String word = extras.getString(EXTRA_WORD);
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
