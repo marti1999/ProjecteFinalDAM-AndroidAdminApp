@@ -7,6 +7,7 @@
     <dimen name="tab_label">14sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
 
+    <dimen name="dialog_margin">21dp</dimen>
 
     <dimen name="standard_55">60dp</dimen>
     <dimen name="standard_105">115dp</dimen>

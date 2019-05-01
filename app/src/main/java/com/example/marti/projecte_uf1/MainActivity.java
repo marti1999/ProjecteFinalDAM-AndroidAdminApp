@@ -10,8 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.example.marti.projecte_uf1.SignIn.RegisterActivity;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.utils.NotificationHelper;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.unstoppable.submitbuttonview.SubmitButton;
 
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_PERSONA = PrefsFileKeys.NAME;
     public static final String EXTRA_EMAIL = PrefsFileKeys.EMAIL;
     public static Integer SIGNIN_REQUEST = 1;
+    public static final String EXTRA_WORD = "1";
+
     public static final String LOGIN_OK = "true";
 
     SQLiteManager manager = new SQLiteManager(this);
@@ -365,7 +370,7 @@ public class MainActivity extends AppCompatActivity {
                             showAlertDialogQuestion(response.body());
                         }
                     } else {
-                        Toast.makeText(MainActivity.this, response.code()+response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, response.code() + response.message(), Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -383,12 +388,21 @@ public class MainActivity extends AppCompatActivity {
     public void showAlertDialogQuestion(String question) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Answer the security question");
-        builder.setMessage(question);
+        builder.setMessage("\n"+question);
 
         final EditText input = new EditText(this);
-
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        builder.setView(input);
+
+
+        FrameLayout container = new FrameLayout(this);
+        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin= getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+        input.setLayoutParams(params);
+        container.addView(input);
+
+        builder.setView(container);
 
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
@@ -415,16 +429,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void getNewPassword(String answerRaw) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         String answer = generatePasswordHash(answerRaw);
-        String body = etEmail.getText().toString()+"-"+answer;
+        // Toast.makeText(this, answer, Toast.LENGTH_LONG).show();
+        String body = etEmail.getText().toString() + "-" + answer;
 
         mAPIService.getNewPassword(body).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     String arr[] = response.body().split("-");
-                    if (arr[0].equalsIgnoreCase("true")){
-                        //TODO: send notification with new password
-                        Toast.makeText(MainActivity.this, "check your notifications", Toast.LENGTH_SHORT).show();
+                    if (arr[0].equalsIgnoreCase("true")) {
+
+                        sendNotification(arr[1]);
+                        Toast.makeText(MainActivity.this, "Check notifications", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, arr[1], Toast.LENGTH_SHORT).show();
                     }
@@ -437,5 +453,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    public void sendNotification(String word){
+        NotificationHelper nHelper = new NotificationHelper(this);
+        nHelper.createNotification("Password changed!", "This is your new password: " + word , word);
+    }
+
+
 
 }

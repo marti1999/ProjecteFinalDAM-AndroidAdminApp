@@ -1,5 +1,6 @@
 package com.example.marti.projecte_uf1.mutualFragments;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.example.marti.projecte_uf1.MainActivity;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Donor;
@@ -269,22 +272,32 @@ public class profileFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-
-                        YoYo.with(Techniques.FadeOut)
-                                .duration(4000)
-                                .playOn(image);
-                        image.setImageBitmap(myBitmap);
-                        YoYo.with(Techniques.FadeIn)
-                                .duration(4000)
-                                .playOn(image);
+                        changePictureWithAbsolutePath(imageFile);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        //Toast.makeText(getActivity(), "Failed to download profile picture", Toast.LENGTH_LONG).show();
+                        image.setImageResource(R.drawable.male);
                     }
                 });
+    }
+
+    private void changePictureWithAbsolutePath(File imageFile) {
+        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+
+//        YoYo.with(Techniques.FadeOut)
+//                .duration(2000)
+//                .playOn(image);
+
+
+
+
+
+
+        image.setImageBitmap(myBitmap);
+        YoYo.with(Techniques.FadeIn)
+                .duration(1500)
+                .playOn(image);
     }
 }

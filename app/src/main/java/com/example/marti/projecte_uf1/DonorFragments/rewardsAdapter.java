@@ -173,53 +173,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
 
     }
 
-    public void sendNotification(View view) { //TODO: utilitzar si es necessari en algum moment, sin'o s' hauria d' esborrar
 
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("fromNotification", "attending?");
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        Intent intentConfirm = new Intent(context, NotificationActionReceiver.class);
-        intentConfirm.putExtra(EXTRA_ID, "1");
-        intentConfirm.setAction("CONFIRM");
-        intentConfirm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-
-        Intent intentCancel = new Intent(context, NotificationActionReceiver.class);
-        intentCancel.setAction("CANCEL");
-        intentCancel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-
-        PendingIntent pendingIntentConfirm = PendingIntent.getBroadcast(context, 0, intentConfirm, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        PendingIntent pendingIntentCancel = PendingIntent.getBroadcast(context, 1, intentCancel, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.feministicon)
-                .setBadgeIconType(R.drawable.feministicon)
-                .setContentTitle("Attending to an event")
-                .setContentText("" + "Are you sure you want to attend to the event?\nLong click to show buttons")
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        notificationBuilder.addAction(R.drawable.ic_nav_menu, "Confirm", pendingIntentConfirm);
-        notificationBuilder.addAction(R.drawable.ic_nav_menu, "Cancel", pendingIntentCancel);
-
-
-        //NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-
-        notificationManager.notify(11111 /* ID of notification */, notificationBuilder.build());
-
-
-    }
 
 
 

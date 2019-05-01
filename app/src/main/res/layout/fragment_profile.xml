@@ -16,17 +16,14 @@
             android:orientation="vertical">
 
 
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/image"
+                android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
-                app:civ_border_width="2dp"
-                android:src="@drawable/profilepicture"
                 app:civ_border_color="@color/grisLight"
-                android:layout_width="150dp" />
+                app:civ_border_width="2dp" />
 
             <TextView
                 android:id="@+id/type"
