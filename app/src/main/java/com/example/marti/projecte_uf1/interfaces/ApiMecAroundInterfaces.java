@@ -5,9 +5,13 @@ package com.example.marti.projecte_uf1.interfaces;
 
 import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.model.Announcement;
+import com.example.marti.projecte_uf1.model.Classification;
+import com.example.marti.projecte_uf1.model.Color;
 import com.example.marti.projecte_uf1.model.Donor;
+import com.example.marti.projecte_uf1.model.Gender;
 import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.model.Reward;
+import com.example.marti.projecte_uf1.model.Size;
 import com.example.marti.projecte_uf1.model.Warehouse;
 
 import java.util.List;
@@ -71,5 +75,18 @@ public interface  ApiMecAroundInterfaces {
 
     @POST("donor/requestNewPassword")
     Call<String> getNewPassword(@Body String emailAnswer);
+
+
+
+
+    //Cloth Attributes
+    @GET("sizes")
+    Call<List<Size>> getClothSizes();
+    @GET("genders")
+    Call<List<Gender>> getClothGenders();
+    @GET("colors")
+    Call<List<Color>> getClothColors();
+    @GET("classifications")
+    Call<List<Classification>> getClothClassifications();
 
 }
