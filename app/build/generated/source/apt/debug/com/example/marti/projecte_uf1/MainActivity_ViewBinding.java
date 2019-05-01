@@ -14,7 +14,7 @@ import java.lang.Override;
 public class MainActivity_ViewBinding implements Unbinder {
   private MainActivity target;
 
-  private View view2131296570;
+  private View view2131296578;
 
   @UiThread
   public MainActivity_ViewBinding(MainActivity target) {
@@ -29,7 +29,7 @@ public class MainActivity_ViewBinding implements Unbinder {
     target.tvSignIn = Utils.findRequiredViewAsType(source, R.id.tvSignIn, "field 'tvSignIn'", TextView.class);
     view = Utils.findRequiredView(source, R.id.tvForgotPassword, "field 'tvForgotPassword' and method 'onViewClicked'");
     target.tvForgotPassword = Utils.castView(view, R.id.tvForgotPassword, "field 'tvForgotPassword'", TextView.class);
-    view2131296570 = view;
+    view2131296578 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -48,7 +48,7 @@ public class MainActivity_ViewBinding implements Unbinder {
     target.tvSignIn = null;
     target.tvForgotPassword = null;
 
-    view2131296570.setOnClickListener(null);
-    view2131296570 = null;
+    view2131296578.setOnClickListener(null);
+    view2131296578 = null;
   }
 }

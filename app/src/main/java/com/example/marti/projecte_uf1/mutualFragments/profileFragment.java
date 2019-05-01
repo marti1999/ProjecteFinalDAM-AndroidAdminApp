@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.example.marti.projecte_uf1.AppActivity;
 import com.example.marti.projecte_uf1.MainActivity;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
@@ -195,11 +196,23 @@ public class profileFragment extends Fragment {
             fillRequestor();
         }
        // image.setImageResource(R.drawable.profilepicture);
-        try {
-            downloadProfilePicture();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (getActivity() instanceof AppActivity){
+        File picturePath =  ((AppActivity) getActivity()).getProfilePicture();
+        if (picturePath == null){
+            image.setImageResource(R.drawable.male);
+
+        } else {
+            changePictureWithAbsolutePath(picturePath);
         }
+        } else {
+            try {
+                downloadProfilePicture();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
 
         return view;
@@ -248,6 +261,11 @@ public class profileFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getActivity(), "Profile picture succesfully uploaded", Toast.LENGTH_LONG).show();
+                try {
+                    ((AppActivity)getActivity()).downloadProfilePicture();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -286,18 +304,9 @@ public class profileFragment extends Fragment {
     private void changePictureWithAbsolutePath(File imageFile) {
         Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
 
-//        YoYo.with(Techniques.FadeOut)
-//                .duration(2000)
-//                .playOn(image);
-
-
-
-
-
-
         image.setImageBitmap(myBitmap);
         YoYo.with(Techniques.FadeIn)
-                .duration(1500)
+                .duration(2000)
                 .playOn(image);
     }
 }

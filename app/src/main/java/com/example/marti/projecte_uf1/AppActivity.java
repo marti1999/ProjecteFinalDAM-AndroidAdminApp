@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,9 +19,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.marti.projecte_uf1.DonorFragments.RewardsFragment;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
@@ -28,6 +33,14 @@ import com.example.marti.projecte_uf1.mutualFragments.fragmentMap;
 import com.example.marti.projecte_uf1.mutualFragments.profileFragment;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.example.marti.projecte_uf1.utils.asyncTask;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.ButterKnife;
 
@@ -39,10 +52,10 @@ public class AppActivity extends AppCompatActivity {
     private NavigationView navView;
     private int backButtonCount;
     boolean doubleBackToExitPressedOnce = false;
-
+    public File imageFile;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
-
+    private StorageReference mStorageRef;
     public Donor currentDonor;
     public Requestor currentRequestor;
 
@@ -67,6 +80,7 @@ public class AppActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
 
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -172,10 +186,61 @@ public class AppActivity extends AppCompatActivity {
         tvName.setText(userEmail);
         tvEmail.setText(userType);
 
-        asyncTask asyncTk = new asyncTask(AppActivity.this); //TODO: canviar per aconseguir la foto necessaria;
-        asyncTk.execute();
+
+        try {
+            downloadProfilePicture();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        asyncTask asyncTk = new asyncTask(AppActivity.this); //TODO: canviar per aconseguir la foto necessaria;
+//        asyncTk.execute();
 
         return true;
+    }
+
+    public void downloadProfilePicture() throws IOException {
+        String fileName = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
+        StorageReference ref = mStorageRef.child(fileName);
+        imageFile = File.createTempFile("images", "jpg");
+
+        ref.getFile(imageFile)
+                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        changePictureWithAbsolutePath(imageFile);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        //de.hdodenhof.circleimageview.CircleImageView image;
+                        de.hdodenhof.circleimageview.CircleImageView image = findViewById(R.id.profilePicture);
+                        image.setImageResource(R.drawable.male);
+                        imageFile = null;
+                    }
+                });
+    }
+
+    private void changePictureWithAbsolutePath(File imageFile) {
+        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+
+//        YoYo.with(Techniques.FadeOut)
+//                .duration(2000)
+//                .playOn(image);
+
+
+
+
+        de.hdodenhof.circleimageview.CircleImageView image = findViewById(R.id.profilePicture);
+
+        image.setImageBitmap(myBitmap);
+        YoYo.with(Techniques.FadeIn)
+                .duration(1500)
+                .playOn(image);
+    }
+
+    public File getProfilePicture(){
+        return imageFile;
     }
 
     @Override

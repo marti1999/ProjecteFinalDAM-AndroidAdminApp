@@ -41,26 +41,26 @@ public final class R {
     public static final class id {
         private id() {}
 
-        public static final int bottom = 0x7f090039;
-        public static final int current_scene = 0x7f09004f;
-        public static final int fade_in = 0x7f09007c;
-        public static final int fade_in_out = 0x7f09007d;
-        public static final int fade_out = 0x7f09007e;
-        public static final int group_layouttransition_backup = 0x7f09008d;
-        public static final int left = 0x7f0900a1;
-        public static final int overlay_layout_params_backup = 0x7f0900c7;
-        public static final int overlay_view = 0x7f0900c8;
-        public static final int parentMatrix = 0x7f0900cc;
-        public static final int right = 0x7f0900e9;
-        public static final int runningTransitions = 0x7f0900ec;
-        public static final int scene_layoutid_cache = 0x7f0900f2;
-        public static final int sequential = 0x7f090106;
-        public static final int together = 0x7f090140;
-        public static final int top = 0x7f090141;
-        public static final int transitionAlpha = 0x7f090144;
-        public static final int transitionName = 0x7f090145;
-        public static final int transitionPosition = 0x7f090146;
-        public static final int transitionTransform = 0x7f090147;
+        public static final int bottom = 0x7f090037;
+        public static final int current_scene = 0x7f09004c;
+        public static final int fade_in = 0x7f090075;
+        public static final int fade_in_out = 0x7f090076;
+        public static final int fade_out = 0x7f090077;
+        public static final int group_layouttransition_backup = 0x7f090086;
+        public static final int left = 0x7f090099;
+        public static final int overlay_layout_params_backup = 0x7f0900bf;
+        public static final int overlay_view = 0x7f0900c0;
+        public static final int parentMatrix = 0x7f0900c4;
+        public static final int right = 0x7f0900de;
+        public static final int runningTransitions = 0x7f0900e1;
+        public static final int scene_layoutid_cache = 0x7f0900e7;
+        public static final int sequential = 0x7f0900fb;
+        public static final int together = 0x7f090135;
+        public static final int top = 0x7f090136;
+        public static final int transitionAlpha = 0x7f090139;
+        public static final int transitionName = 0x7f09013a;
+        public static final int transitionPosition = 0x7f09013b;
+        public static final int transitionTransform = 0x7f09013c;
     }
     public static final class styleable {
         private styleable() {}

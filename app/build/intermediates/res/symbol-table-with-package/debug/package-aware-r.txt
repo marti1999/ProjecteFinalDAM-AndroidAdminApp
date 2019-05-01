@@ -937,6 +937,7 @@ dimen design_tab_scrollable_min_width
 dimen design_tab_text_size
 dimen design_tab_text_size_2line
 dimen design_textinput_caption_translate_y
+dimen dialog_margin
 dimen disabled_alpha_material_dark
 dimen disabled_alpha_material_light
 dimen fastscroll_default_thickness
@@ -1118,7 +1119,6 @@ drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable add
-drawable alarmadd
 drawable announcement
 drawable appicon
 drawable arrowleft
@@ -1126,10 +1126,7 @@ drawable arrowright
 drawable avd_hide_password
 drawable avd_show_password
 drawable b
-drawable btnormal
-drawable btpressed
 drawable button_focused
-drawable calculator
 drawable cloth
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
@@ -1150,8 +1147,6 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
-drawable custom_border_button
-drawable desc
 drawable design_bottom_navigation_item_background
 drawable design_fab_background
 drawable design_ic_visibility
@@ -1165,7 +1160,6 @@ drawable edit
 drawable email
 drawable event
 drawable female
-drawable feministicon
 drawable gift
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
@@ -1179,7 +1173,6 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_nav_menu
-drawable image1
 drawable lock
 drawable male
 drawable map
@@ -1200,20 +1193,16 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
-drawable pdf
 drawable person
 drawable personadd
-drawable phone
 drawable profilepicture
 drawable qr
-drawable security
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable uparrow
 drawable yes
 id ALT
 id CTRL
-id EsdevenimentName
 id FUNCTION
 id META
 id RewardLayoutContent
@@ -1266,7 +1255,6 @@ id auto
 id backBt
 id barrier
 id beginning
-id birth
 id blocking
 id bottom
 id buttonPanel
@@ -1289,14 +1277,12 @@ id content
 id contentPanel
 id content_frame
 id coordinator
-id createAccount
 id current_scene
 id custom
 id customPanel
 id dark
 id decor_content_parent
 id default_activity_button
-id description
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -1319,7 +1305,6 @@ id end_padder
 id enterAlways
 id enterAlwaysCollapsed
 id errorLayout
-id esdeveniments_list
 id etAnswer
 id etBirth
 id etClothQnt
@@ -1330,8 +1315,6 @@ id etName
 id etPassword
 id etPassword2
 id etQuestion
-id eventImage
-id eventInfo
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1364,7 +1347,6 @@ id ifRoom
 id image
 id imageView
 id info
-id interested
 id invisible
 id italic
 id item_touch_helper_previous_elevation
@@ -1419,11 +1401,8 @@ id parentMatrix
 id parentPanel
 id parent_matrix
 id password
-id password1
-id password2
 id percent
 id perones_list
-id phone3
 id pin
 id points
 id pointsLabel
@@ -1622,7 +1601,6 @@ layout abc_tooltip
 layout activity_app
 layout activity_main
 layout activity_register_acticity
-layout activity_sign_in
 layout announcement_list_item
 layout content_layout
 layout design_bottom_navigation_item
@@ -1639,7 +1617,6 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
-layout esdeveniment_list_item
 layout fragment_announcements
 layout fragment_create_qr
 layout fragment_fragment_map
