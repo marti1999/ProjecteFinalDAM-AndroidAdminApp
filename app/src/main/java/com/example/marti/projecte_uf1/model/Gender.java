@@ -41,4 +41,9 @@ public class Gender {
         this.active = active;
     }
 
+    @Override
+    public String toString() {
+        return gender1;
+    }
+
 }

@@ -41,4 +41,9 @@ public class Size {
         this.active = active;
     }
 
+    @Override
+    public String toString() {
+        return size1;
+    }
+
 }

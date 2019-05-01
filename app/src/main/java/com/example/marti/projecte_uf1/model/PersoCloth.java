@@ -7,19 +7,15 @@ public class PersoCloth {
     private int clothColor;
     private int clothSize;
     private int clothGender;
-    private int currPunts;
-    private int punts;
-    private int pecesDonadesTotal;
+    private int points;
 
-    public PersoCloth(int donorId, int clothClassification, int clothColor, int clothSize, int clothGender, int currPunts, int punts, int pecesDonadesTotal) {
+    public PersoCloth(int donorId, int clothClassification, int clothColor, int clothSize, int clothGender, int points) {
         this.donorId = donorId;
         this.clothClassification = clothClassification;
         this.clothColor = clothColor;
         this.clothSize = clothSize;
         this.clothGender = clothGender;
-        this.currPunts = currPunts;
-        this.punts = punts;
-        this.pecesDonadesTotal = pecesDonadesTotal;
+        this.points = points;
     }
 
     public int getDonorId() {
@@ -42,16 +38,22 @@ public class PersoCloth {
         return clothGender;
     }
 
-    public int getCurrPunts() {
-        return currPunts;
+
+    public int getPoints() {
+        return points;
     }
 
-    public int getPunts() {
-        return punts;
-    }
 
-    public int getPecesDonadesTotal() {
-        return pecesDonadesTotal;
-    }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "donorId:" + donorId +
+                ", clothClassification:" + clothClassification +
+                ", clothColor:" + clothColor +
+                ", clothSize:" + clothSize +
+                ", clothGender:" + clothGender +
+                ", points:" + points +
+                '}';
+    }
 }

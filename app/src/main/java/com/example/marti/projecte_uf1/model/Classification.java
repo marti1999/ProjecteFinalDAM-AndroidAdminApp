@@ -45,5 +45,9 @@ public class Classification {
         this.active = active;
         this.value = value;
     }
+    @Override
+    public String toString() {
+        return classificationType;
+    }
 
 }
