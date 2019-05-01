@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">370005516674-jfluakdki99j6i41k8b330ncf7aetd54.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://voltacatalunya2.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">370005516674</string>
+    <string name="google_api_key" translatable="false">AIzaSyCXtccvD0gL2KvbETmfQxwtKK-TiNukBrA</string>
+    <string name="google_app_id" translatable="false">1:370005516674:android:81e475385c6e91aa</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCXtccvD0gL2KvbETmfQxwtKK-TiNukBrA</string>
+    <string name="google_storage_bucket" translatable="false">voltacatalunya2.appspot.com</string>
+    <string name="project_id" translatable="false">voltacatalunya2</string>
+</resources>
