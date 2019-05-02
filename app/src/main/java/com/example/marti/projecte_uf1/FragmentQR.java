@@ -52,7 +52,7 @@ public class FragmentQR extends Fragment {
     private Button generate_QRCode;
     private Button btnAddCloth;
     private ImageView qrCode;
-    private EditText etQnt;
+    private android.support.design.widget.TextInputEditText etQnt;
     private Spinner clothClassification;
     private Spinner clothColor;
     private Spinner clothSize;
@@ -284,7 +284,7 @@ public class FragmentQR extends Fragment {
         generate_QRCode = (Button) view.findViewById(R.id.generate_qr);
         btnAddCloth = (Button) view.findViewById(R.id.addItemToList);
         qrCode = (ImageView) view.findViewById(R.id.imageView);
-        etQnt = (EditText) view.findViewById(R.id.etClothQnt);
+        etQnt = (android.support.design.widget.TextInputEditText) view.findViewById(R.id.etClothQnt);
         linearQR = view.findViewById(R.id.llShowQr);
         linearForm = view.findViewById(R.id.llFormQr);
 
