@@ -44,9 +44,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="edit" />
-                                      <entry key="theme" value="HOLO_DARK" />
-                                      <entry key="themeColor" value="ffffff" />
+                                      <entry key="outputName" value="editGrey" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="9b9b9b" />
                                     </map>
                                   </option>
                                 </PersistentState>

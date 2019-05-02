@@ -1,7 +1,9 @@
 package com.example.marti.projecte_uf1.mutualFragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -11,10 +13,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +83,8 @@ public class profileFragment extends Fragment {
     CircleImageView image;
     @BindView(R.id.imageEdit)
     FloatingActionButton imageEdit;
+    @BindView(R.id.passwordEdit)
+    AppCompatImageView passwordEdit;
     private ApiMecAroundInterfaces mAPIService;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
@@ -224,11 +236,6 @@ public class profileFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.imageEdit)
-    public void onViewClicked() {
-        pickImageFromGallery();
-    }
-
     private void pickImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -307,5 +314,89 @@ public class profileFragment extends Fragment {
         YoYo.with(Techniques.FadeIn)
                 .duration(2000)
                 .playOn(image);
+    }
+
+    @OnClick({R.id.imageEdit, R.id.passwordEdit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imageEdit:
+                pickImageFromGallery();
+                break;
+            case R.id.passwordEdit:
+
+                break;
+        }
+    }
+
+    private void showPasswordChangeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Input de new password");
+        builder.setMessage("\nWrite it two times to minimize errors");
+
+
+        final EditText input = new EditText(getActivity());
+        final EditText input2 = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+
+        FrameLayout container = new FrameLayout(getActivity());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+        input.setLayoutParams(params);
+        input2.setLayoutParams(params);
+        container.addView(input);
+        container.addView(input2);
+
+        builder.setView(container);
+
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (input.getText().toString().equals(input2.getText().toString())) {
+                    try {
+                        String hash = generatePasswordHash(input.getText().toString());
+                        if (userType.equalsIgnoreCase("donor")) {
+                            Donor d = new Donor();
+                            d.id = Integer.valueOf(userId);
+                            d.password = hash;
+                            //TODO: webservice post
+                        } else {
+                            Requestor r = new Requestor();
+                            r.id = Integer.valueOf(userId);
+                            r.password = hash;
+                            //TODO: webservice post
+                        }
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Failed to change password", Toast.LENGTH_SHORT).show();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Failed to change password", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Password do not match", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public String generatePasswordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+        digest.reset();
+        digest.update(password.getBytes("utf8"));
+        String newPassword = String.format("%040x", new BigInteger(1, digest.digest()));
+        return newPassword;
     }
 }
