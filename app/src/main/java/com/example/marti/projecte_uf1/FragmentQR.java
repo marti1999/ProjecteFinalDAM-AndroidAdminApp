@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -56,8 +57,11 @@ public class FragmentQR extends Fragment {
     private Spinner clothColor;
     private Spinner clothSize;
     private Spinner clothGender;
+    private LinearLayout linearQR;
+    private LinearLayout linearForm;
     private List<PersoCloth> qrCloth;
     private Donor donorActual;
+    private int donorId = 0;
 
 
     @Override
@@ -65,11 +69,10 @@ public class FragmentQR extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_qr, container, false);
         viewFormBindings(view);
-        qrCloth = new ArrayList<>();
-
         mAPIService = ApiUtils.getAPIService();
+        qrCloth = new ArrayList<>();
+        setActualDonor();
         fillSpinners();
-
         btnAddCloth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +93,9 @@ public class FragmentQR extends Fragment {
                     }
 
                     finalText += "]}";
+                    //TODO: FER INVISIBLE o VISIBLE segons situacio
+                    //linearQR.setVisibility(View.VISIBLE);
+                    // linearForm.setVisibility(View.INVISIBLE);
 
                     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                     try {
@@ -106,6 +112,38 @@ public class FragmentQR extends Fragment {
             }
         });
         return view;
+    }
+
+    private void setActualDonor() {
+        prefs = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        try {
+            donorId = Integer.parseInt(prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "0"));
+        } catch (Exception e) {
+            Log.d("Donor id get", e.toString());
+        }
+        mAPIService.getDonorById(donorId).enqueue(new Callback<Donor>() {
+            @Override
+            public void onResponse(Call<Donor> call, Response<Donor> response) {
+                if (response.isSuccessful()) {
+
+
+                    if (response.body() != null) {
+                        donorActual = response.body();
+                    } else {
+                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Donor> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void fillSpinners() {
@@ -210,13 +248,6 @@ public class FragmentQR extends Fragment {
 
     private void addCloth() {
 
-        prefs = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        int donorId = 0;
-        try {
-            donorId = Integer.parseInt(prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "0"));
-        } catch (Exception e) {
-            Log.d("Donor id get", e.toString());
-        }
         if (donorId != 0) {
             Classification classif = (Classification) clothClassification.getSelectedItem();
             int idClassification = classif.id;
@@ -235,7 +266,7 @@ public class FragmentQR extends Fragment {
 
             int qntFinal = Integer.parseInt(qntFinalText);
             PersoCloth persoCloth = new PersoCloth(donorId, idClassification, idColor, idSize, idGender, clothPoints);
-            donorActual = (Donor) mAPIService.getDonorById(donorId);
+
             addCustomClothToList(persoCloth, qntFinal);
 
         } else {
@@ -254,7 +285,8 @@ public class FragmentQR extends Fragment {
         btnAddCloth = (Button) view.findViewById(R.id.addItemToList);
         qrCode = (ImageView) view.findViewById(R.id.imageView);
         etQnt = (EditText) view.findViewById(R.id.etClothQnt);
-
+        linearQR = view.findViewById(R.id.llShowQr);
+        linearForm = view.findViewById(R.id.llFormQr);
 
         clothClassification = view.findViewById(R.id.spinClothType);
         clothColor = view.findViewById(R.id.spinClothColor);

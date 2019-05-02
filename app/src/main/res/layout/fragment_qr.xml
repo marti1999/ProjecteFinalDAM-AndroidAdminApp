@@ -62,6 +62,14 @@
             android:text="Generate QR"
             tools:layout_editor_absoluteX="133dp"
             tools:layout_editor_absoluteY="92dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:minWidth="200dp"
+            android:minHeight="200dp" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -72,19 +80,11 @@
         android:gravity="center"
         android:orientation="vertical"
         tools:context="com.example.marti.projecte_uf1.AppActivity"
-        tools:showIn="@layout/activity_main"
         android:id="@+id/llShowQr"
         android:visibility="gone"
-        >
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_launcher"
-            tools:layout_editor_absoluteX="152dp"
-            tools:layout_editor_absoluteY="218dp" />
+        android:background="@color/background"
+        android:minWidth="200dp"
+        android:minHeight="200dp">
 
 
 
