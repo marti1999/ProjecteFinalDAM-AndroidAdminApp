@@ -386,6 +386,7 @@ public class profileFragment extends Fragment {
                                     }
                                 }
 
+
                                 @Override
                                 public void onFailure(Call<Donor> call, Throwable t) {
                                     Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();

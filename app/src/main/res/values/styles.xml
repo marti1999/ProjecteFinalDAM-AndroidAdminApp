@@ -46,6 +46,11 @@
         <item name="android:background">@drawable/button_focused</item>
     </style>
 
+    <style name="buttonBigSecondary">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_focused_secondary</item>
+    </style>
+
     <style name="textViewNormal">
         <item name="android:textColor">@color/gris</item>
     </style>
