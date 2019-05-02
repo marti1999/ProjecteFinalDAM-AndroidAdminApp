@@ -21,11 +21,13 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.easing.linear.Linear;
 import com.example.marti.projecte_uf1.AppActivity;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
@@ -323,7 +325,7 @@ public class profileFragment extends Fragment {
                 pickImageFromGallery();
                 break;
             case R.id.passwordEdit:
-
+                showPasswordChangeDialog();
                 break;
         }
     }
@@ -334,23 +336,28 @@ public class profileFragment extends Fragment {
         builder.setMessage("\nWrite it two times to minimize errors");
 
 
-        final EditText input = new EditText(getActivity());
-        final EditText input2 = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.setOrientation(LinearLayout.VERTICAL);
 
-
-        FrameLayout container = new FrameLayout(getActivity());
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
 
+// Add a TextView here for the "Title" label, as noted in the comments
+        final EditText input = new EditText(getActivity());
+        input.setHint("Password");
         input.setLayoutParams(params);
-        input2.setLayoutParams(params);
-        container.addView(input);
-        container.addView(input2);
+        layout.addView(input); // Notice this is an add method
 
-        builder.setView(container);
+// Add another TextView here for the "Description" label
+        final EditText input2 = new EditText(getActivity());
+        input2.setHint("Repeat password");
+        input2.setLayoutParams(params);
+        layout.addView(input2); // Another add method
+
+
+        builder.setView(layout);
+
 
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
@@ -363,12 +370,35 @@ public class profileFragment extends Fragment {
                             Donor d = new Donor();
                             d.id = Integer.valueOf(userId);
                             d.password = hash;
-                            //TODO: webservice post
+
+                            mAPIService.updateDonor(Integer.valueOf(d.id), d).enqueue(new Callback<Donor>() {
+                                @Override
+                                public void onResponse(Call<Donor> call, Response<Donor> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response.body() != null) {
+                                            Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity(), response.code(), Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Donor> call, Throwable t) {
+                                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+
+                                }
+                            });
+
+
                         } else {
                             Requestor r = new Requestor();
                             r.id = Integer.valueOf(userId);
                             r.password = hash;
-                            //TODO: webservice post
+                            //TODO: webservice put
                         }
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();

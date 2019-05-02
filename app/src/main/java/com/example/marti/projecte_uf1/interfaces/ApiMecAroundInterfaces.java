@@ -76,6 +76,9 @@ public interface  ApiMecAroundInterfaces {
     @POST("donor/requestNewPassword")
     Call<String> getNewPassword(@Body String emailAnswer);
 
+    @PUT("donor")
+    Call<Donor> updateDonor(@Query("id") int donorId,
+                            @Body Donor donor);
 
 
 

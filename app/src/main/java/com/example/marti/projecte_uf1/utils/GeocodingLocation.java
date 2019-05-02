@@ -24,40 +24,45 @@ public class GeocodingLocation {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-                String result = null;
-                try {
-                    List<Address> addressList = geocoder.getFromLocationName(locationAddress, 1);
-                    if (addressList != null && addressList.size() > 0) {
-                        Address address = addressList.get(0);
-                        StringBuilder sb = new StringBuilder();
-                        sb.append(address.getLatitude()).append(",");
-                        sb.append(address.getLongitude());
-                        result = sb.toString();
-                    }
-                } catch (IOException e) {
-                    Log.e(TAG, "Unable to connect to Geocoder", e);
-                } finally {
-                    Message message = Message.obtain();
-                    message.setTarget(handler);
-                    if (result != null) {
-                        message.what = 1;
-                        Bundle bundle = new Bundle();
+                try{
+                    Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                    String result = null;
+                    try {
+                        List<Address> addressList = geocoder.getFromLocationName(locationAddress, 1);
+                        if (addressList != null && addressList.size() > 0) {
+                            Address address = addressList.get(0);
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(address.getLatitude()).append(",");
+                            sb.append(address.getLongitude());
+                            result = sb.toString();
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, "Unable to connect to Geocoder", e);
+                    } finally {
+                        Message message = Message.obtain();
+                        message.setTarget(handler);
+                        if (result != null) {
+                            message.what = 1;
+                            Bundle bundle = new Bundle();
 
-                        bundle.putString("address", result);
-                        message.setData(bundle);
-                    } else {
-                        message.what = 1;
-                        Bundle bundle = new Bundle();
-                        result = "Unable to get Latitude and Longitude for this address location." ;
-                        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-                        bundle.putString("address", result);
-                        bundle.putString("warehouseName", name);
+                            bundle.putString("address", result);
+                            message.setData(bundle);
+                        } else {
+                            message.what = 1;
+                            Bundle bundle = new Bundle();
+                            result = "Unable to get Latitude and Longitude for this address location." ;
+                            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                            bundle.putString("address", result);
+                            bundle.putString("warehouseName", name);
 
-                        message.setData(bundle);
+                            message.setData(bundle);
+                        }
+                        message.sendToTarget();
                     }
-                    message.sendToTarget();
+                } catch (Exception e){
+                    Toast.makeText(context, "Unable to connect to Geocoder", Toast.LENGTH_LONG).show();
                 }
+
             }
         };
         thread.start();
