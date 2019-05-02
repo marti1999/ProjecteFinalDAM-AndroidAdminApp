@@ -5,13 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.androidtutorialpoint.mymapsappsdirection.permission.MAPS_RECEIVE" />
-
 
     <supports-screens
         android:largeScreens="true"
@@ -26,7 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name="NotificationActionReceiver">
+
+        <receiver android:name=".NotificationActionReceiver">
             <intent-filter>
                 <action android:name="COPY_TO_CLIPBOARD" />
             </intent-filter>
@@ -36,7 +36,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBcDIiw-UW_WP7EKdzA3KJRbRcl3Tk0mgE" />
 
-        <activity android:name=".SignIn.RegisterActivity"  android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SignIn.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AppActivity"
             android:parentActivityName=".MainActivity"
@@ -50,8 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
 
         <service android:name=".myService" />
     </application>

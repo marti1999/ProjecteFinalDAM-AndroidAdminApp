@@ -1,6 +1,5 @@
 package com.example.marti.projecte_uf1.mutualFragments;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -8,9 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.marti.projecte_uf1.AppActivity;
-import com.example.marti.projecte_uf1.MainActivity;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Donor;
@@ -43,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,7 +70,9 @@ public class profileFragment extends Fragment {
     TextView dni;
     Unbinder unbinder;
     @BindView(R.id.image)
-    de.hdodenhof.circleimageview.CircleImageView image;
+    CircleImageView image;
+    @BindView(R.id.imageEdit)
+    FloatingActionButton imageEdit;
     private ApiMecAroundInterfaces mAPIService;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
@@ -195,15 +196,15 @@ public class profileFragment extends Fragment {
         } else {
             fillRequestor();
         }
-       // image.setImageResource(R.drawable.profilepicture);
-        if (getActivity() instanceof AppActivity){
-        File picturePath =  ((AppActivity) getActivity()).getProfilePicture();
-        if (picturePath == null){
-            image.setImageResource(R.drawable.male);
+        // image.setImageResource(R.drawable.profilepicture);
+        if (getActivity() instanceof AppActivity) {
+            File picturePath = ((AppActivity) getActivity()).getProfilePicture();
+            if (picturePath == null) {
+                image.setImageResource(R.drawable.male);
 
-        } else {
-            changePictureWithAbsolutePath(picturePath);
-        }
+            } else {
+                changePictureWithAbsolutePath(picturePath);
+            }
         } else {
             try {
                 downloadProfilePicture();
@@ -211,8 +212,6 @@ public class profileFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
-
 
 
         return view;
@@ -225,7 +224,7 @@ public class profileFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.image)
+    @OnClick(R.id.imageEdit)
     public void onViewClicked() {
         pickImageFromGallery();
     }
@@ -262,7 +261,7 @@ public class profileFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getActivity(), "Profile picture succesfully uploaded", Toast.LENGTH_LONG).show();
                 try {
-                    ((AppActivity)getActivity()).downloadProfilePicture();
+                    ((AppActivity) getActivity()).downloadProfilePicture();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

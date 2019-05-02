@@ -1,4 +1,0 @@
-#Wed May 01 13:18:07 CEST 2019
-base.0=C\:\\Users\\mcaix\\Documents\\Source\\Repos\\androidApp2\\projecteFinal\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\8
-path.0=classes.dex
-renamed.0=classes.dex

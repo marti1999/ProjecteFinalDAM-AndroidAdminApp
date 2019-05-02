@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,22 +16,50 @@
             android:background="@drawable/gradientuser"
             android:orientation="vertical">
 
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+            <RelativeLayout
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
-                app:civ_border_color="@color/grisLight"
-                app:civ_border_width="2dp" />
+                android:clipChildren="false"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    app:civ_border_color="@color/grisLight"
+                    app:civ_border_width="2dp" />
+
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/imageEdit"
+                    app:fabSize="mini"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    android:layout_below="@+id/image"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginTop="-153dp"
+
+                    android:src="@drawable/edit" />
+
+
+
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:text="type"
                 android:textColor="#fff"
                 android:textSize="21sp"
@@ -58,23 +87,23 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/pointsLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="PointsLabel"
-                        android:id="@+id/pointsLabel"
 
                         android:textSize="20sp" />
 
                     <TextView
+                        android:id="@+id/points"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
 
+                        android:paddingTop="10dp"
                         android:text="1205"
-                        android:id="@+id/points"
 
                         android:textColor="#303F9F"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -86,22 +115,22 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/amountLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Amount given"
-                        android:id="@+id/amountLabel"
 
                         android:textSize="20sp" />
 
                     <TextView
+                        android:id="@+id/amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:text="360"
-                        android:id="@+id/amount"
 
                         android:textColor="#303F9F"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -113,8 +142,8 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginTop="45dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="45dp"
         android:layout_marginBottom="80dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -132,14 +161,14 @@
                 android:src="@drawable/email" />
 
             <TextView
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:id="@+id/email"
-                android:textColor="#303F9F"
+                android:text="marti@gmail.com"
 
-                android:text="marti@gmail.com" />
+                android:textColor="#303F9F" />
         </LinearLayout>
 
         <LinearLayout
@@ -155,15 +184,15 @@
                 android:src="@drawable/lock" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/password"
 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:id="@+id/password"
-                android:textColor="#303F9F"
+                android:text="**********"
 
-                android:text="**********" />
+                android:textColor="#303F9F" />
         </LinearLayout>
 
         <LinearLayout
@@ -179,12 +208,13 @@
                 android:src="@drawable/person" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/name"
 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="name"                android:id="@+id/name"
+                android:text="name"
                 android:textColor="#303F9F" />
         </LinearLayout>
 
@@ -201,13 +231,13 @@
                 android:src="@drawable/dni" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/dni"
 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="DNI"
-                android:id="@+id/dni"
                 android:textColor="#303F9F" />
         </LinearLayout>
     </LinearLayout>
