@@ -88,7 +88,7 @@ public class profileFragment extends Fragment {
     @BindView(R.id.passwordEdit)
     AppCompatImageView passwordEdit;
     private ApiMecAroundInterfaces mAPIService;
-    private String sharedPrefFile = "prefsFile";
+    private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
     private Donor donor;
@@ -346,12 +346,17 @@ public class profileFragment extends Fragment {
 // Add a TextView here for the "Title" label, as noted in the comments
         final EditText input = new EditText(getActivity());
         input.setHint("Password");
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         input.setLayoutParams(params);
+
         layout.addView(input); // Notice this is an add method
 
 // Add another TextView here for the "Description" label
         final EditText input2 = new EditText(getActivity());
         input2.setHint("Repeat password");
+        input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         input2.setLayoutParams(params);
         layout.addView(input2); // Another add method
 
