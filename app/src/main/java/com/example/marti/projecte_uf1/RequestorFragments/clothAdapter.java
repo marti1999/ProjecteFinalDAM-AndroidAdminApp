@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.SQLiteManager;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
@@ -37,6 +39,7 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView warehouseAddress;
+        public TextView warehouseAddress2;
         public Button btMap;
         //public TextView announcementRecipient;
         public LinearLayout linearLayout;
@@ -49,6 +52,7 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
         public MyViewHolder(View view) {
             super(view);
             warehouseAddress = view.findViewById(R.id.tvAddress);
+            warehouseAddress2 = view.findViewById(R.id.tvAddress2);
           //  announcementRecipient = view.findViewById(R.id.announcementRecipient);
             linearLayout = view.findViewById(R.id.warehouse_list);
             btMap = view.findViewById(R.id.btViewOnMap);
@@ -93,9 +97,22 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
 
 
 
-        myViewHolder.warehouseAddress.setText(warehouse.street + ", " + warehouse.number + "\n"+warehouse.postalCode+ " " +warehouse.city);
-        //myViewHolder.announcementRecipient.setText(warehouse.recipient);
-        //myViewHolder.announcementMessage.setText(warehouse.message);
+        myViewHolder.warehouseAddress.setText(warehouse.street + ", " + warehouse.number);
+        myViewHolder.warehouseAddress2.setText(warehouse.postalCode+ ",  " +warehouse.city);
+
+
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        String name = warehouse.city;
+        String letter2 = String.valueOf(name.charAt(0));
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .withBorder(4) /* thickness in px */
+                .endConfig()
+                .buildRoundRect(letter2, generator.getRandomColor(), 10);
+
+
+
+        myViewHolder.warehouseImage.setImageDrawable(drawable);
 
         myViewHolder.btMap.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,7 +26,7 @@
         <item
         android:id="@+id/cloth"
         android:icon="@drawable/cloth"
-        android:title="Cloth" />
+        android:title="Search clothes" />
     </group>
     <group android:checkableBehavior="single" android:visible="true" android:id="@+id/mutual_navview">
         <item

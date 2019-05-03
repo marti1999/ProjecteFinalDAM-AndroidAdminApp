@@ -60,14 +60,14 @@
         <item name="android:ems">10</item>
     </style>
 
-    <style name="textViewPersonaItem">
+    <style name="textViewAddressItem">
         <item name="android:textSize">16dp</item>
     </style>
 
-    <style name="ButtonItemPersona">
+    <style name="ButtomWarehouseItem">
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">15dp</item>
-        <item name="android:background">@color/colorAccent</item>
+        <item name="android:background">@drawable/squareroundedbutton</item>
         <item name="android:layout_marginEnd">0dp</item>
     </style>
 

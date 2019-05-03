@@ -65,6 +65,10 @@ dependencies {
     //ROUND IMAGEVIEW
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
+    //RANDOM COLORS FOR LIST/RECYCLERVIEWS
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+
+
 
 }
 apply plugin: 'com.google.gms.google-services'

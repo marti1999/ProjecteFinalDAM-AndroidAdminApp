@@ -29,7 +29,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="20dp"
         android:text=""
-        style="@style/textViewPersonaItem" />
+        style="@style/textViewAddressItem" />
 
 
     <Button
@@ -42,5 +42,5 @@
 
 
         android:text="@string/sendText"
-        style="@style/ButtonItemPersona" />
+        style="@style/ButtomWarehouseItem" />
 </LinearLayout>
