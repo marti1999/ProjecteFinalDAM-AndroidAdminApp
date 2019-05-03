@@ -1,11 +1,10 @@
 package com.example.marti.projecte_uf1.interfaces;
 
 
-
-
 import com.example.marti.projecte_uf1.model.Administrator;
 import com.example.marti.projecte_uf1.model.Announcement;
 import com.example.marti.projecte_uf1.model.Classification;
+import com.example.marti.projecte_uf1.model.Cloth;
 import com.example.marti.projecte_uf1.model.Color;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Gender;
@@ -26,7 +25,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
-public interface  ApiMecAroundInterfaces {
+public interface ApiMecAroundInterfaces {
 
 
     @POST("administrator/login")
@@ -55,20 +54,24 @@ public interface  ApiMecAroundInterfaces {
     Call<List<Warehouse>> getWarehoues();
 
     @PUT("reward/claim")
-    Call<Boolean> claimReward(@Query("rewardId")int rewardId,
+    Call<Boolean> claimReward(@Query("rewardId") int rewardId,
                               @Body int donorId);
 
+    @POST("warehouse/byCloth")
+    Call<List<Warehouse>> getWarehousesByCloth(@Body Cloth c);
+
+
     @GET("announcementsUserType")
-    Call<List<Announcement>> getAnnouncements(@Query("userType")String userType);
+    Call<List<Announcement>> getAnnouncements(@Query("userType") String userType);
 
     @PUT("reward/availableDonor")
-    Call<List<Reward>> getAvailableRewardByDonor(@Query("donorId")int donorId);
+    Call<List<Reward>> getAvailableRewardByDonor(@Query("donorId") int donorId);
 
     @GET("donor")
-    Call<Donor> getDonorById(@Query("id")int donorId);
+    Call<Donor> getDonorById(@Query("id") int donorId);
 
     @GET("requestor")
-    Call<Requestor> getRequestorById(@Query("id")int requestorId);
+    Call<Requestor> getRequestorById(@Query("id") int requestorId);
 
     @POST("donor/question")
     Call<String> getQuestionBothByMail(@Body String email);
@@ -81,14 +84,16 @@ public interface  ApiMecAroundInterfaces {
                             @Body Donor donor);
 
 
-
     //Cloth Attributes
     @GET("sizes")
     Call<List<Size>> getClothSizes();
+
     @GET("genders")
     Call<List<Gender>> getClothGenders();
+
     @GET("colors")
     Call<List<Color>> getClothColors();
+
     @GET("classifications")
     Call<List<Classification>> getClothClassifications();
 

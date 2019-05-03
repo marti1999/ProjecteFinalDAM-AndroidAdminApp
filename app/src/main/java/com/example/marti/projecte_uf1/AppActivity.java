@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.marti.projecte_uf1.DonorFragments.RewardsFragment;
+import com.example.marti.projecte_uf1.RequestorFragments.clothFragment;
 import com.example.marti.projecte_uf1.model.Donor;
 import com.example.marti.projecte_uf1.model.Requestor;
 import com.example.marti.projecte_uf1.mutualFragments.AnnouncementsFragment;
@@ -131,6 +132,9 @@ public class AppActivity extends AppCompatActivity {
                                 fragment = new profileFragment();
                                 fragmentTransaction = true;
                                 break;
+                            case R.id.cloth:
+                                fragment = new clothFragment();
+                                fragmentTransaction = true;
                         }
 
                         if (fragmentTransaction) {
