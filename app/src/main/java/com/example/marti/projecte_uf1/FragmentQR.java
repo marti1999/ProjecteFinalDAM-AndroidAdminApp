@@ -90,7 +90,7 @@ public class FragmentQR extends Fragment {
                     String finalText = "";
                     int clothGivenFinal = donorActual.ammountGiven;
                     int currDonorPoints = donorActual.points;
-                    finalText += "{'NumGiven': "+clothGivenFinal +", 'DonorCurrPoints':"+currDonorPoints+", 'CustomCloths':[";
+                    finalText += "{\"NumGiven\": "+clothGivenFinal +", \"DonorCurrPoints\":"+currDonorPoints+", \"CustomCloths\":[";
                     for (PersoCloth p :qrCloth) {
                         finalText += p.toString() + ",";
                     }

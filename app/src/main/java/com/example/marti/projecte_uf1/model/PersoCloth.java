@@ -48,12 +48,12 @@ public class PersoCloth {
     @Override
     public String toString() {
         return "{" +
-                "donorId:" + donorId +
-                ", clothClassification:" + clothClassification +
-                ", clothColor:" + clothColor +
-                ", clothSize:" + clothSize +
-                ", clothGender:" + clothGender +
-                ", points:" + points +
+                "\"donorId\":" + donorId +
+                ", \"clothClassification\":" + clothClassification +
+                ", \"clothColor\":" + clothColor +
+                ", \"clothSize\":" + clothSize +
+                ", \"clothGender\":" + clothGender +
+                ", \"points\":" + points +
                 '}';
     }
 }
