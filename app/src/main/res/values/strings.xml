@@ -24,7 +24,10 @@
     <string name="sendText">Send</string>
     <string name="doubleTapText">Press the back button once again to close the application.</string>
     <string name="welcome">Welcome</string>
-
+    <string name="base_total_clothes">Total clothes:</string>
+    <string name="generate_qr">Generate QR</string>
+    <string name="add_cloth">Add cloth</string>
+    <string name="amount">Amount</string>
 
     <string-array name="income">
         <item>15000</item>

@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
@@ -42,6 +42,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentQR extends Fragment {
 
+    private static final int MAX_EACH_TIME = 6;
+
     public FragmentQR() {
     }
 
@@ -52,13 +54,13 @@ public class FragmentQR extends Fragment {
     private Button generate_QRCode;
     private Button btnAddCloth;
     private ImageView qrCode;
+    private TextView actualClothes;
     private android.support.design.widget.TextInputEditText etQnt;
+    private de.hdodenhof.circleimageview.CircleImageView btnDelCloth;
     private Spinner clothClassification;
     private Spinner clothColor;
     private Spinner clothSize;
     private Spinner clothGender;
-    private LinearLayout linearQR;
-    private LinearLayout linearForm;
     private List<PersoCloth> qrCloth;
     private Donor donorActual;
     private int donorId = 0;
@@ -72,6 +74,7 @@ public class FragmentQR extends Fragment {
         mAPIService = ApiUtils.getAPIService();
         qrCloth = new ArrayList<>();
         setActualDonor();
+        setActualCloths();
         fillSpinners();
         btnAddCloth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,27 +94,46 @@ public class FragmentQR extends Fragment {
                     for (PersoCloth p :qrCloth) {
                         finalText += p.toString() + ",";
                     }
-
+                    finalText = finalText.substring(0,finalText.length()-1);
                     finalText += "]}";
-                    //TODO: FER INVISIBLE o VISIBLE segons situacio
-                    //linearQR.setVisibility(View.VISIBLE);
-                    // linearForm.setVisibility(View.INVISIBLE);
 
-                    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-                    try {
-                        BitMatrix bitMatrix = multiFormatWriter.encode(finalText, BarcodeFormat.QR_CODE, 200, 200);
-                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-                        qrCode.setImageBitmap(bitmap);
-                    } catch (WriterException e) {
-                        e.printStackTrace();
-                    }
+                    generateQR(finalText);
                 }else {
                     Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
+        btnDelCloth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleanPersoClothList();
+            }
+        });
         return view;
+    }
+
+    private void cleanPersoClothList() {
+        qrCloth.clear();
+        setActualCloths();
+    }
+
+    private void setActualCloths() {
+        String clothText = getString(R.string.base_total_clothes)+ " " + qrCloth.size();
+        actualClothes.setText(clothText);
+    }
+
+    private void generateQR(String finalText) {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(finalText, BarcodeFormat.QR_CODE, 600, 600);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            qrCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setActualDonor() {
@@ -245,33 +267,41 @@ public class FragmentQR extends Fragment {
         });
     }
 
-
     private void addCloth() {
 
-        if (donorId != 0) {
-            Classification classif = (Classification) clothClassification.getSelectedItem();
-            int idClassification = classif.id;
-            int clothPoints = classif.value;
-            Color col = (Color) clothColor.getSelectedItem();
-            int idColor = col.id;
-            Size s = (Size) clothSize.getSelectedItem();
-            int idSize = s.id;
-            Gender gen = (Gender) clothGender.getSelectedItem();
-            int idGender = gen.id;
-
-            String qntFinalText = etQnt.getText().toString();
-            if (qntFinalText.equals("") || qntFinalText.equals("0")) {
-                qntFinalText = "1";
-            }
-
-            int qntFinal = Integer.parseInt(qntFinalText);
-            PersoCloth persoCloth = new PersoCloth(donorId, idClassification, idColor, idSize, idGender, clothPoints);
-
-            addCustomClothToList(persoCloth, qntFinal);
-
-        } else {
-            Toast.makeText(getActivity(), "An ERROR has been occurred generating the QR", Toast.LENGTH_SHORT).show();
+        String qntFinalText = etQnt.getText().toString();
+        if (qntFinalText.equals("") || qntFinalText.equals("0")) {
+            qntFinalText = "1";
         }
+        int qntFinal = Integer.parseInt(qntFinalText);
+        if(isValidQuantity(qntFinal) && isValidQuantity(qrCloth.size()+qntFinal)) {
+
+            if (donorId != 0) {
+                Classification classif = (Classification) clothClassification.getSelectedItem();
+                int idClassification = classif.id;
+                int clothPoints = classif.value;
+                Color col = (Color) clothColor.getSelectedItem();
+                int idColor = col.id;
+                Size s = (Size) clothSize.getSelectedItem();
+                int idSize = s.id;
+                Gender gen = (Gender) clothGender.getSelectedItem();
+                int idGender = gen.id;
+
+
+                PersoCloth persoCloth = new PersoCloth(donorId, idClassification, idColor, idSize, idGender, clothPoints);
+
+                addCustomClothToList(persoCloth, qntFinal);
+                setActualCloths();
+            } else {
+                Toast.makeText(getActivity(), "An ERROR has been occurred generating the QR", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(getActivity(), "The max quantity of items (each time) is "+MAX_EACH_TIME, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isValidQuantity(int qnt) {
+        return qnt > 0 && qnt <= MAX_EACH_TIME;
     }
 
     private void addCustomClothToList(PersoCloth persoCloth, int qntFinal) {
@@ -283,14 +313,15 @@ public class FragmentQR extends Fragment {
     private void viewFormBindings(View view) {
         generate_QRCode = (Button) view.findViewById(R.id.generate_qr);
         btnAddCloth = (Button) view.findViewById(R.id.addItemToList);
+        btnDelCloth = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.deleteClothes);
         qrCode = (ImageView) view.findViewById(R.id.imageView);
         etQnt = (android.support.design.widget.TextInputEditText) view.findViewById(R.id.etClothQnt);
-        linearQR = view.findViewById(R.id.llShowQr);
-        linearForm = view.findViewById(R.id.llFormQr);
+        actualClothes = (TextView) view.findViewById(R.id.totalClothes);
 
-        clothClassification = view.findViewById(R.id.spinClothType);
-        clothColor = view.findViewById(R.id.spinClothColor);
-        clothSize = view.findViewById(R.id.spinClothSize);
-        clothGender = view.findViewById(R.id.spinClothGender);
+
+        clothClassification = (Spinner) view.findViewById(R.id.spinClothType);
+        clothColor = (Spinner) view.findViewById(R.id.spinClothColor);
+        clothSize = (Spinner) view.findViewById(R.id.spinClothSize);
+        clothGender = (Spinner) view.findViewById(R.id.spinClothGender);
     }
 }
