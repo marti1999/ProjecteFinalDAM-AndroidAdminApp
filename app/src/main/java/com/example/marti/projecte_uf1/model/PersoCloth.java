@@ -43,7 +43,7 @@ public class PersoCloth {
     @Override
     public String toString() {
         return "{" +
-                ", \"clothClassification\":" + clothClassification +
+                "\"clothClassification\":" + clothClassification +
                 ", \"clothColor\":" + clothColor +
                 ", \"clothSize\":" + clothSize +
                 ", \"clothGender\":" + clothGender +

@@ -91,7 +91,7 @@ public class FragmentQR extends Fragment {
                     int clothGivenFinal = donorActual.ammountGiven;
                     int currDonorPoints = donorActual.points;
                     int donorId = donorActual.id;
-                    finalText += "{\"NumGiven\": "+clothGivenFinal +", \"DonorCurrPoints\":"+currDonorPoints+", \"DonorId:+" +donorId+"\" \"CustomCloths\":[";
+                    finalText += "{\"NumGiven\": "+clothGivenFinal +", \"DonorId\":" +donorId+", \"CustomCloths\":[";
                     for (PersoCloth p :qrCloth) {
                         finalText += p.toString() + ",";
                     }
@@ -148,8 +148,6 @@ public class FragmentQR extends Fragment {
             @Override
             public void onResponse(Call<Donor> call, Response<Donor> response) {
                 if (response.isSuccessful()) {
-
-
                     if (response.body() != null) {
                         donorActual = response.body();
                     } else {
