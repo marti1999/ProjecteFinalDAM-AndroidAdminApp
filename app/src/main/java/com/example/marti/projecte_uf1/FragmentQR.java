@@ -90,7 +90,8 @@ public class FragmentQR extends Fragment {
                     String finalText = "";
                     int clothGivenFinal = donorActual.ammountGiven;
                     int currDonorPoints = donorActual.points;
-                    finalText += "{\"NumGiven\": "+clothGivenFinal +", \"DonorCurrPoints\":"+currDonorPoints+", \"CustomCloths\":[";
+                    int donorId = donorActual.id;
+                    finalText += "{\"NumGiven\": "+clothGivenFinal +", \"DonorCurrPoints\":"+currDonorPoints+", \"DonorId:+" +donorId+"\" \"CustomCloths\":[";
                     for (PersoCloth p :qrCloth) {
                         finalText += p.toString() + ",";
                     }
@@ -288,7 +289,7 @@ public class FragmentQR extends Fragment {
                 int idGender = gen.id;
 
 
-                PersoCloth persoCloth = new PersoCloth(donorId, idClassification, idColor, idSize, idGender, clothPoints);
+                PersoCloth persoCloth = new PersoCloth(idClassification, idColor, idSize, idGender, clothPoints);
 
                 addCustomClothToList(persoCloth, qntFinal);
                 setActualCloths();

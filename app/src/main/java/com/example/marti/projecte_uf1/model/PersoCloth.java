@@ -2,15 +2,13 @@ package com.example.marti.projecte_uf1.model;
 
 public class PersoCloth {
 
-    private int donorId;
     private int clothClassification;
     private int clothColor;
     private int clothSize;
     private int clothGender;
     private int points;
 
-    public PersoCloth(int donorId, int clothClassification, int clothColor, int clothSize, int clothGender, int points) {
-        this.donorId = donorId;
+    public PersoCloth( int clothClassification, int clothColor, int clothSize, int clothGender, int points) {
         this.clothClassification = clothClassification;
         this.clothColor = clothColor;
         this.clothSize = clothSize;
@@ -18,9 +16,6 @@ public class PersoCloth {
         this.points = points;
     }
 
-    public int getDonorId() {
-        return donorId;
-    }
 
     public int getClothClassification() {
         return clothClassification;
@@ -48,7 +43,6 @@ public class PersoCloth {
     @Override
     public String toString() {
         return "{" +
-                "\"donorId\":" + donorId +
                 ", \"clothClassification\":" + clothClassification +
                 ", \"clothColor\":" + clothColor +
                 ", \"clothSize\":" + clothSize +
