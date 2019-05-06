@@ -59,7 +59,6 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 public class clothFragment extends Fragment {
-    //  @BindView(R.id.warehouse_recyclerview)
     RecyclerView rv;
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeContainer;
@@ -91,12 +90,9 @@ public class clothFragment extends Fragment {
     private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
-    //  SwipeRefreshLayout swipeContainer;
-//    RecyclerView rv;
     clothAdapter adapter;
     Cloth selectedCloth;
     private GoogleMap mMap;
-    Geocoder gc;
     private Warehouse chosenWarehouse;
     private String chosenWarehouseAddress;
 
@@ -221,6 +217,15 @@ public class clothFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cloth, container, false);
         unbinder = ButterKnife.bind(this, view);
         emptyView.setText("Select a cloth to see\navailable warehouses");
+        emptyView.setVisibility(View.VISIBLE);
+
+        initializeSwipeContainer();
+        bindMap();
+
+        return view;
+    }
+
+    private void initializeSwipeContainer() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -231,10 +236,6 @@ public class clothFragment extends Fragment {
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
-        bindMap();
-
-        return view;
     }
 
 
@@ -242,7 +243,6 @@ public class clothFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Search clothes");
-        //populateList(new Cloth());
     }
 
     private void populateList(Cloth c) {
@@ -252,36 +252,25 @@ public class clothFragment extends Fragment {
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-
                         List<Warehouse> list = response.body();
 
                         if (list.size() > 0) {
-
                             setAdapter(new ArrayList<Warehouse>(list));
                         } else {
-                            if (emptyView.getVisibility() == View.GONE) {
 
-                                emptyView.setText("Cloth not available.\nPlease, try another.");
-                                YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
-                                emptyView.setVisibility(View.VISIBLE);
-
-                                //Toast.makeText(getActivity(), "No warehouse available", Toast.LENGTH_SHORT).show();
-
-                            }
+                            emptyView.setText("Cloth not available.\nPlease, try another.");
+                            YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
+                            emptyView.setVisibility(View.VISIBLE);
                         }
 
                     } else {
                         Toast.makeText(getActivity(), "Can't connect with server, try again later", Toast.LENGTH_SHORT).show();
-
                     }
-
-                    swipeContainer.setRefreshing(false);
 
                 } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
-                    swipeContainer.setRefreshing(false);
-
                 }
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -305,13 +294,6 @@ public class clothFragment extends Fragment {
 
             YoYo.with(Techniques.FadeIn).duration(1300).playOn(rv);
             rv.setAdapter(adapter);
-        } else {
-//            if (emptyView.getVisibility()== View.GONE) {
-//
-//                emptyView.setText("No warehouse available for this cloth.\\nPlease, try another.");
-//                YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
-//                emptyView.setVisibility(View.VISIBLE);
-//            }
         }
     }
 
@@ -336,65 +318,69 @@ public class clothFragment extends Fragment {
         });
     }
 
-    @SuppressLint("RestrictedApi")
+
     @OnClick({R.id.chooseCloth, R.id.fabHideMap})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.chooseCloth:
-                selectedCloth = new Cloth();
-                selectedCloth.classificationId = ((Classification) spinClothType.getSelectedItem()).id;
-                selectedCloth.colorId = ((Color) spinClothColor.getSelectedItem()).id;
-                selectedCloth.genderId = ((Gender) spinClothGender.getSelectedItem()).id;
-                selectedCloth.sizeId = ((Size) spinClothSize.getSelectedItem()).id;
-
+                setSelectedCloth();
                 populateList(selectedCloth);
                 break;
-            case R.id.fabHideMap:
-                YoYo.with(Techniques.FadeOut).duration(1250).playOn(fragmentClothParent);
-                YoYo.with(Techniques.FadeOut).duration(1250).playOn(fabHideMap);
-                YoYo.with(Techniques.FadeIn).duration(1250).playOn(fragmentClothParent);
 
-                fragmentClothForm.setVisibility(View.VISIBLE);
-                fragmentClothList.setVisibility(View.VISIBLE);
-//                CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabHideMap.getLayoutParams();
-//                p.setAnchorId(View.NO_ID);
-//                fabHideMap.setLayoutParams(p);
-                fabHideMap.setVisibility(View.GONE);
-                fragmentClothMap.setVisibility(View.GONE);
+            case R.id.fabHideMap:
+                makeFormAndListVisivle();
                 break;
         }
     }
 
+    @SuppressLint("RestrictedApi")
+    private void makeFormAndListVisivle() {
+        YoYo.with(Techniques.FadeOut).duration(1250).playOn(fragmentClothParent);
+        YoYo.with(Techniques.FadeOut).duration(1250).playOn(fabHideMap);
+        YoYo.with(Techniques.FadeIn).duration(1250).playOn(fragmentClothParent);
+
+        fragmentClothForm.setVisibility(View.VISIBLE);
+        fragmentClothList.setVisibility(View.VISIBLE);
+        fabHideMap.setVisibility(View.GONE);
+        fragmentClothMap.setVisibility(View.GONE);
+    }
+
+    private void setSelectedCloth() {
+        selectedCloth = new Cloth();
+        selectedCloth.classificationId = ((Classification) spinClothType.getSelectedItem()).id;
+        selectedCloth.colorId = ((Color) spinClothColor.getSelectedItem()).id;
+        selectedCloth.genderId = ((Gender) spinClothGender.getSelectedItem()).id;
+        selectedCloth.sizeId = ((Size) spinClothSize.getSelectedItem()).id;
+    }
+
+    //handler que passa la location al mapa quan el message "what" és actualitzat amb nova informació
+    //no es crida a ningún lloc, actua com a listener.
     private class GeocoderHandler extends Handler {
         @Override
         public void handleMessage(Message message) {
             String locationAddress;
-            String name;
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
                     locationAddress = bundle.getString("address");
-                    name = bundle.getString("warehouseName");
                     break;
                 default:
                     locationAddress = null;
-                    name = null;
             }
             String[] latlong = locationAddress.split(",");
             double latitude = Double.parseDouble(latlong[0]);
             double longitude = Double.parseDouble(latlong[1]);
             LatLng location = new LatLng(latitude, longitude);
-            //  Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
 
-            addMarker(location, name);
+            addMarker(location);
 
         }
     }
 
 
+    //aquest mètode és cridat des de l'adapter del recycler view d'aquest fragment.
     public void showWarehouseOnMap(Warehouse warehouse) {
         chosenWarehouse = warehouse;
-        //  Toast.makeText(getActivity(), "TEST", Toast.LENGTH_SHORT).show();
         String address = warehouse.street + ", " + warehouse.number + " " + warehouse.postalCode + " " + warehouse.city;
         chosenWarehouseAddress = address;
         GeocodingLocation locationAddress = new GeocodingLocation();
@@ -402,12 +388,9 @@ public class clothFragment extends Fragment {
                 getActivity(), new GeocoderHandler());
     }
 
-    @SuppressLint("RestrictedApi")
-    public void addMarker(LatLng latlng, String name) {
+    public void addMarker(LatLng latlng) {
         MarkerOptions markerOptions = new MarkerOptions();
-
         markerOptions.position(latlng);
-
         markerOptions.title(chosenWarehouseAddress);
 
         CameraPosition googlePlex = CameraPosition.builder()
@@ -417,8 +400,13 @@ public class clothFragment extends Fragment {
                 .build();
 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 3500, null);
-
         mMap.addMarker(markerOptions);
+
+        makeMapVisible();
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void makeMapVisible() {
         YoYo.with(Techniques.FadeOut).duration(1250).playOn(fragmentClothParent);
         YoYo.with(Techniques.FadeIn).duration(1250).playOn(fragmentClothParent);
         YoYo.with(Techniques.FadeIn).duration(1250).playOn(fabHideMap);

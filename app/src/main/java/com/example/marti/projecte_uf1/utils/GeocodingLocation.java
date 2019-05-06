@@ -17,7 +17,6 @@ import javax.xml.transform.Result;
 
 public class GeocodingLocation {
 
-    private static final String TAG = "GeocodingLocation";
 
     public static void getAddressFromLocation(final String locationAddress, final String name,
                                               final Context context, final Handler handler) {
@@ -37,7 +36,8 @@ public class GeocodingLocation {
                             result = sb.toString();
                         }
                     } catch (IOException e) {
-                        Log.e(TAG, "Unable to connect to Geocoder", e);
+                        Toast.makeText(context, "Unable to connect to Geocoder", Toast.LENGTH_LONG).show();
+
                     } finally {
                         Message message = Message.obtain();
                         message.setTarget(handler);

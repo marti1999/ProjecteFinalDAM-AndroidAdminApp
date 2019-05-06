@@ -44,10 +44,8 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
             super(view);
             warehouseAddress = view.findViewById(R.id.tvAddress);
             warehouseAddress2 = view.findViewById(R.id.tvAddress2);
-
             linearLayout = view.findViewById(R.id.warehouse_list);
             btMap = view.findViewById(R.id.btViewOnMap);
-
             warehouseImage = view.findViewById(R.id.warehouse_image);
         }
 
@@ -58,12 +56,10 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
     }
 
 
-
     public clothAdapter(ArrayList<Warehouse> warehouseArrayList, Context context, clothFragment fragment) {
         this.list = warehouseArrayList;
         this.context = context;
         this.fragment = fragment;
-
     }
 
     @NonNull
@@ -72,7 +68,6 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
 
         View item = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.warehouse_list_item, viewGroup, false);
-
 
         mAPIService = ApiUtils.getAPIService();
 
@@ -84,12 +79,8 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull final clothAdapter.MyViewHolder myViewHolder, final int i) {
         final Warehouse warehouse = list.get(i);
 
-
-
-
         myViewHolder.warehouseAddress.setText(warehouse.street + ", " + warehouse.number);
-        myViewHolder.warehouseAddress2.setText(warehouse.postalCode+ ",  " +warehouse.city);
-
+        myViewHolder.warehouseAddress2.setText(warehouse.postalCode + ",  " + warehouse.city);
 
         ColorGenerator generator = ColorGenerator.MATERIAL;
         String name = warehouse.city;
@@ -100,8 +91,6 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
                 .endConfig()
                 .buildRoundRect(letter2, generator.getRandomColor(), 10);
 
-
-
         myViewHolder.warehouseImage.setImageDrawable(drawable);
 
         myViewHolder.btMap.setOnClickListener(new View.OnClickListener() {
@@ -109,17 +98,11 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
             public void onClick(View v) {
                 ArrayList<Warehouse> list = new ArrayList<Warehouse>();
                 list.add(warehouse);
-               // Toast.makeText(context, "aqui se deberia ver el mapa TODO", Toast.LENGTH_SHORT).show();
                 fragment.showWarehouseOnMap(warehouse);
             }
         });
 
-
     }
-
-
-
-
 
     @Override
     public int getItemCount() {
