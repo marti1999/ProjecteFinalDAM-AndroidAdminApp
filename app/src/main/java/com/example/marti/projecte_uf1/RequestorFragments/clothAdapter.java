@@ -29,23 +29,14 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
 
     private ArrayList<Warehouse> list;
     private Context context;
-    public static final String EXTRA_ID = "ID";
-    SQLiteManager manager = new SQLiteManager(context);
-    private String sharedPrefFile = "prefsFile";
-    private SharedPreferences prefs;
-    private SharedPreferences.Editor prefsEditor;
     public ApiMecAroundInterfaces mAPIService;
-
+    public clothFragment fragment;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView warehouseAddress;
         public TextView warehouseAddress2;
         public Button btMap;
-        //public TextView announcementRecipient;
         public LinearLayout linearLayout;
-       // public LinearLayout linearLayoutHeader;
-      //  public LinearLayout linearLayoutContent;
-    //    public TextView announcementMessage;
         public ImageView warehouseImage;
 
 
@@ -53,13 +44,10 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
             super(view);
             warehouseAddress = view.findViewById(R.id.tvAddress);
             warehouseAddress2 = view.findViewById(R.id.tvAddress2);
-          //  announcementRecipient = view.findViewById(R.id.announcementRecipient);
+
             linearLayout = view.findViewById(R.id.warehouse_list);
             btMap = view.findViewById(R.id.btViewOnMap);
 
-//            linearLayoutHeader = view.findViewById(R.id.announcementHeaderLaout);
-//            linearLayoutContent = view.findViewById(R.id.announcementLayoutContent);
-//            announcementMessage = view.findViewById(R.id.announcementInfo);
             warehouseImage = view.findViewById(R.id.warehouse_image);
         }
 
@@ -71,9 +59,11 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
 
 
 
-    public clothAdapter(ArrayList<Warehouse> warehouseArrayList, Context context) {
+    public clothAdapter(ArrayList<Warehouse> warehouseArrayList, Context context, clothFragment fragment) {
         this.list = warehouseArrayList;
         this.context = context;
+        this.fragment = fragment;
+
     }
 
     @NonNull
@@ -119,7 +109,8 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
             public void onClick(View v) {
                 ArrayList<Warehouse> list = new ArrayList<Warehouse>();
                 list.add(warehouse);
-                Toast.makeText(context, "aqui se deberia ver el mapa TODO", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, "aqui se deberia ver el mapa TODO", Toast.LENGTH_SHORT).show();
+                fragment.showWarehouseOnMap(warehouse);
             }
         });
 

@@ -50,7 +50,7 @@ public class GeocodingLocation {
                         } else {
                             message.what = 1;
                             Bundle bundle = new Bundle();
-                            result = "Unable to get Latitude and Longitude for this address location." ;
+                            result = "Unable to get location for this address." ;
                             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                             bundle.putString("address", result);
                             bundle.putString("warehouseName", name);

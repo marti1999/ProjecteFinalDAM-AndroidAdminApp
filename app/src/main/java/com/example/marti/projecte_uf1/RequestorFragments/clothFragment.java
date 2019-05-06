@@ -1,9 +1,15 @@
 package com.example.marti.projecte_uf1.RequestorFragments;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +35,15 @@ import com.example.marti.projecte_uf1.model.Gender;
 import com.example.marti.projecte_uf1.model.Size;
 import com.example.marti.projecte_uf1.model.Warehouse;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.utils.GeocodingLocation;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +76,16 @@ public class clothFragment extends Fragment {
     Button generateQr;
     @BindView(R.id.empty_view)
     TextView emptyView;
+    @BindView(R.id.fragment_cloth_form)
+    LinearLayout fragmentClothForm;
+    @BindView(R.id.fragment_cloth_list)
+    LinearLayout fragmentClothList;
+    @BindView(R.id.fragment_cloth_map)
+    LinearLayout fragmentClothMap;
+    @BindView(R.id.fabHideMap)
+    FloatingActionButton fabHideMap;
+    @BindView(R.id.fragment_cloth_parent)
+    LinearLayout fragmentClothParent;
     private RecyclerView.LayoutManager mLayoutManager;
     private ApiMecAroundInterfaces mAPIService;
     private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
@@ -70,6 +95,10 @@ public class clothFragment extends Fragment {
 //    RecyclerView rv;
     clothAdapter adapter;
     Cloth selectedCloth;
+    private GoogleMap mMap;
+    Geocoder gc;
+    private Warehouse chosenWarehouse;
+    private String chosenWarehouseAddress;
 
     public clothFragment() {
 
@@ -192,11 +221,10 @@ public class clothFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cloth, container, false);
         unbinder = ButterKnife.bind(this, view);
         emptyView.setText("Select a cloth to see\navailable warehouses");
-        //TODO: canviar el parametre de la linia de sota al populate list
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                populateList(new Cloth());
+                populateList(selectedCloth);
             }
         });
         swipeContainer.setColorSchemeResources(R.color.colorPrimary,
@@ -204,6 +232,7 @@ public class clothFragment extends Fragment {
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
 
+        bindMap();
 
         return view;
     }
@@ -218,25 +247,32 @@ public class clothFragment extends Fragment {
 
     private void populateList(Cloth c) {
         mAPIService.getWarehousesByCloth(c).enqueue(new Callback<List<Warehouse>>() {
-            //TODO: fer servir la linia de dalt
-            //mAPIService.getWarehoues().enqueue(new Callback<List<Warehouse>>() {
+
             @Override
             public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
+
                         List<Warehouse> list = response.body();
-                        setAdapter(new ArrayList<Warehouse>(list));
+
+                        if (list.size() > 0) {
+
+                            setAdapter(new ArrayList<Warehouse>(list));
+                        } else {
+                            if (emptyView.getVisibility() == View.GONE) {
+
+                                emptyView.setText("Cloth not available.\nPlease, try another.");
+                                YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
+                                emptyView.setVisibility(View.VISIBLE);
+
+                                //Toast.makeText(getActivity(), "No warehouse available", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
 
                     } else {
-                        if (emptyView.getVisibility() == View.GONE) {
+                        Toast.makeText(getActivity(), "Can't connect with server, try again later", Toast.LENGTH_SHORT).show();
 
-                            emptyView.setText("Cloth not available.\nPlease, try another.");
-                            YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
-                            emptyView.setVisibility(View.VISIBLE);
-
-                            Toast.makeText(getActivity(), "No warehouse available", Toast.LENGTH_SHORT).show();
-
-                        }
                     }
 
                     swipeContainer.setRefreshing(false);
@@ -262,11 +298,12 @@ public class clothFragment extends Fragment {
             YoYo.with(Techniques.FadeOut).duration(1300).playOn(emptyView);
             emptyView.setVisibility(View.GONE);
 
-            adapter = new clothAdapter(warehouses, getActivity());
+            adapter = new clothAdapter(warehouses, getActivity(), clothFragment.this);
             rv = getView().findViewById(R.id.warehouse_recyclerview);
             mLayoutManager = new GridLayoutManager(getActivity(), 2);
             rv.setLayoutManager(mLayoutManager);
 
+            YoYo.with(Techniques.FadeIn).duration(1300).playOn(rv);
             rv.setAdapter(adapter);
         } else {
 //            if (emptyView.getVisibility()== View.GONE) {
@@ -278,6 +315,120 @@ public class clothFragment extends Fragment {
         }
     }
 
+    private void bindMap() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapFragment);
+
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                mMap = googleMap;
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                mMap.clear();
+
+                CameraPosition googlePlex = CameraPosition.builder()
+                        .target(new LatLng(41.59, 1.52))
+                        .zoom(7.5f)
+                        .bearing(0)
+                        .build();
+
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 3500, null);
+            }
+        });
+    }
+
+    @SuppressLint("RestrictedApi")
+    @OnClick({R.id.chooseCloth, R.id.fabHideMap})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.chooseCloth:
+                selectedCloth = new Cloth();
+                selectedCloth.classificationId = ((Classification) spinClothType.getSelectedItem()).id;
+                selectedCloth.colorId = ((Color) spinClothColor.getSelectedItem()).id;
+                selectedCloth.genderId = ((Gender) spinClothGender.getSelectedItem()).id;
+                selectedCloth.sizeId = ((Size) spinClothSize.getSelectedItem()).id;
+
+                populateList(selectedCloth);
+                break;
+            case R.id.fabHideMap:
+                YoYo.with(Techniques.FadeOut).duration(1250).playOn(fragmentClothParent);
+                YoYo.with(Techniques.FadeOut).duration(1250).playOn(fabHideMap);
+                YoYo.with(Techniques.FadeIn).duration(1250).playOn(fragmentClothParent);
+
+                fragmentClothForm.setVisibility(View.VISIBLE);
+                fragmentClothList.setVisibility(View.VISIBLE);
+//                CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabHideMap.getLayoutParams();
+//                p.setAnchorId(View.NO_ID);
+//                fabHideMap.setLayoutParams(p);
+                fabHideMap.setVisibility(View.GONE);
+                fragmentClothMap.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            String name;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    name = bundle.getString("warehouseName");
+                    break;
+                default:
+                    locationAddress = null;
+                    name = null;
+            }
+            String[] latlong = locationAddress.split(",");
+            double latitude = Double.parseDouble(latlong[0]);
+            double longitude = Double.parseDouble(latlong[1]);
+            LatLng location = new LatLng(latitude, longitude);
+            //  Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+
+            addMarker(location, name);
+
+        }
+    }
+
+
+    public void showWarehouseOnMap(Warehouse warehouse) {
+        chosenWarehouse = warehouse;
+        //  Toast.makeText(getActivity(), "TEST", Toast.LENGTH_SHORT).show();
+        String address = warehouse.street + ", " + warehouse.number + " " + warehouse.postalCode + " " + warehouse.city;
+        chosenWarehouseAddress = address;
+        GeocodingLocation locationAddress = new GeocodingLocation();
+        locationAddress.getAddressFromLocation(address, warehouse.name,
+                getActivity(), new GeocoderHandler());
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void addMarker(LatLng latlng, String name) {
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        markerOptions.position(latlng);
+
+        markerOptions.title(chosenWarehouseAddress);
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(latlng)
+                .zoom(10f)
+                .bearing(0)
+                .build();
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 3500, null);
+
+        mMap.addMarker(markerOptions);
+        YoYo.with(Techniques.FadeOut).duration(1250).playOn(fragmentClothParent);
+        YoYo.with(Techniques.FadeIn).duration(1250).playOn(fragmentClothParent);
+        YoYo.with(Techniques.FadeIn).duration(1250).playOn(fabHideMap);
+        fragmentClothForm.setVisibility(View.GONE);
+        fragmentClothList.setVisibility(View.GONE);
+        fabHideMap.setVisibility(View.VISIBLE);
+
+        fragmentClothMap.setVisibility(View.VISIBLE);
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -285,14 +436,5 @@ public class clothFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.chooseCloth)
-    public void onViewClicked() {
-        selectedCloth = new Cloth();
-        selectedCloth.classificationId = ((Classification) spinClothType.getSelectedItem()).id;
-        selectedCloth.colorId = ((Color) spinClothColor.getSelectedItem()).id;
-        selectedCloth.genderId = ((Gender) spinClothGender.getSelectedItem()).id;
-        selectedCloth.sizeId = ((Size) spinClothSize.getSelectedItem()).id;
 
-        populateList(selectedCloth);
-    }
 }
