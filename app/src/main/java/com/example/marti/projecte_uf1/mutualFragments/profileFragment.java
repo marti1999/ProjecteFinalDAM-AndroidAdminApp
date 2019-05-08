@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.daimajia.easing.linear.Linear;
 import com.example.marti.projecte_uf1.AppActivity;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
@@ -87,6 +86,8 @@ public class profileFragment extends Fragment {
     FloatingActionButton imageEdit;
     @BindView(R.id.passwordEdit)
     AppCompatImageView passwordEdit;
+    @BindView(R.id.layout_fragment_profile)
+    FrameLayout layoutFragmentProfile;
     private ApiMecAroundInterfaces mAPIService;
     private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
     private SharedPreferences prefs;
@@ -204,6 +205,12 @@ public class profileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        //layoutFragmentProfile.setVisibility(View.INVISIBLE);
+        YoYo.with(Techniques.FadeIn)
+                .duration(2000)
+                .playOn(layoutFragmentProfile);
+        layoutFragmentProfile.setVisibility(View.VISIBLE);
 
         if (userType.equalsIgnoreCase("donor")) {
             fillDonor();
@@ -343,7 +350,6 @@ public class profileFragment extends Fragment {
         params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
 
-// Add a TextView here for the "Title" label, as noted in the comments
         final EditText input = new EditText(getActivity());
         input.setHint("Password");
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -352,7 +358,6 @@ public class profileFragment extends Fragment {
 
         layout.addView(input); // Notice this is an add method
 
-// Add another TextView here for the "Description" label
         final EditText input2 = new EditText(getActivity());
         input2.setHint("Repeat password");
         input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -406,7 +411,6 @@ public class profileFragment extends Fragment {
                             r.password = hash;
 
 
-
                             mAPIService.updateRequestor(Integer.valueOf(r.id), r).enqueue(new Callback<Requestor>() {
                                 @Override
                                 public void onResponse(Call<Requestor> call, Response<Requestor> response) {
@@ -429,7 +433,6 @@ public class profileFragment extends Fragment {
 
                                 }
                             });
-
 
 
                         }

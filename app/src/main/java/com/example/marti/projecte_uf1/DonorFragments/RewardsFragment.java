@@ -116,12 +116,15 @@ public class RewardsFragment extends Fragment {
 
                 } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    swipeContainer.setRefreshing(false);
+
                 }
             }
 
             @Override
             public void onFailure(Call<List<Reward>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                swipeContainer.setRefreshing(false);
 
             }
         });

@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_fragment_profile"
+    android:visibility="invisible"
     tools:context=".mutualFragments.profileFragment">
 
     <RelativeLayout
@@ -59,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:text="type"
+                android:text=""
                 android:textColor="#fff"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -99,7 +101,7 @@
                         android:layout_height="wrap_content"
 
                         android:paddingTop="10dp"
-                        android:text="1205"
+                        android:text=""
 
                         android:textColor="#303F9F"
                         android:textSize="20sp" />
@@ -126,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
-                        android:text="360"
+                        android:text=""
 
                         android:textColor="#303F9F"
                         android:textSize="20sp" />
@@ -165,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="marti@gmail.com"
+                android:text=""
 
                 android:textColor="#303F9F" />
         </LinearLayout>
@@ -222,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="name"
+                android:text=""
                 android:textColor="#303F9F" />
         </LinearLayout>
 
@@ -245,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="DNI"
+                android:text=""
                 android:textColor="#303F9F" />
         </LinearLayout>
     </LinearLayout>
