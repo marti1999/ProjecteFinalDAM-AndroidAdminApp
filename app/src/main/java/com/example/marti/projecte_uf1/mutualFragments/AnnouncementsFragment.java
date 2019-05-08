@@ -12,8 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.marti.projecte_uf1.R;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Announcement;
@@ -38,6 +41,8 @@ public class AnnouncementsFragment extends Fragment {
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeContainer;
     Unbinder unbinder;
+    @BindView(R.id.empty_view)
+    TextView emptyView;
     private ApiMecAroundInterfaces mAPIService;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
@@ -115,16 +120,28 @@ public class AnnouncementsFragment extends Fragment {
 
     private void setAdapter(ArrayList<Announcement> list) {
 
+        if (list.size() > 0) {
 
-        adapter = new announcementsAdapter(list, getActivity());
-        rv = getView().findViewById(R.id.announcement_recyclerview);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+            YoYo.with(Techniques.FadeOut).duration(1300).playOn(emptyView);
+            emptyView.setVisibility(View.GONE);
 
-        rv.setLayoutManager(mLayoutManager);
-        rv.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
+            adapter = new announcementsAdapter(list, getActivity());
+            rv = getView().findViewById(R.id.announcement_recyclerview);
+            mLayoutManager = new LinearLayoutManager(getActivity());
 
-        rv.setAdapter(adapter);
+            rv.setLayoutManager(mLayoutManager);
+            rv.addItemDecoration(new DividerItemDecoration(getContext(),
+                    DividerItemDecoration.VERTICAL));
+
+            rv.setAdapter(adapter);
+        } else {
+
+            if (emptyView.getVisibility() == View.GONE) {
+
+                YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
+                emptyView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override

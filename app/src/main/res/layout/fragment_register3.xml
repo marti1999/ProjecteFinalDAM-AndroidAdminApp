@@ -178,6 +178,31 @@ You may now click finish to log in."
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/requestorCreatedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="center_horizontal|top"
+                android:text="Congratulations, your account
+has been created.
+You need to wait until your account is validated."
+                android:textColor="@color/gris"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/errorLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

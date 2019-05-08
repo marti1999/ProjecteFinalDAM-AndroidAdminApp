@@ -20,6 +20,14 @@
         android:layout_height="match_parent"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:gravity="center_horizontal"
+        android:textSize="25dp"
+        android:text="No announcements right now"
+        android:visibility="gone" />
 
 </FrameLayout>

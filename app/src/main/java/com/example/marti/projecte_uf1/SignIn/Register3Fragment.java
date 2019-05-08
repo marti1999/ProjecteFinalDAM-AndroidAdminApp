@@ -50,6 +50,8 @@ public class Register3Fragment extends Fragment {
     Button saveRequestorBt;
     @BindView(R.id.errorLayout)
     LinearLayout errorLayout;
+    @BindView(R.id.requestorCreatedLayout)
+    LinearLayout requestorCreatedLayout;
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
@@ -111,7 +113,6 @@ public class Register3Fragment extends Fragment {
                 disableRequestorDonorButtons();
 
 
-
                 Donor d0 = ((RegisterActivity) getActivity()).getDonor();
 
                 mAPIService.insertDonor(d0).enqueue(new Callback<Donor>() {
@@ -153,7 +154,7 @@ public class Register3Fragment extends Fragment {
                             Requestor r = response.body();
                             if (r != null) {
                                 requestorLayout.setVisibility(View.GONE);
-                                succesfulMessage();
+                                succesfulMessageRequestor();
                             } else {
                                 requestorLayout.setVisibility(View.GONE);
                                 errorMessage();
@@ -194,6 +195,13 @@ public class Register3Fragment extends Fragment {
 
     private void succesfulMessage() {
         donorLayout.setVisibility(View.VISIBLE);
+
+        ((RegisterActivity) getActivity()).hideBackButton();
+        ((RegisterActivity) getActivity()).showNextButton("Finish");
+    }
+
+    private void succesfulMessageRequestor() {
+        requestorCreatedLayout.setVisibility(View.VISIBLE);
 
         ((RegisterActivity) getActivity()).hideBackButton();
         ((RegisterActivity) getActivity()).showNextButton("Finish");
