@@ -79,11 +79,13 @@ public interface ApiMecAroundInterfaces {
     @POST("donor/requestNewPassword")
     Call<String> getNewPassword(@Body String emailAnswer);
 
-    @PUT("donor")
+    @PUT("donorPassword")
     Call<Donor> updateDonor(@Query("id") int donorId,
                             @Body Donor donor);
 
-
+    @PUT("requestorPassword")
+    Call<Requestor> updateRequestor(@Query("id") int requestorId,
+                            @Body Requestor requestor);
     //Cloth Attributes
     @GET("sizes")
     Call<List<Size>> getClothSizes();

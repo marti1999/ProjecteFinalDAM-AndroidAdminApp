@@ -383,7 +383,7 @@ public class profileFragment extends Fragment {
                                         if (response.body() != null) {
                                             Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Password not updated!", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
                                         Toast.makeText(getActivity(), response.code(), Toast.LENGTH_LONG).show();
@@ -404,7 +404,34 @@ public class profileFragment extends Fragment {
                             Requestor r = new Requestor();
                             r.id = Integer.valueOf(userId);
                             r.password = hash;
-                            //TODO: webservice put
+
+
+
+                            mAPIService.updateRequestor(Integer.valueOf(r.id), r).enqueue(new Callback<Requestor>() {
+                                @Override
+                                public void onResponse(Call<Requestor> call, Response<Requestor> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response.body() != null) {
+                                            Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), "Password not updated!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(getActivity(), response.code(), Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+
+
+                                @Override
+                                public void onFailure(Call<Requestor> call, Throwable t) {
+                                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+
+                                }
+                            });
+
+
+
                         }
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
