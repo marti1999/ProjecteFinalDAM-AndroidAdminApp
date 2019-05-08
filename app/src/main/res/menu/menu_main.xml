@@ -11,12 +11,7 @@
         android:title="Log out"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_deleteAccount"
-        android:orderInCategory="100"
-        android:title="Delete account"
 
-        app:showAsAction="never" />
 
 
 

@@ -104,7 +104,7 @@
         android:id="@+id/llShowQr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"

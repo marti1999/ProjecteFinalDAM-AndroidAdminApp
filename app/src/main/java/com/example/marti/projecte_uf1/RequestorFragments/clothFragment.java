@@ -395,10 +395,11 @@ public class clothFragment extends Fragment {
 
         CameraPosition googlePlex = CameraPosition.builder()
                 .target(latlng)
-                .zoom(10f)
+                .zoom(13f)
                 .bearing(0)
                 .build();
 
+        mMap.clear();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 3500, null);
         mMap.addMarker(markerOptions);
 

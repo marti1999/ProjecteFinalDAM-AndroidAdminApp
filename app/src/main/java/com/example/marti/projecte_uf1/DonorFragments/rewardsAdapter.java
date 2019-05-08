@@ -28,6 +28,7 @@ import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Reward;
 import com.example.marti.projecte_uf1.model.RewardInfoLang;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.utils.NotificationHelper;
 
 import java.util.ArrayList;
 
@@ -145,7 +146,8 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                         if (response.isSuccessful()){
                             if (response.body()) {
                                 Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
-
+                                NotificationHelper nHelper = new NotificationHelper(context);
+                                nHelper.createNotificationRewardClaimed("Reward claimed!", "Check your inbox for more information.");
 
                                 list.remove(i);
                                 notifyItemRemoved(i);

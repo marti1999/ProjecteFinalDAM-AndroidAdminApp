@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single" android:visible="false" android:id="@+id/general_navview">
+    <group android:checkableBehavior="single" android:visible="true" android:id="@+id/mutual_navview">
         <item
-            android:id="@+id/menu_seccion_1"
+            android:id="@+id/profile"
             android:icon="@drawable/person"
-            android:title="Test1" />
+            android:title="Profile" />
         <item
-            android:id="@+id/menu_seccion_2"
-            android:icon="@drawable/event"
-            android:title="Test2" />
+            android:id="@+id/annnouncements"
+            android:icon="@drawable/announcement"
+            android:title="Announcements" />
+        <item
+            android:id="@+id/warehouses"
+            android:icon="@drawable/map"
+            android:title="Warehouses" />
     </group>
+
     <group android:checkableBehavior="single" android:visible="false" android:id="@+id/donors_navview">
         <item
             android:id="@+id/donor_rewards"
@@ -28,20 +33,5 @@
         android:icon="@drawable/cloth"
         android:title="Search clothes" />
     </group>
-    <group android:checkableBehavior="single" android:visible="true" android:id="@+id/mutual_navview">
-        <item
-            android:id="@+id/annnouncements"
-            android:icon="@drawable/announcement"
-            android:title="Announcements" />
-        <item
-            android:id="@+id/warehouses"
-            android:icon="@drawable/map"
-            android:title="Warehouses" />
-        <item
-            android:id="@+id/profile"
-            android:icon="@drawable/person"
-            android:title="Profile" />
 
-
-    </group>
 </menu>

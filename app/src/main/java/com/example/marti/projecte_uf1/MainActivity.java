@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, getString(R.string.welcome), Toast.LENGTH_SHORT).show();
+
                         launchLogInActivity();
                     }
                 });
@@ -458,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendNotification(String word){
         NotificationHelper nHelper = new NotificationHelper(this);
-        nHelper.createNotification("Password changed!", "This is your new password: " + word , word);
+        nHelper.createNotificationNewPassword("Password changed!", "This is your new password: " + word , word);
     }
 
 
