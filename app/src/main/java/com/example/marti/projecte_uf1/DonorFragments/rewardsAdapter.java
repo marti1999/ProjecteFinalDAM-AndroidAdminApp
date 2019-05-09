@@ -100,7 +100,13 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final rewardsAdapter.MyViewHolder myViewHolder, final int i) {
         final Reward reward = list.get(i);
-
+//        if (reward == null) {
+//            return;
+//        }
+//
+//        if (reward.id == null){
+//            return;
+//        }
         RewardInfoLang infoEng = new RewardInfoLang();
         for (RewardInfoLang item : reward.getRewardInfoLangs()) {
             if (item.languageId == 1) { //TODO:  s' hauria de posar aixi pero peta el segon item item.language.code.equalsIgnoreCase("en")
@@ -143,7 +149,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
                 mAPIService.claimReward(rewardId, currentUserId).enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             if (response.body()) {
                                 Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
                                 NotificationHelper nHelper = new NotificationHelper(context);
@@ -174,9 +180,6 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
 
 
     }
-
-
-
 
 
     @Override
