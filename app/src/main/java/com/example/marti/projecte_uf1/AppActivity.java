@@ -72,6 +72,7 @@ public class AppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_app);
         ButterKnife.bind(this);
 
+        startService(new Intent(this, myService.class));
 
         initializeVariablesAndBindings();
 
@@ -327,6 +328,8 @@ public class AppActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Intent myService = new Intent(AppActivity.this, myService.class);
+        stopService(myService);
 
     }
 }

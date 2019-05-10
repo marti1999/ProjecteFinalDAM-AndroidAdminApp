@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String LOGIN_OK = "true";
 
-    SQLiteManager manager = new SQLiteManager(this);
+  //  SQLiteManager manager = new SQLiteManager(this);
     @BindView(R.id.tvSignIn)
     TextView tvSignIn;
     @BindView(R.id.tvForgotPassword)
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         try { //todo s'hauria de treure un cop s'hagi tret el que depen
-            manager.openWrite();
+      //      manager.openWrite();
 
             // manager.close();
         } catch (Exception ex) {
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mAPIService = ApiUtils.getAPIService();
+
+
 
 
         // getSupportActionBar().setTitle("Log in");
@@ -351,7 +353,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        manager.close();
+
+      //  manager.close();
     }
 
     @OnClick(R.id.tvForgotPassword)

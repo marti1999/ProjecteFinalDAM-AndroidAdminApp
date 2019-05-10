@@ -64,6 +64,9 @@ public interface ApiMecAroundInterfaces {
     @GET("announcementsUserType")
     Call<List<Announcement>> getAnnouncements(@Query("userType") String userType);
 
+    @GET("announcementsUserTypeNumber")
+    Call<Integer> getAnnouncementsNewNumber(@Query("userType") String userType);
+
     @PUT("reward/availableDonor")
     Call<List<Reward>> getAvailableRewardByDonor(@Query("donorId") int donorId);
 
