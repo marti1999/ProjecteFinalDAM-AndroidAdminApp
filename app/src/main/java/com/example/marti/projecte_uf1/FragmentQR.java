@@ -100,7 +100,7 @@ public class FragmentQR extends Fragment {
 
                     generateQR(finalText);
                 }else {
-                    Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Add 1 cloth at least", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -285,8 +285,6 @@ public class FragmentQR extends Fragment {
                 int idSize = s.id;
                 Gender gen = (Gender) clothGender.getSelectedItem();
                 int idGender = gen.id;
-
-
                 PersoCloth persoCloth = new PersoCloth(idClassification, idColor, idSize, idGender, clothPoints);
 
                 addCustomClothToList(persoCloth, qntFinal);

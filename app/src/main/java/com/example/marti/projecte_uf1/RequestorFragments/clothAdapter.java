@@ -1,10 +1,8 @@
 package com.example.marti.projecte_uf1.RequestorFragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.example.marti.projecte_uf1.R;
-import com.example.marti.projecte_uf1.SQLiteManager;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Warehouse;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder> {
 

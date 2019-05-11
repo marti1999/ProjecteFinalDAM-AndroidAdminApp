@@ -143,8 +143,8 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="55dp"
         android:layout_marginBottom="80dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -159,7 +159,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/email" />
+                android:src="@drawable/emailgrey" />
 
             <TextView
                 android:id="@+id/email"
@@ -184,7 +184,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/lock" />
+                android:src="@drawable/lockgrey" />
 
             <TextView
                 android:id="@+id/password"
@@ -215,7 +215,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/person" />
+                android:src="@drawable/persongrey" />
 
             <TextView
                 android:id="@+id/name"
@@ -238,7 +238,7 @@
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/dni" />
+                android:src="@drawable/dnigrey" />
 
             <TextView
                 android:id="@+id/dni"

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Announcement;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
+import com.example.marti.projecte_uf1.utils.NotificationHelper;
 import com.example.marti.projecte_uf1.utils.PrefsFileKeys;
 import com.google.android.gms.dynamic.IFragmentWrapper;
 
@@ -29,6 +30,8 @@ public class myService extends Service {
 
     private String sharedPrefFile = PrefsFileKeys.FILE_NAME;
     private SharedPreferences prefs;
+    private SharedPreferences.Editor prefsEditor;
+
     private ApiMecAroundInterfaces mAPIService;
     String userType;
     int number = 0;
@@ -44,13 +47,26 @@ public class myService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         prefs = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        prefsEditor = prefs.edit();
+
         userType = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "");
+        getNotificationsNumberFromPrefs();
         mAPIService = ApiUtils.getAPIService();
 
 
         callAsynchronousTask();
         //
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void getNotificationsNumberFromPrefs() {
+        if (userType.equalsIgnoreCase("donor")) {
+
+            number = prefs.getInt(PrefsFileKeys.NOTIFICATIONS_NUMBER_DONORS, 0);
+        }
+        if (userType.equalsIgnoreCase("requestor")) {
+            number = prefs.getInt(PrefsFileKeys.NOTIFICATIONS_NUMBER_REQUESTORS, 0);
+        }
     }
 
     public void callAsynchronousTask() {
@@ -66,27 +82,26 @@ public class myService extends Service {
                                 @Override
                                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                                     if (response.isSuccessful()) {
-                                        if (response.body()!= null){
+                                        if (response.body() != null) {
 
-                                            if (number < response.body()){
-                                                Toast.makeText(myService.this, "NEW NOTIFICATION", Toast.LENGTH_SHORT).show();
+                                            if (number < response.body()) {
                                                 number = response.body();
+                                                saveNotificationNumberToPrefs();
+                                                NotificationHelper nHelper = new NotificationHelper(myService.this);
+                                                nHelper.createNotificationNewAnnouncements("You have new announcements", "Check them in the announcements tab");
                                             }
 
-
-                                        }
-                                        else {
-                                            Toast.makeText(myService.this, "Service number null", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                       //     Toast.makeText(myService.this, "Service number null", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
-                                        Toast.makeText(myService.this, "Service reponse unsuccessful", Toast.LENGTH_SHORT).show();
+                                     //   Toast.makeText(myService.this, response.message() + response.code(), Toast.LENGTH_SHORT).show();
                                     }
-
                                 }
 
                                 @Override
                                 public void onFailure(Call<Integer> call, Throwable t) {
-                                    Toast.makeText(myService.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                                //    Toast.makeText(myService.this, t.getMessage(), Toast.LENGTH_LONG).show();
 
                                 }
                             });
@@ -100,12 +115,23 @@ public class myService extends Service {
         timer.schedule(doAsynchronousTask, 0, 5000); //execute in every 50000 ms
     }
 
+    private void saveNotificationNumberToPrefs() {
+        if (userType.equalsIgnoreCase("donor")) {
+
+            prefsEditor.putInt(PrefsFileKeys.NOTIFICATIONS_NUMBER_DONORS, number);
+        }
+        if (userType.equalsIgnoreCase("requestor")) {
+            prefsEditor.putInt(PrefsFileKeys.NOTIFICATIONS_NUMBER_REQUESTORS, number);
+        }
+        prefsEditor.apply();
+    }
+
 
     @Override
     public void onDestroy() {
 
         super.onDestroy();
 
-        Log.d(TAG, "FirstService destroyed");
+        Log.d(TAG, "Service destroyed");
     }
 }

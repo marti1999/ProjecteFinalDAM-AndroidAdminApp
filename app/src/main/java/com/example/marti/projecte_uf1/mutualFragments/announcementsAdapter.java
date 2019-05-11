@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.marti.projecte_uf1.R;
-import com.example.marti.projecte_uf1.SQLiteManager;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Announcement;
 import com.example.marti.projecte_uf1.remote.ApiUtils;
@@ -25,7 +24,6 @@ public class announcementsAdapter extends RecyclerView.Adapter<announcementsAdap
     private ArrayList<Announcement> list;
     private Context context;
     public static final String EXTRA_ID = "ID";
-    SQLiteManager manager = new SQLiteManager(context);
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;

@@ -38,6 +38,7 @@ public class fragmentMap extends Fragment {
 
     public ApiMecAroundInterfaces mAPIService;
     List<Warehouse> list;
+    String address;
 
     public fragmentMap() {
     }
@@ -82,7 +83,7 @@ public class fragmentMap extends Fragment {
                     list = response.body();
                     for (Warehouse item : list
                     ) {
-                        String address = item.street + ", " + item.number + " " + item.postalCode + " " + item.city;
+                        address = item.street + ", " + item.number + " " + item.postalCode + " " + item.city;
 
                         GeocodingLocation locationAddress = new GeocodingLocation();
                         locationAddress.getAddressFromLocation(address, item.name,
@@ -96,7 +97,6 @@ public class fragmentMap extends Fragment {
 
             }
         });
-
 
 
         return rootView;
@@ -121,7 +121,7 @@ public class fragmentMap extends Fragment {
             double latitude = Double.parseDouble(latlong[0]);
             double longitude = Double.parseDouble(latlong[1]);
             LatLng location = new LatLng(latitude, longitude);
-            Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
 
             addMarker(location, name);
 
@@ -133,7 +133,7 @@ public class fragmentMap extends Fragment {
 
         markerOptions.position(latlng);
 
-        markerOptions.title(name);
+        markerOptions.title(address);
 
         mMap.addMarker(markerOptions);
     }

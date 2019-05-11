@@ -9,6 +9,8 @@ public class PrefsFileKeys {
     public static final String EMAIL = "EMAIL";
     public static final String NAME = "NAME";
     public static final String LAST_LOGIN = "LAST_LOGIN";
+    public static final String NOTIFICATIONS_NUMBER_DONORS = "NOTIFICATIONS_NUMBER_DONORS";
+    public static final String NOTIFICATIONS_NUMBER_REQUESTORS = "NOTIFICATIONS_NUMBER_REQUESTORS";
 
 
 

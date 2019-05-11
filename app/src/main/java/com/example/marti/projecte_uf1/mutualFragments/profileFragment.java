@@ -339,8 +339,8 @@ public class profileFragment extends Fragment {
 
     private void showPasswordChangeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Input de new password");
-        builder.setMessage("\nWrite it two times to minimize errors");
+        builder.setTitle("Input the new password");
+        //builder.setMessage("\nWrite it two times to minimize errors");
 
 
         LinearLayout layout = new LinearLayout(getActivity());

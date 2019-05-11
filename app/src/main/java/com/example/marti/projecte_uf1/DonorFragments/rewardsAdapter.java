@@ -1,14 +1,8 @@
 package com.example.marti.projecte_uf1.DonorFragments;
 
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -20,10 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.marti.projecte_uf1.MainActivity;
-import com.example.marti.projecte_uf1.NotificationActionReceiver;
 import com.example.marti.projecte_uf1.R;
-import com.example.marti.projecte_uf1.SQLiteManager;
 import com.example.marti.projecte_uf1.interfaces.ApiMecAroundInterfaces;
 import com.example.marti.projecte_uf1.model.Reward;
 import com.example.marti.projecte_uf1.model.RewardInfoLang;
@@ -41,7 +32,6 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     private ArrayList<Reward> list;
     private Context context;
     public static final String EXTRA_ID = "ID";
-    SQLiteManager manager = new SQLiteManager(context);
     private String sharedPrefFile = "prefsFile";
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefsEditor;
@@ -100,13 +90,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final rewardsAdapter.MyViewHolder myViewHolder, final int i) {
         final Reward reward = list.get(i);
-//        if (reward == null) {
-//            return;
-//        }
-//
-//        if (reward.id == null){
-//            return;
-//        }
+
         RewardInfoLang infoEng = new RewardInfoLang();
         for (RewardInfoLang item : reward.getRewardInfoLangs()) {
             if (item.languageId == 1) { //TODO:  s' hauria de posar aixi pero peta el segon item item.language.code.equalsIgnoreCase("en")
