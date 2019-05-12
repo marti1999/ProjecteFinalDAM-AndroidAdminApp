@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class asyncTask extends AsyncTask<Void, Integer, Bitmap> {
-    //TODO: canviar tot el async tasc pel que faci falta
 
     private Activity activityContext;
     public asyncTask(Activity activity) {
@@ -37,7 +36,6 @@ public class asyncTask extends AsyncTask<Void, Integer, Bitmap> {
             return bmp;
 
 
-            //return dowloadImage(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,7 +51,6 @@ public class asyncTask extends AsyncTask<Void, Integer, Bitmap> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        // Toast.makeText(getApplicationContext(), "Downloading profile picture...", Toast.LENGTH_SHORT).show();
     }
 
     @Override

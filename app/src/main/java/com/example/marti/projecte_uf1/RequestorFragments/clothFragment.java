@@ -2,13 +2,11 @@ package com.example.marti.projecte_uf1.RequestorFragments;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -131,13 +129,13 @@ public class clothFragment extends Fragment {
                     spinClothType.setAdapter(cAdapter);
                     cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Classification>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -154,13 +152,13 @@ public class clothFragment extends Fragment {
                     spinClothColor.setAdapter(cAdapter);
                     cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Color>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -177,13 +175,13 @@ public class clothFragment extends Fragment {
                     spinClothGender.setAdapter(cAdapter);
                     cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Gender>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -200,13 +198,13 @@ public class clothFragment extends Fragment {
                     spinClothSize.setAdapter(cAdapter);
                     cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Size>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -242,7 +240,7 @@ public class clothFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Search clothes");
+        getActivity().setTitle(R.string.search_clothes);
     }
 
     private void populateList(Cloth c) {
@@ -328,13 +326,13 @@ public class clothFragment extends Fragment {
                 break;
 
             case R.id.fabHideMap:
-                makeFormAndListVisivle();
+                makeFormAndListVisible();
                 break;
         }
     }
 
     @SuppressLint("RestrictedApi")
-    private void makeFormAndListVisivle() {
+    private void makeFormAndListVisible() {
         YoYo.with(Techniques.FadeOut).duration(1250).playOn(fragmentClothParent);
         YoYo.with(Techniques.FadeOut).duration(1250).playOn(fabHideMap);
         YoYo.with(Techniques.FadeIn).duration(1250).playOn(fragmentClothParent);

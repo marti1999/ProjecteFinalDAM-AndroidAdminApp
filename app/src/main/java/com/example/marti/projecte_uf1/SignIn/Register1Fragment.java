@@ -127,7 +127,6 @@ public class Register1Fragment extends Fragment {
 
         };
 
-
         etBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,10 +172,6 @@ public class Register1Fragment extends Fragment {
         if (isNIFFormatInvalid()) return false;
 
         if (isGenderNotSelected()) return false;
-
-
-      //  if (isUserDuplicated()) return false;
-
 
         return true;
     }

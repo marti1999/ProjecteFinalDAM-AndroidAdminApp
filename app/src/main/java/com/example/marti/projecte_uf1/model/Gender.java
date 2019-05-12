@@ -19,20 +19,11 @@ public class Gender {
     @Expose
     public Boolean active;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Gender() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param active
-     * @param gender1
-     * @param $id
-     */
+
     public Gender(String $id, Integer id, String gender1, Boolean active) {
         super();
         this.$id = $id;

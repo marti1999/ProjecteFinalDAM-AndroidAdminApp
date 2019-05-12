@@ -29,23 +29,11 @@ public class Announcement {
     @Expose
     public String recipient;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
+
     public Announcement() {
     }
 
-    /**
-     *
-     * @param message
-     * @param id
-     * @param title
-     * @param dateCreated
-     * @param language
-     * @param $id
-     * @param recipient
-     */
+
     public Announcement(String $id, Integer id, String title, String message, String dateCreated, String language, String recipient) {
         super();
         this.$id = $id;

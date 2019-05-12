@@ -19,20 +19,11 @@ public class MaxClaim {
     @Expose
     public Double operationResult;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public MaxClaim() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param operationResult
-     * @param value
-     * @param $id
-     */
+
     public MaxClaim(String $id, Integer id, Integer value, Double operationResult) {
         super();
         this.$id = $id;

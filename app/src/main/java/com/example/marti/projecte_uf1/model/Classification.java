@@ -22,21 +22,11 @@ public class Classification {
     @Expose
     public Integer value;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Classification() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param classificationType
-     * @param value
-     * @param active
-     * @param $id
-     */
+
     public Classification(String $id, Integer id, String classificationType, Boolean active, Integer value) {
         super();
         this.$id = $id;

@@ -290,10 +290,10 @@ public class FragmentQR extends Fragment {
                 addCustomClothToList(persoCloth, qntFinal);
                 setActualCloths();
             } else {
-                Toast.makeText(getActivity(), "An ERROR has been occurred generating the QR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "An ERROR has occurred generating QR code", Toast.LENGTH_SHORT).show();
             }
         }else {
-            Toast.makeText(getActivity(), "The max quantity of items (each time) is "+MAX_EACH_TIME, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "The maximum total amount is "+MAX_EACH_TIME, Toast.LENGTH_SHORT).show();
         }
     }
 

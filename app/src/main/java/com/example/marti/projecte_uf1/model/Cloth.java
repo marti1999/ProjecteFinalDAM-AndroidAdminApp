@@ -56,32 +56,10 @@ public class Cloth {
     @Expose
     public Integer classificationId;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
     public Cloth() {
     }
 
-    /**
-     * 
-     * @param classificationId
-     * @param colorId
-     * @param genderId
-     * @param warehouseId
-     * @param warehouse
-     * @param size
-     * @param id
-     * @param color
-     * @param classification
-     * @param gender
-     * @param dateCreated
-     * @param active
-     * @param clothesRequests
-     * @param orders
-     * @param $id
-     * @param sizeId
-     */
+
     public Cloth(String $id, Classification classification, List<Object> clothesRequests, List<Order_> orders, Color color, Gender gender, Size size, Warehouse warehouse, Integer id, String dateCreated, Boolean active, Integer warehouseId, Integer sizeId, Integer colorId, Integer genderId, Integer classificationId) {
         super();
         this.$id = $id;

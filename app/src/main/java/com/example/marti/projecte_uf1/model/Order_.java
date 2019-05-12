@@ -10,17 +10,11 @@ public class Order_ {
     @Expose
     public String $ref;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Order_() {
     }
 
-    /**
-     * 
-     * @param $ref
-     */
+
     public Order_(String $ref) {
         super();
         this.$ref = $ref;

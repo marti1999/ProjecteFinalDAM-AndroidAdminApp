@@ -28,6 +28,28 @@
     <string name="generate_qr">Generate QR</string>
     <string name="add_cloth">Add cloth</string>
     <string name="amount">Amount</string>
+    <string name="cannot_connect_to_server">Cannot connect to server</string>
+    <string name="rewardNotificationTitle">Reward claimed!</string>
+    <string name="reward_notification_message">Check your inbox for more information.</string>
+    <string name="reward_deny">You don\'t have enough points</string>
+    <string name="points">Points:</string>
+    <string name="cannot_connect_to_server2">Cannot connet to server.</string>
+    <string name="rewards">Rewards</string>
+    <string name="address">address</string>
+    <string name="warehousename">warehouseName</string>
+    <string name="donor">donor</string>
+    <string name="picture_uploaded">Profile picture succesfully uploaded</string>
+    <string name="failed_picture_upload">Failed to upload profile picture</string>
+    <string name="input_new_password">Input a new password</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="send">Send</string>
+    <string name="password_change_failed">Failed to change password</string>
+    <string name="password_not_match">Password do not match</string>
+    <string name="password_updated">Password successfully updated!</string>
+    <string name="cacel">Cancel</string>
+    <string name="search_clothes">Search clothes</string>
+
 
     <string-array name="income">
         <item>15000</item>

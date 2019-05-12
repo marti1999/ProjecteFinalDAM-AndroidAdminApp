@@ -28,23 +28,11 @@ public class Order {
     @Expose
     public Integer clothesId;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Order() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param cloth
-     * @param clothesId
-     * @param dateCreated
-     * @param requestorId
-     * @param $id
-     * @param requestor
-     */
+
     public Order(String $id, Cloth cloth, Requestor_ requestor, Integer id, String dateCreated, Integer requestorId, Integer clothesId) {
         super();
         this.$id = $id;

@@ -23,10 +23,7 @@ public class announcementsAdapter extends RecyclerView.Adapter<announcementsAdap
 
     private ArrayList<Announcement> list;
     private Context context;
-    public static final String EXTRA_ID = "ID";
-    private String sharedPrefFile = "prefsFile";
-    private SharedPreferences prefs;
-    private SharedPreferences.Editor prefsEditor;
+
     public ApiMecAroundInterfaces mAPIService;
 
 
@@ -58,8 +55,6 @@ public class announcementsAdapter extends RecyclerView.Adapter<announcementsAdap
     }
 
 
-    //TODO: canviar tots els objectes reward per announcements
-
     public announcementsAdapter(ArrayList<Announcement> announcementsList, Context context) {
         this.list = announcementsList;
         this.context = context;
@@ -72,9 +67,7 @@ public class announcementsAdapter extends RecyclerView.Adapter<announcementsAdap
         View item = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.announcement_list_item, viewGroup, false);
 
-
         mAPIService = ApiUtils.getAPIService();
-
         return new MyViewHolder(item);
     }
 
@@ -82,10 +75,6 @@ public class announcementsAdapter extends RecyclerView.Adapter<announcementsAdap
     @Override
     public void onBindViewHolder(@NonNull final announcementsAdapter.MyViewHolder myViewHolder, final int i) {
         final Announcement announcement = list.get(i);
-
-
-
-
         myViewHolder.announcementTitle.setText(announcement.title);
         myViewHolder.announcementRecipient.setText(announcement.recipient);
         myViewHolder.announcementMessage.setText(announcement.message);
@@ -94,29 +83,19 @@ public class announcementsAdapter extends RecyclerView.Adapter<announcementsAdap
             @Override
             public void onClick(View v) {
                 ViewGroup group = (ViewGroup) myViewHolder.linearLayout;
-                //Reward esd = list.get(i);
-                //esdG = esd;
+
                 if (myViewHolder.linearLayoutContent.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(group);
                     myViewHolder.linearLayoutContent.setVisibility(View.VISIBLE);
                     myViewHolder.announcementImage.animate().rotation(180).setDuration(400).start();
 
-
                 } else {
-
                     myViewHolder.announcementImage.animate().rotation(0).setDuration(400).start();
                     myViewHolder.linearLayoutContent.setVisibility(View.GONE);
-
                 }
             }
         });
-
-
     }
-
-
-
-
 
     @Override
     public int getItemCount() {

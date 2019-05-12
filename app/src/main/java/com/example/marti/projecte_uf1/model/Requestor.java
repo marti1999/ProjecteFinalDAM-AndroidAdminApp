@@ -83,41 +83,11 @@ public class Requestor {
     @Expose
     public Integer statusId;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Requestor() {
     }
 
-    /**
-     * 
-     * @param maxClaimsId
-     * @param password
-     * @param securityQuestion
-     * @param householdMembers
-     * @param statusId
-     * @param id
-     * @param picturePath
-     * @param householdIncome
-     * @param name
-     * @param gender
-     * @param birthDate
-     * @param points
-     * @param dni
-     * @param $id
-     * @param securityAnswer
-     * @param maxClaim
-     * @param lastName
-     * @param status
-     * @param languageId
-     * @param email
-     * @param dateCreated
-     * @param active
-     * @param orders
-     * @param clothesRequests
-     * @param language
-     */
+
     public Requestor(String $id, List<Object> clothesRequests, Language language, MaxClaim maxClaim, List<Order> orders, Status status, String dni, String name, String lastName, String birthDate, String gender, String password, String email, String securityAnswer, String securityQuestion, String dateCreated, Boolean active, Double householdIncome, Integer householdMembers, Object picturePath, Integer id, Integer points, Integer languageId, Integer maxClaimsId, Integer statusId) {
         super();
         this.$id = $id;

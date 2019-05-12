@@ -206,18 +206,21 @@ public class profileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        //layoutFragmentProfile.setVisibility(View.INVISIBLE);
-        YoYo.with(Techniques.FadeIn)
-                .duration(2000)
-                .playOn(layoutFragmentProfile);
-        layoutFragmentProfile.setVisibility(View.VISIBLE);
+        FadeInLayout();
 
-        if (userType.equalsIgnoreCase("donor")) {
+        if (userType.equalsIgnoreCase(getString(R.string.donor))) {
             fillDonor();
         } else {
             fillRequestor();
         }
-        // image.setImageResource(R.drawable.profilepicture);
+
+        setProfilePicture();
+
+
+        return view;
+    }
+
+    private void setProfilePicture() {
         if (getActivity() instanceof AppActivity) {
             File picturePath = ((AppActivity) getActivity()).getProfilePicture();
             if (picturePath == null) {
@@ -233,9 +236,13 @@ public class profileFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
 
-
-        return view;
+    private void FadeInLayout() {
+        YoYo.with(Techniques.FadeIn)
+                .duration(2000)
+                .playOn(layoutFragmentProfile);
+        layoutFragmentProfile.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -253,6 +260,7 @@ public class profileFragment extends Fragment {
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
+    //from the file picker activity opened, it gets the selected file
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -268,14 +276,13 @@ public class profileFragment extends Fragment {
 
     public void uploadImage(Uri file) {
 
-        // Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
         String fileName = prefs.getString(PrefsFileKeys.LAST_LOGIN_TYPE, "") + prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, "");
         StorageReference ref = mStorageRef.child(fileName);
 
         ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(), "Profile picture succesfully uploaded", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.picture_uploaded), Toast.LENGTH_LONG).show();
                 try {
                     ((AppActivity) getActivity()).downloadProfilePicture();
                 } catch (IOException e) {
@@ -285,7 +292,7 @@ public class profileFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Failed to upload profile picture", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.failed_picture_upload), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -320,6 +327,10 @@ public class profileFragment extends Fragment {
         Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
 
         image.setImageBitmap(myBitmap);
+        FadeInPicture();
+    }
+
+    private void FadeInPicture() {
         YoYo.with(Techniques.FadeIn)
                 .duration(2000)
                 .playOn(image);
@@ -339,8 +350,7 @@ public class profileFragment extends Fragment {
 
     private void showPasswordChangeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Input the new password");
-        //builder.setMessage("\nWrite it two times to minimize errors");
+        builder.setTitle(getString(R.string.input_new_password));
 
 
         LinearLayout layout = new LinearLayout(getActivity());
@@ -351,25 +361,25 @@ public class profileFragment extends Fragment {
         params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
 
         final EditText input = new EditText(getActivity());
-        input.setHint("Password");
+        input.setHint(getString(R.string.password));
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         input.setLayoutParams(params);
 
-        layout.addView(input); // Notice this is an add method
+        layout.addView(input);
 
         final EditText input2 = new EditText(getActivity());
-        input2.setHint("Repeat password");
+        input2.setHint(getString(R.string.repeat_password));
         input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         input2.setLayoutParams(params);
-        layout.addView(input2); // Another add method
+        layout.addView(input2);
 
 
         builder.setView(layout);
 
 
-        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.send), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -381,74 +391,28 @@ public class profileFragment extends Fragment {
                             d.id = Integer.valueOf(userId);
                             d.password = hash;
 
-                            mAPIService.updateDonor(Integer.valueOf(d.id), d).enqueue(new Callback<Donor>() {
-                                @Override
-                                public void onResponse(Call<Donor> call, Response<Donor> response) {
-                                    if (response.isSuccessful()) {
-                                        if (response.body() != null) {
-                                            Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(getActivity(), "Password not updated!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } else {
-                                        Toast.makeText(getActivity(), response.code(), Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-
-
-                                @Override
-                                public void onFailure(Call<Donor> call, Throwable t) {
-                                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-
-                                }
-                            });
-
+                            updateDonorPassword(d);
 
                         } else {
                             Requestor r = new Requestor();
                             r.id = Integer.valueOf(userId);
                             r.password = hash;
 
-
-                            mAPIService.updateRequestor(Integer.valueOf(r.id), r).enqueue(new Callback<Requestor>() {
-                                @Override
-                                public void onResponse(Call<Requestor> call, Response<Requestor> response) {
-                                    if (response.isSuccessful()) {
-                                        if (response.body() != null) {
-                                            Toast.makeText(getActivity(), "Password successfully updated!", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(getActivity(), "Password not updated!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } else {
-                                        Toast.makeText(getActivity(), response.code(), Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-
-
-                                @Override
-                                public void onFailure(Call<Requestor> call, Throwable t) {
-                                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-
-                                }
-                            });
-
-
+                            updateRequestorPassword(r);
                         }
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
-                        Toast.makeText(getActivity(), "Failed to change password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.password_change_failed), Toast.LENGTH_SHORT).show();
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
-                        Toast.makeText(getActivity(), "Failed to change password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),getString(R.string.password_change_failed), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Password do not match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.password_not_match), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cacel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -456,6 +420,52 @@ public class profileFragment extends Fragment {
         });
 
         builder.show();
+    }
+
+    private void updateRequestorPassword(Requestor r) {
+        mAPIService.updateRequestor(Integer.valueOf(r.id), r).enqueue(new Callback<Requestor>() {
+            @Override
+            public void onResponse(Call<Requestor> call, Response<Requestor> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Toast.makeText(getActivity(), getString(R.string.password_updated), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.password_change_failed), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.password_change_failed), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Requestor> call, Throwable t) {
+                Toast.makeText(getActivity(), getString(R.string.password_change_failed), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void updateDonorPassword(Donor d) {
+        mAPIService.updateDonor(Integer.valueOf(d.id), d).enqueue(new Callback<Donor>() {
+            @Override
+            public void onResponse(Call<Donor> call, Response<Donor> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Toast.makeText(getActivity(), getString(R.string.password_updated), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.password_change_failed), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Donor> call, Throwable t) {
+                Toast.makeText(getActivity(), getString(R.string.password_change_failed), Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 
     public String generatePasswordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {

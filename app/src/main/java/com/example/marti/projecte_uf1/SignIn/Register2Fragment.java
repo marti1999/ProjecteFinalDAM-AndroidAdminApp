@@ -39,7 +39,6 @@ public class Register2Fragment extends Fragment {
     private SharedPreferences.Editor prefsEditor;
 
     public Register2Fragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -53,7 +52,6 @@ public class Register2Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register2, container, false);
 
         unbinder = ButterKnife.bind(this, view);

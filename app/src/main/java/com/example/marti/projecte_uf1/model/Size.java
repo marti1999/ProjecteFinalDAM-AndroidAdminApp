@@ -19,20 +19,11 @@ public class Size {
     @Expose
     public Boolean active;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Size() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param active
-     * @param $id
-     * @param size1
-     */
+
     public Size(String $id, Integer id, String size1, Boolean active) {
         super();
         this.$id = $id;

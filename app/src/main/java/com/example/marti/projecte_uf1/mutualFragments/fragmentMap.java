@@ -58,6 +58,43 @@ public class fragmentMap extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_fragment_map, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapFragment);
 
+        setMapProperties(mapFragment);
+
+
+        setWarehouses();
+
+
+        return rootView;
+    }
+
+    private void setWarehouses() {
+        mAPIService.getWarehoues().enqueue(new Callback<List<Warehouse>>() {
+            @Override
+            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
+                if (response.isSuccessful()) {
+                    list = response.body();
+                    for (Warehouse item : list
+                    ) {
+                        address = item.street + ", " + item.number + " " + item.postalCode + " " + item.city;
+
+                        GeocodingLocation locationAddress = new GeocodingLocation();
+                        locationAddress.getAddressFromLocation(address, item.name,
+                                getActivity(), new GeocoderHandler());
+                    }
+                } else{
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void setMapProperties(SupportMapFragment mapFragment) {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -74,32 +111,6 @@ public class fragmentMap extends Fragment {
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 3500, null);
             }
         });
-
-
-        mAPIService.getWarehoues().enqueue(new Callback<List<Warehouse>>() {
-            @Override
-            public void onResponse(Call<List<Warehouse>> call, Response<List<Warehouse>> response) {
-                if (response.isSuccessful()) {
-                    list = response.body();
-                    for (Warehouse item : list
-                    ) {
-                        address = item.street + ", " + item.number + " " + item.postalCode + " " + item.city;
-
-                        GeocodingLocation locationAddress = new GeocodingLocation();
-                        locationAddress.getAddressFromLocation(address, item.name,
-                                getActivity(), new GeocoderHandler());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Warehouse>> call, Throwable t) {
-
-            }
-        });
-
-
-        return rootView;
     }
 
     private class GeocoderHandler extends Handler {
@@ -110,8 +121,8 @@ public class fragmentMap extends Fragment {
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
-                    name = bundle.getString("warehouseName");
+                    locationAddress = bundle.getString(getString(R.string.address));
+                    name = bundle.getString(getString(R.string.warehousename));
                     break;
                 default:
                     locationAddress = null;
@@ -121,7 +132,6 @@ public class fragmentMap extends Fragment {
             double latitude = Double.parseDouble(latlong[0]);
             double longitude = Double.parseDouble(latlong[1]);
             LatLng location = new LatLng(latitude, longitude);
-            // Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
 
             addMarker(location, name);
 
@@ -132,7 +142,6 @@ public class fragmentMap extends Fragment {
         MarkerOptions markerOptions = new MarkerOptions();
 
         markerOptions.position(latlng);
-
         markerOptions.title(address);
 
         mMap.addMarker(markerOptions);

@@ -80,9 +80,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
         View item = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.rewards_list_item, viewGroup, false);
 
-
         mAPIService = ApiUtils.getAPIService();
-
         return new MyViewHolder(item);
     }
 
@@ -93,30 +91,26 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
 
         RewardInfoLang infoEng = new RewardInfoLang();
         for (RewardInfoLang item : reward.getRewardInfoLangs()) {
-            if (item.languageId == 1) { //TODO:  s' hauria de posar aixi pero peta el segon item item.language.code.equalsIgnoreCase("en")
+            if (item.languageId == 1) {
                 infoEng = item;
             }
         }
 
-
         myViewHolder.rewardTitle.setText(infoEng.title);
-        myViewHolder.rewardPoints.setText(String.valueOf("Points: " + reward.neededPoints));
+        myViewHolder.rewardPoints.setText(String.valueOf(context.getString(R.string.points) + reward.neededPoints));
         myViewHolder.rewardInfo.setText(infoEng.description);
 
         myViewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ViewGroup group = (ViewGroup) myViewHolder.linearLayout;
-                //Reward esd = list.get(i);
-                //esdG = esd;
+
                 if (myViewHolder.linearLayoutContent.getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(group);
                     myViewHolder.linearLayoutContent.setVisibility(View.VISIBLE);
                     myViewHolder.rewardImage.animate().rotation(180).setDuration(400).start();
 
-
                 } else {
-
                     myViewHolder.rewardImage.animate().rotation(0).setDuration(400).start();
                     myViewHolder.linearLayoutContent.setVisibility(View.GONE);
 
@@ -128,41 +122,35 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
             @Override
             public void onClick(View v) {
 
-
                 int rewardId = reward.id.intValue();
                 mAPIService.claimReward(rewardId, currentUserId).enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         if (response.isSuccessful()) {
                             if (response.body()) {
-                                Toast.makeText(context, "Reward claimed", Toast.LENGTH_SHORT).show();
                                 NotificationHelper nHelper = new NotificationHelper(context);
-                                nHelper.createNotificationRewardClaimed("Reward claimed!", "Check your inbox for more information.");
+                                nHelper.createNotificationRewardClaimed(context.getString(R.string.rewardNotificationTitle), context.getString(R.string.reward_notification_message));
 
                                 list.remove(i);
                                 notifyItemRemoved(i);
                                 notifyItemRangeChanged(i, list.size());
 
                             } else {
-                                Toast.makeText(context, "You don't have enough points", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, context.getString(R.string.reward_deny), Toast.LENGTH_SHORT).show();
                             }
 
                         } else {
-                            Toast.makeText(context, response.code() + response.message(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, context.getString(R.string.cannot_connect_to_server) + response.message(), Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Boolean> call, Throwable t) {
-                        Toast.makeText(context, "Server error " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, context.getString(R.string.cannot_connect_to_server) + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
-
             }
         });
-
-
     }
 
 

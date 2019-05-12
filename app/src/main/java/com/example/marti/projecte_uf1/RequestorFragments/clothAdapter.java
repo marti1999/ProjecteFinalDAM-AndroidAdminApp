@@ -65,7 +65,6 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
                 .inflate(R.layout.warehouse_list_item, viewGroup, false);
 
         mAPIService = ApiUtils.getAPIService();
-
         return new MyViewHolder(item);
     }
 
@@ -77,14 +76,7 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
         myViewHolder.warehouseAddress.setText(warehouse.street + ", " + warehouse.number);
         myViewHolder.warehouseAddress2.setText(warehouse.postalCode + ",  " + warehouse.city);
 
-        ColorGenerator generator = ColorGenerator.MATERIAL;
-        String name = warehouse.city;
-        String letter2 = String.valueOf(name.charAt(0));
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .withBorder(4) /* thickness in px */
-                .endConfig()
-                .buildRoundRect(letter2, generator.getRandomColor(), 10);
+        TextDrawable drawable = warehouseInitialAsImage(warehouse);
 
         myViewHolder.warehouseImage.setImageDrawable(drawable);
 
@@ -97,6 +89,17 @@ public class clothAdapter extends RecyclerView.Adapter<clothAdapter.MyViewHolder
             }
         });
 
+    }
+
+    private TextDrawable warehouseInitialAsImage(Warehouse warehouse) {
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        String name = warehouse.city;
+        String letter2 = String.valueOf(name.charAt(0));
+        return TextDrawable.builder()
+                .beginConfig()
+                .withBorder(4) /* thickness in px */
+                .endConfig()
+                .buildRoundRect(letter2, generator.getRandomColor(), 10);
     }
 
     @Override

@@ -10,17 +10,11 @@ public class Requestor_ {
     @Expose
     public String $ref;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Requestor_() {
     }
 
-    /**
-     * 
-     * @param $ref
-     */
+
     public Requestor_(String $ref) {
         super();
         this.$ref = $ref;

@@ -38,8 +38,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class RewardsFragment extends Fragment {
 
-  //  SwipeRefreshLayout mSwipeRefreshLayout;
-
     rewardsAdapter adapter;
     RecyclerView rv;
     @BindView(R.id.empty_view)
@@ -58,16 +56,12 @@ public class RewardsFragment extends Fragment {
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAPIService = ApiUtils.getAPIService();
-
         prefs = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
-
-
     }
 
     @Override
@@ -77,7 +71,6 @@ public class RewardsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_rewards, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-       // mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -96,7 +89,7 @@ public class RewardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Rewards");
+        getActivity().setTitle(R.string.rewards);
         populateList();
     }
 
@@ -108,24 +101,20 @@ public class RewardsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Reward>> call, Response<List<Reward>> response) {
                 if (response.isSuccessful()) {
-
                     List<Reward> list = response.body();
-                    // Toast.makeText(getActivity(), String.valueOf(list.size()), Toast.LENGTH_SHORT).show();
                     setAdapter(new ArrayList<Reward>(list));
                     swipeContainer.setRefreshing(false);
 
                 } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                     swipeContainer.setRefreshing(false);
-
                 }
             }
 
             @Override
             public void onFailure(Call<List<Reward>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 swipeContainer.setRefreshing(false);
-
             }
         });
 
@@ -140,7 +129,6 @@ public class RewardsFragment extends Fragment {
             String currentUserIdString = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, null);
             int currentUserId = Integer.valueOf(currentUserIdString);
 
-
             adapter = new rewardsAdapter(list, getActivity(), currentUserId);
             rv = getView().findViewById(R.id.reward_recyclerview);
             mLayoutManager = new LinearLayoutManager(getActivity());
@@ -151,14 +139,11 @@ public class RewardsFragment extends Fragment {
 
             rv.setAdapter(adapter);
         } else {
-
-            if (emptyView.getVisibility()== View.GONE) {
-
+            if (emptyView.getVisibility() == View.GONE) {
                 YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
                 emptyView.setVisibility(View.VISIBLE);
             }
         }
-
     }
 
     @Override

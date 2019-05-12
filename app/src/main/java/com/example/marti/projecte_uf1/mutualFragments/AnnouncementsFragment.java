@@ -59,7 +59,6 @@ public class AnnouncementsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAPIService = ApiUtils.getAPIService();
-
         prefs = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         prefsEditor = prefs.edit();
 
@@ -68,10 +67,16 @@ public class AnnouncementsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_announcements, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        swipeContainerActions();
+
+        return view;
+    }
+
+    private void swipeContainerActions() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -82,8 +87,6 @@ public class AnnouncementsFragment extends Fragment {
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
-
-        return view;
     }
 
     @Override
@@ -105,14 +108,14 @@ public class AnnouncementsFragment extends Fragment {
                     swipeContainer.setRefreshing(false);
 
                 } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                     swipeContainer.setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Announcement>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -122,8 +125,7 @@ public class AnnouncementsFragment extends Fragment {
 
         if (list.size() > 0) {
 
-            YoYo.with(Techniques.FadeOut).duration(1300).playOn(emptyView);
-            emptyView.setVisibility(View.GONE);
+            hideEmptyListMessage();
 
             adapter = new announcementsAdapter(list, getActivity());
             rv = getView().findViewById(R.id.announcement_recyclerview);
@@ -136,11 +138,20 @@ public class AnnouncementsFragment extends Fragment {
             rv.setAdapter(adapter);
         } else {
 
-            if (emptyView.getVisibility() == View.GONE) {
+            showEmptyListMessage();
+        }
+    }
 
-                YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
-                emptyView.setVisibility(View.VISIBLE);
-            }
+    private void hideEmptyListMessage() {
+        YoYo.with(Techniques.FadeOut).duration(1300).playOn(emptyView);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    private void showEmptyListMessage() {
+        if (emptyView.getVisibility() == View.GONE) {
+
+            YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
+            emptyView.setVisibility(View.VISIBLE);
         }
     }
 

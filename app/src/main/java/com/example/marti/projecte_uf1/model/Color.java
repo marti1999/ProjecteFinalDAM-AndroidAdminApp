@@ -22,21 +22,10 @@ public class Color {
     @Expose
     public Boolean active;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Color() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param name
-     * @param active
-     * @param colorCode
-     * @param $id
-     */
     public Color(String $id, Integer id, String colorCode, String name, Boolean active) {
         super();
         this.$id = $id;
