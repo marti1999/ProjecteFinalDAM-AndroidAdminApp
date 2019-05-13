@@ -124,7 +124,11 @@ public class RewardsFragment extends Fragment {
 
         if (list.size() > 0) {
 
-            YoYo.with(Techniques.FadeOut).duration(1300).playOn(emptyView);
+            try{
+                YoYo.with(Techniques.FadeOut).duration(1300).playOn(emptyView);
+            } catch(Exception ex){
+
+            }
             emptyView.setVisibility(View.GONE);
             String currentUserIdString = prefs.getString(PrefsFileKeys.LAST_LOGIN_ID, null);
             int currentUserId = Integer.valueOf(currentUserIdString);
@@ -140,7 +144,12 @@ public class RewardsFragment extends Fragment {
             rv.setAdapter(adapter);
         } else {
             if (emptyView.getVisibility() == View.GONE) {
-                YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
+
+                try{
+                    YoYo.with(Techniques.FadeIn).duration(1300).playOn(emptyView);
+                } catch(Exception ex){
+
+                }
                 emptyView.setVisibility(View.VISIBLE);
             }
         }
