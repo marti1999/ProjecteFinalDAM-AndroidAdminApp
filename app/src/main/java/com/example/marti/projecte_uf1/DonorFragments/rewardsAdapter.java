@@ -97,7 +97,7 @@ public class rewardsAdapter extends RecyclerView.Adapter<rewardsAdapter.MyViewHo
         }
 
         myViewHolder.rewardTitle.setText(infoEng.title);
-        myViewHolder.rewardPoints.setText(String.valueOf(context.getString(R.string.points) + reward.neededPoints));
+        myViewHolder.rewardPoints.setText(String.valueOf(context.getString(R.string.points) + " " + reward.neededPoints));
         myViewHolder.rewardInfo.setText(infoEng.description);
 
         myViewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
