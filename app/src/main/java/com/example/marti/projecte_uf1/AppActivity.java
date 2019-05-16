@@ -160,7 +160,7 @@ public class AppActivity extends AppCompatActivity {
     }
 
     private void setStartScreen() {
-        if (user_type.equalsIgnoreCase("donor")) {
+        if (user_type.equalsIgnoreCase(getString(R.string.donor))) {
             navView.getMenu().setGroupVisible(R.id.donors_navview, true);
 
             Fragment fragment = null;
@@ -170,10 +170,10 @@ public class AppActivity extends AppCompatActivity {
                     .commit();
 
             navView.setCheckedItem(R.id.donor_QR);
-            getSupportActionBar().setTitle("Donation QR");
+            getSupportActionBar().setTitle(R.string.donationQR);
 
         }
-        if (user_type.equalsIgnoreCase("requestor")) {
+        if (user_type.equalsIgnoreCase(getString(R.string.requestor))) {
             navView.getMenu().setGroupVisible(R.id.requestors_navview, true);
 
             Fragment fragment = null;
@@ -183,7 +183,7 @@ public class AppActivity extends AppCompatActivity {
                     .commit();
 
             navView.setCheckedItem(R.id.cloth);
-            getSupportActionBar().setTitle("Search cloth");
+            getSupportActionBar().setTitle(R.string.searchCloth);
         }
     }
 

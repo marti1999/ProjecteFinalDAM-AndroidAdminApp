@@ -89,7 +89,7 @@ public class Register2Fragment extends Fragment {
                 || etAnswer.getText().toString().equals("")){
 
             Toast toast = Toast.makeText(getActivity(),
-                    "All fields must be filled up.",
+                    getString(R.string.filledUp),
                     Toast.LENGTH_LONG);
 
             toast.show();
@@ -101,7 +101,7 @@ public class Register2Fragment extends Fragment {
     private boolean passwordDontMatch() {
         if (!etPassword.getText().toString().equals(etPassword2.getText().toString())){
             Toast toast = Toast.makeText(getActivity(),
-                    "Password do not match.",
+                    getString(R.string.passwordDontMatch),
                     Toast.LENGTH_LONG);
 
             toast.show();

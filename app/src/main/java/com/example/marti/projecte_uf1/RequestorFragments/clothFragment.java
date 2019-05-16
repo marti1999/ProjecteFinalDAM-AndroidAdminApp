@@ -262,7 +262,7 @@ public class clothFragment extends Fragment {
                         }
 
                     } else {
-                        Toast.makeText(getActivity(), "Can't connect with server, try again later", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {

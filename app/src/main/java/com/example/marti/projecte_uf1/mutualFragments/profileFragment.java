@@ -119,17 +119,17 @@ public class profileFragment extends Fragment {
                     if (requestor != null) {
                         fillTextViewsRequestor(requestor);
                     } else {
-                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
 
                 }
             }
 
             @Override
             public void onFailure(Call<Requestor> call, Throwable t) {
-                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -144,17 +144,17 @@ public class profileFragment extends Fragment {
                     if (donor != null) {
                         fillTextViewsDonor(donor);
                     } else {
-                        Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
 
                 }
             }
 
             @Override
             public void onFailure(Call<Donor> call, Throwable t) {
-                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -260,7 +260,7 @@ public class profileFragment extends Fragment {
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
-    //from the file picker activity opened, it gets the selected file
+    //from file picker activity, it gets the selected file
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

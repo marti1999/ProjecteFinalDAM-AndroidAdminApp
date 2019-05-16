@@ -261,7 +261,7 @@ public class FragmentQR extends Fragment {
 
             @Override
             public void onFailure(Call<List<Size>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -290,10 +290,10 @@ public class FragmentQR extends Fragment {
                 addCustomClothToList(persoCloth, qntFinal);
                 setActualCloths();
             } else {
-                Toast.makeText(getActivity(), "An ERROR has occurred generating QR code", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.errorQR), Toast.LENGTH_SHORT).show();
             }
         }else {
-            Toast.makeText(getActivity(), "The maximum total amount is "+MAX_EACH_TIME, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.maxAmount)+ " "+MAX_EACH_TIME, Toast.LENGTH_SHORT).show();
         }
     }
 

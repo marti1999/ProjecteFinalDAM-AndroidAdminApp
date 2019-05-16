@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (!userDuplicaated){
                         nextTab(transitionsContainer);
                     } else {
-                        Toast.makeText(RegisterActivity.this, "User already in use.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, getString(R.string.userInUse), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Error connecting to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 userDuplicaated = false;
                 pd.dismiss();
             }

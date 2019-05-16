@@ -37,7 +37,6 @@
     <string name="rewards">Rewards</string>
     <string name="address">address</string>
     <string name="warehousename">warehouseName</string>
-    <string name="donor">donor</string>
     <string name="picture_uploaded">Profile picture succesfully uploaded</string>
     <string name="failed_picture_upload">Failed to upload profile picture</string>
     <string name="input_new_password">Input a new password</string>
@@ -49,6 +48,25 @@
     <string name="password_updated">Password successfully updated!</string>
     <string name="cacel">Cancel</string>
     <string name="search_clothes">Search clothes</string>
+    <string name="maxAmount">The maximum total amount is</string>
+    <string name="errorQR">An ERROR has occurred generating QR code</string>
+    <string name="donationQR">Donation QR</string>
+    <string name="requestor">requestor</string>
+    <string name="searchCloth">Search cloth</string>
+    <string name="checkInformation">Checking information...</string>
+    <string name="userAlreadyExist">User already exists</string>
+    <string name="genderNotSelected">Gender not selected</string>
+    <string name="dniNotValid">DNI is not valid</string>
+    <string name="emailNotValid">The email is not valid</string>
+    <string name="overAgeRequired">You must be over 18 years old.</string>
+    <string name="fillUp">All fields must be filled up.</string>
+    <string name="filledUp">All fields must be filled up.</string>
+    <string name="passwordDontMatch">Password do not match.</string>
+    <string name="backToLogin">Back to login</string>
+    <string name="finish">Finish</string>
+    <string name="userInUse">User already in use.</string>
+    <string name="donor">donor</string>
+
 
 
     <string-array name="income">

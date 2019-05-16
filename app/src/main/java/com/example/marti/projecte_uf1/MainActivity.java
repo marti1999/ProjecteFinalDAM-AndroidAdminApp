@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
                             testButton.doResult(false);
                             if (errorMessage != null) {
 
-                                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, getString(R.string.cannot_connect_to_server2), Toast.LENGTH_LONG).show();
                             } else {
                                 YoYo.with(Techniques.Shake)
                                         .duration(700)
@@ -373,13 +373,13 @@ public class MainActivity extends AppCompatActivity {
                             showAlertDialogQuestion(response.body());
                         }
                     } else {
-                        Toast.makeText(MainActivity.this, response.code() + response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, getString(R.string.cannot_connect_to_server2), Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.cannot_connect_to_server2), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -432,7 +432,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void getNewPassword(String answerRaw) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         String answer = generatePasswordHash(answerRaw);
-        // Toast.makeText(this, answer, Toast.LENGTH_LONG).show();
         String body = etEmail.getText().toString() + "-" + answer;
 
         mAPIService.getNewPassword(body).enqueue(new Callback<String>() {
@@ -452,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Can't connect with server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
             }
         });
     }

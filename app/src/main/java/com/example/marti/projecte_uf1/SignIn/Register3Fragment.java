@@ -190,14 +190,14 @@ public class Register3Fragment extends Fragment {
     private void errorMessage() {
         errorLayout.setVisibility(View.VISIBLE);
         ((RegisterActivity) getActivity()).hideBackButton();
-        ((RegisterActivity) getActivity()).showNextButton("Back to login");
+        ((RegisterActivity) getActivity()).showNextButton(getString(R.string.backToLogin));
     }
 
     private void succesfulMessage() {
         donorLayout.setVisibility(View.VISIBLE);
 
         ((RegisterActivity) getActivity()).hideBackButton();
-        ((RegisterActivity) getActivity()).showNextButton("Finish");
+        ((RegisterActivity) getActivity()).showNextButton(getString(R.string.finish));
     }
 
     private void succesfulMessageRequestor() {

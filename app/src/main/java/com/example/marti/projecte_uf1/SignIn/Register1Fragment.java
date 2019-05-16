@@ -181,7 +181,7 @@ public class Register1Fragment extends Fragment {
         donor.dni = etDNI.getText().toString();
         donor.email = etMail.getText().toString();
 
-        pd.setMessage("Checking information...");
+        pd.setMessage(getString(R.string.checkInformation));
         pd.show();
 
 
@@ -198,7 +198,7 @@ public class Register1Fragment extends Fragment {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(getActivity(), "Error connecting to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.cannot_connect_to_server2), Toast.LENGTH_SHORT).show();
                 userDuplicaated = false;
                 pd.dismiss();
             }
@@ -208,7 +208,7 @@ public class Register1Fragment extends Fragment {
         Toast.makeText(getActivity(), "Test", Toast.LENGTH_SHORT).show();
 
         if (userDuplicaated) {
-            Toast.makeText(getActivity(), "User already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.userAlreadyExist), Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -217,7 +217,7 @@ public class Register1Fragment extends Fragment {
     private boolean isGenderNotSelected() {
         if (!maleSelected && !femaleSelected) {
             Toast toast = Toast.makeText(getActivity(),
-                    "Gender not selected",
+                    getString(R.string.genderNotSelected),
                     Toast.LENGTH_LONG);
 
             toast.show();
@@ -229,7 +229,7 @@ public class Register1Fragment extends Fragment {
     private boolean isNIFFormatInvalid() {
         if (!validateNIF(etDNI.getText().toString())) {
             Toast toast = Toast.makeText(getActivity(),
-                    "DNI is not valid",
+                    getString(R.string.dniNotValid),
                     Toast.LENGTH_LONG);
 
             toast.show();
@@ -241,7 +241,7 @@ public class Register1Fragment extends Fragment {
     private boolean isEmailFormatInvalid() {
         if (!Patterns.EMAIL_ADDRESS.matcher(etMail.getText().toString()).matches()) {
             Toast toast = Toast.makeText(getActivity(),
-                    "The email is not valid",
+                    getString(R.string.emailNotValid),
                     Toast.LENGTH_LONG);
 
             toast.show();
@@ -253,7 +253,7 @@ public class Register1Fragment extends Fragment {
     private boolean isUnderAge() {
         if (age < 18) {
             Toast toast = Toast.makeText(getActivity(),
-                    "You must be over 18 years old.",
+                    getString(R.string.overAgeRequired),
                     Toast.LENGTH_LONG);
 
             toast.show();
@@ -269,7 +269,7 @@ public class Register1Fragment extends Fragment {
                 || etLastName.getText().toString().equals("")
                 || etDNI.getText().toString().equals("")) {
             Toast toast = Toast.makeText(getActivity(),
-                    "All fields must be filled up.",
+                    getString(R.string.fillUp),
                     Toast.LENGTH_LONG);
 
             toast.show();
