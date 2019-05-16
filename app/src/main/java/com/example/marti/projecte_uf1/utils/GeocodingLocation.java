@@ -46,6 +46,8 @@ public class GeocodingLocation {
                             Bundle bundle = new Bundle();
 
                             bundle.putString("address", result);
+                            bundle.putString("warehouseName", locationAddress);
+
                             message.setData(bundle);
                         } else {
                             message.what = 1;
@@ -53,7 +55,7 @@ public class GeocodingLocation {
                             result = "Unable to get location for this address." ;
                             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
                             bundle.putString("address", result);
-                            bundle.putString("warehouseName", name);
+                            bundle.putString("warehouseName", locationAddress);
 
                             message.setData(bundle);
                         }

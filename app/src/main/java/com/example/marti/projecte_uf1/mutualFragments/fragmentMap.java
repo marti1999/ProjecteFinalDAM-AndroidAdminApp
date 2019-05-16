@@ -142,7 +142,7 @@ public class fragmentMap extends Fragment {
         MarkerOptions markerOptions = new MarkerOptions();
 
         markerOptions.position(latlng);
-        markerOptions.title(address);
+        markerOptions.title(name);
 
         mMap.addMarker(markerOptions);
     }
